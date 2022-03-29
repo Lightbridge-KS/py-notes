@@ -2,11 +2,13 @@ project:
   type: book
 
 book:
-  title: "R & Python Cheat Sheet"
+  title: "Python & R Cheat Sheet"
   author: "Kittipos Sirivongrungson"
   date: "3/29/2022"
   chapters:
     - index.qmd
+    - primitive.qmd
+    - number.qmd
     - string.qmd
     - references.qmd
 
