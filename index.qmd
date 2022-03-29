@@ -1,8 +1,8 @@
 # Preface {.unnumbered}
 
-> My R & Python Cheat Sheet (Work In-Progress)
+> My Python & R Cheat Sheet (Work In-Progress)
 
-I am an R user who is leaning Python. I'm building my reference cheat sheet to compare both language.
+I am an R user who is leaning Python. I'm building my reference of **mainly Python** and some R code.
 
-Note that this is a work in progress book. There may be some error here and there, imperfect definition, or content structures.
+Note that this is a work in progress book, so the content is imperfect and constantly changing.
 

@@ -1,0 +1,47 @@
+---
+title: "Primitive"
+---
+
+```{r setup, include=FALSE}
+here::i_am("primitive.qmd")
+options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
+knitr::opts_chunk$set(collapse = TRUE)
+library(reticulate)
+library(here)
+```
+
+```{python}
+type(42)
+type(4.2)              
+type('forty-two')      
+type(True)             
+```
+
+### Type Conversion
+
+```{python}
+int(2.8)
+float(1)
+str(3)
+bool(0)
+```
+
+These considered **"Falsy"**
+
+```python
+""
+0
+None
+```
+
+```{python}
+bool(0)
+bool(1)
+
+bool("")
+bool("F")
+
+bool(None)
+```
+
+

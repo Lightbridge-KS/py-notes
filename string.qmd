@@ -11,6 +11,7 @@ library(reticulate)
 library(here)
 ```
 
+`Python`
 
 ```{python}
 course = "Python programming"
@@ -18,6 +19,8 @@ course = "Python programming"
 type(course)
 len(course)
 ```
+
+`R`
 
 ```{r}
 course_r <- "R programming"
@@ -29,6 +32,8 @@ nchar(course_r)
 
 ### Slicing
 
+`Python`
+
 ```{python}
 course[0]
 course[-1]
@@ -38,37 +43,106 @@ course[0:]
 course[:]
 ```
 
+`R`
+
+
 ```{r}
 substr(course_r, 1, 1)
 substr(course_r, 1, 4)
 ```
 
 
+
+
 ### Escape
 
+`Python`
+
 ```{python}
-print("python \"programming\' \nis fun")
+print("python \"programming\" \nis 'fun'")
 ```
+
+`R`
 
 ```{r}
-cat("R\n is also fun")
+cat("R\nis \"also\" 'fun'")
 ```
 
 
-### Formatted String
+### Join String
+
+`Python`
 
 ```{python}
 first = "Kittipos"
 last = "Sirivongrungson"
-
+# Simple
+first + " " + last
+# Advance
 print(f"{first} {last} is {len(first + last)} letter long")
 ```
+
+`R`
 
 
 ```{r}
 first <-  "Kittipos"
 last <-  "Sirivongrungson"
-
+# Simple
+paste(first, last)
+# Advance
 glue::glue("{first} {last} is {nchar(paste0(first, last))} letter long")
 ```
+
+
+
+
+
+### String Methods
+
+`Python`
+
+Copy on modify 
+
+```{python}
+course = " Python programming "
+
+course.upper() # Copy on modify
+course # Original is intact
+```
+
+Basic formatting
+
+
+```{python}
+course.upper()
+course.lower()
+course.title()
+```
+
+
+Strip white spaces
+
+```{python}
+course.strip()
+course.lstrip() # left
+course.rstrip() # right
+```
+
+Find and replace character
+
+```{python}
+course = " Python programming "
+
+course.find("pro")
+course.replace("p", "j")
+```
+
+Logical testing with string
+ 
+```{python}
+"pro" in course
+"java" not in course
+```
+
 
