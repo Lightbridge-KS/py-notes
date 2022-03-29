@@ -1,0 +1,74 @@
+---
+title: "String"
+format: html
+---
+
+```{r setup, include=FALSE}
+here::i_am("string.qmd")
+options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
+knitr::opts_chunk$set(collapse = TRUE)
+library(reticulate)
+library(here)
+```
+
+
+```{python}
+course = "Python programming"
+
+type(course)
+len(course)
+```
+
+```{r}
+course_r <- "R programming"
+
+typeof(course_r)
+length(course_r)
+nchar(course_r)
+```
+
+### Slicing
+
+```{python}
+course[0]
+course[-1]
+course[0:3]
+course[:3]
+course[0:]
+course[:]
+```
+
+```{r}
+substr(course_r, 1, 1)
+substr(course_r, 1, 4)
+```
+
+
+### Escape
+
+```{python}
+print("python \"programming\' \nis fun")
+```
+
+```{r}
+cat("R\n is also fun")
+```
+
+
+### Formatted String
+
+```{python}
+first = "Kittipos"
+last = "Sirivongrungson"
+
+print(f"{first} {last} is {len(first + last)} letter long")
+```
+
+
+```{r}
+first <-  "Kittipos"
+last <-  "Sirivongrungson"
+
+glue::glue("{first} {last} is {nchar(paste0(first, last))} letter long")
+```
+

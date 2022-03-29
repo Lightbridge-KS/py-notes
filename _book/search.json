@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "R & Python Cheat Sheet",
+    "section": "",
+    "text": "My R & Python Cheat Sheet\n\nI am an R user who is leaning Python. I’m building a reference cheat sheet to compare both language."
+  },
+  {
+    "objectID": "string.html",
+    "href": "string.html",
+    "title": "1  String",
+    "section": "",
+    "text": "course_r <- \"R programming\"\n\ntypeof(course_r)\n## [1] \"character\"\nlength(course_r)\n## [1] 1\nnchar(course_r)\n## [1] 13\n\n\n1.0.1 Slicing\n\ncourse[0]\n## 'P'\ncourse[-1]\n## 'g'\ncourse[0:3]\n## 'Pyt'\ncourse[:3]\n## 'Pyt'\ncourse[0:]\n## 'Python programming'\ncourse[:]\n## 'Python programming'\n\n\nsubstr(course_r, 1, 1)\n## [1] \"R\"\nsubstr(course_r, 1, 4)\n## [1] \"R pr\"\n\n\n\n1.0.2 Escape\n\nprint(\"python \\\"programming\\' \\nis fun\")\n## python \"programming' \n## is fun\n\n\ncat(\"R\\n is also fun\")\n## R\n##  is also fun\n\n\n\n1.0.3 Formatted String\n\nfirst = \"Kittipos\"\nlast = \"Sirivongrungson\"\n\nprint(f\"{first} {last} is {len(first + last)} letter long\")\n## Kittipos Sirivongrungson is 23 letter long\n\n\nfirst <-  \"Kittipos\"\nlast <-  \"Sirivongrungson\"\n\nglue::glue(\"{first} {last} is {nchar(paste0(first, last))} letter long\")\n## Kittipos Sirivongrungson is 23 letter long"
+  }
+]

@@ -1,0 +1,22 @@
+project:
+  type: book
+
+book:
+  title: "R & Python Cheat Sheet"
+  author: "Kittipos Sirivongrungson"
+  date: "3/29/2022"
+  chapters:
+    - index.qmd
+    - string.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  #pdf:
+    #documentclass: scrreprt
+
+
+
