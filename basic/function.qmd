@@ -1,0 +1,80 @@
+---
+title: "Functions"
+---
+
+```{r setup, include=FALSE}
+here::i_am("basic/function.qmd")
+options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
+knitr::opts_chunk$set(collapse = TRUE)
+library(reticulate)
+library(here)
+```
+
+
+## Define a Function
+
+```{python}
+def greet():
+  """Greeeting"""
+  print("Hello World")
+```
+
+
+```{python}
+greet()
+```
+
+## Arguments
+
+Terminology: `key` = `value`
+
+- **Parameters** are like `key`
+- **Arguments** are like `value` that supply to the parameters
+
+
+```{python}
+def greet(first, last):
+  """Greeeting someone"""
+  print(f"Hello {first} {last}")
+  print("Welcome aboard!")
+```
+
+**Parameters** = `first`, `last`
+
+```{python}
+greet("Ada", "Lovelace")
+```
+
+**Arguments** = "Ada", "Lovelace"
+
+## Return
+
+return a value with `return` statement
+
+```{python}
+def get_greet(name):
+  return f"Hello {name}"
+
+```
+
+
+```{python}
+print(get_greet("mom"))
+```
+
+By default function return `None`, if not provide return value.
+
+```{python}
+def myfun():
+  print("Hi")
+
+```
+
+```{python}
+print(myfun())
+```
+
+
+
+
+
