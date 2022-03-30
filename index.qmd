@@ -2,11 +2,19 @@
 
 :::{.callout-note}
 ## About
-This is my Python Cheat Sheet Book (Work In-Progress)
+This is my Python cheat sheet book
 :::
 
 
-I am an R user who is leaning Python. I'm building my reference of **Python** and may be some R code.
+I am an R user who is learning Python. I'm building my reference for **Python**. Also, It has some R code as well.
 
-Note that this is a work in progress book, so the content is imperfect and constantly changing.
+:::{.callout-warning}
+
+Note that this is a work in progress book, so the content is imperfect and subject to change.
+
+:::
+
+---
+
+Last updated: `r Sys.Date()`
 
