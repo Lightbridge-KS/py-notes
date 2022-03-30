@@ -2,29 +2,36 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Python & R Cheat Sheet",
+    "title": "Python Cheat Sheet",
     "section": "",
-    "text": "My Python & R Cheat Sheet (Work In-Progress)\n\nI am an R user who is leaning Python. I’m building my reference of mainly Python and some R code.\nNote that this is a work in progress book, so the content is imperfect and constantly changing."
+    "text": "About\n\n\n\nThis is my Python Cheat Sheet Book (Work In-Progress)\n\n\nI am an R user who is leaning Python. I’m building my reference of Python and may be some R code.\nNote that this is a work in progress book, so the content is imperfect and constantly changing."
   },
   {
-    "objectID": "primitive.html",
-    "href": "primitive.html",
-    "title": "1  Primitive",
+    "objectID": "basic/primitive.html",
+    "href": "basic/primitive.html",
+    "title": "1  Primitive Types",
     "section": "",
     "text": "1.0.1 Type Conversion\n\nint(2.8)\n## 2\nfloat(1)\n## 1.0\nstr(3)\n## '3'\nbool(0)\n## False\n\nThese considered “Falsy”\n\"\"\n0\nNone\n\nbool(0)\n## False\nbool(1)\n## True\nbool(\"\")\n## False\nbool(\"F\")\n## True\nbool(None)\n## False"
   },
   {
-    "objectID": "number.html",
-    "href": "number.html",
+    "objectID": "basic/number.html",
+    "href": "basic/number.html",
     "title": "2  Number",
     "section": "",
     "text": "2.0.2 Arithmatic Operators\n\n10 + 3\n## 13\n10 - 3\n## 7\n10 * 3\n## 30\n10 ** 3\n## 1000\n10 / 3 \n## 3.3333333333333335\n10 // 3 # floor division\n## 3\n10 % 3 # modulus\n## 1\n\n\n\n2.0.3 Augmented Assignment Operator\n\nx = 10\nx = x + 3\nx\n## 13\n\nShorter version\n\nx = 10\nx += 3\nx\n## 13\n\n\n\n2.0.4 Function with Numbers\n\nround(2.3)\n## 2\nabs(-2.3)\n## 2.3\n\nusing math module\n\nimport math\n\nmath.ceil(2.3)\n## 3\nmath.factorial(3)\n## 6"
   },
   {
-    "objectID": "string.html",
-    "href": "string.html",
+    "objectID": "basic/string.html",
+    "href": "basic/string.html",
     "title": "3  String",
     "section": "",
     "text": "course = \"Python programming\"\n\ntype(course)\n## <class 'str'>\nlen(course)\n## 18\n\nR\n\ncourse_r <- \"R programming\"\n\ntypeof(course_r)\n## [1] \"character\"\nlength(course_r)\n## [1] 1\nnchar(course_r)\n## [1] 13\n\n\n3.0.1 Slicing\nPython\n\ncourse[0]\n## 'P'\ncourse[-1]\n## 'g'\ncourse[0:3]\n## 'Pyt'\ncourse[:3]\n## 'Pyt'\ncourse[0:]\n## 'Python programming'\ncourse[:]\n## 'Python programming'\n\nR\n\nsubstr(course_r, 1, 1)\n## [1] \"R\"\nsubstr(course_r, 1, 4)\n## [1] \"R pr\"\n\n\n\n3.0.2 Escape\nPython\n\nprint(\"python \\\"programming\\\" \\nis 'fun'\")\n## python \"programming\" \n## is 'fun'\n\nR\n\ncat(\"R\\nis \\\"also\\\" 'fun'\")\n## R\n## is \"also\" 'fun'\n\n\n\n3.0.3 Join String\nPython\n\nfirst = \"Kittipos\"\nlast = \"Sirivongrungson\"\n# Simple\nfirst + \" \" + last\n# Advance\n## 'Kittipos Sirivongrungson'\nprint(f\"{first} {last} is {len(first + last)} letter long\")\n## Kittipos Sirivongrungson is 23 letter long\n\nR\n\nfirst <-  \"Kittipos\"\nlast <-  \"Sirivongrungson\"\n# Simple\npaste(first, last)\n## [1] \"Kittipos Sirivongrungson\"\n# Advance\nglue::glue(\"{first} {last} is {nchar(paste0(first, last))} letter long\")\n## Kittipos Sirivongrungson is 23 letter long\n\n\n\n3.0.4 String Methods\nPython\nCopy on modify\n\ncourse = \" Python programming \"\n\ncourse.upper() # Copy on modify\n## ' PYTHON PROGRAMMING '\ncourse # Original is intact\n## ' Python programming '\n\nBasic formatting\n\ncourse.upper()\n## ' PYTHON PROGRAMMING '\ncourse.lower()\n## ' python programming '\ncourse.title()\n## ' Python Programming '\n\nStrip white spaces\n\ncourse.strip()\n## 'Python programming'\ncourse.lstrip() # left\n## 'Python programming '\ncourse.rstrip() # right\n## ' Python programming'\n\nFind and replace character\n\ncourse = \" Python programming \"\n\ncourse.find(\"pro\")\n## 8\ncourse.replace(\"p\", \"j\")\n## ' Python jrogramming '\n\nLogical testing with string\n\n\"pro\" in course\n## True\n\"java\" not in course\n## True"
+  },
+  {
+    "objectID": "basic/cond.html",
+    "href": "basic/cond.html",
+    "title": "4  Conditional",
+    "section": "",
+    "text": "temp = 15\n\nif temp > 30:\n  print(\"Too hot\")\nelif temp > 20:\n  print(\"It's about right\")\nelse:\n  print(\"It's cold\")\n  \n## It's cold\nprint(\"Bye!\")\n## Bye!\n\n\n\n\nThis is long\n\nscore = 4\n\nif score >= 5:\n  msg = \"pass\"\nelse:\n  msg = \"fail\"\n\nprint(msg)\n## fail\n\nuse Ternary Operator instead\nvalue_if_true if condition else value_if_false\n\nscore = 7\n\nmsg = \"pass\" if score >= 5 else \"fail\"\nmsg\n## 'pass'\n\n\n\n\nand or not they can be short-circuited.\n\nhigh_income = True\ngood_credit = False\nstudent = False\n\nif (high_income or good_credit) and not student:\n  print(\"eligible\")\nelse:\n  print(\"not eligible\")\n## eligible\n\n\n\n\n\nage = 23\n\nif 18 < age < 60:\n  print(\"eligible\")\n## eligible"
   }
 ]

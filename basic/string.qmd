@@ -4,7 +4,7 @@ format: html
 ---
 
 ```{r setup, include=FALSE}
-here::i_am("string.qmd")
+here::i_am("basic/string.qmd")
 options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
 knitr::opts_chunk$set(collapse = TRUE)
 library(reticulate)

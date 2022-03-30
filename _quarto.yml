@@ -2,14 +2,19 @@ project:
   type: book
 
 book:
-  title: "Python & R Cheat Sheet"
+  title: "Python Cheat Sheet"
   author: "Kittipos Sirivongrungson"
   date: "3/29/2022"
   chapters:
     - index.qmd
-    - primitive.qmd
-    - number.qmd
-    - string.qmd
+    - part: "Primitive"
+      chapters:
+      - basic/primitive.qmd
+      - basic/number.qmd
+      - basic/string.qmd
+    - part: "Control Flow"
+      chapters:
+      - basic/cond.qmd
     - references.qmd
 
 bibliography: references.bib

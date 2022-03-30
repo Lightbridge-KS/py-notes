@@ -1,8 +1,12 @@
 # Preface {.unnumbered}
 
-> My Python & R Cheat Sheet (Work In-Progress)
+:::{.callout-note}
+## About
+This is my Python Cheat Sheet Book (Work In-Progress)
+:::
 
-I am an R user who is leaning Python. I'm building my reference of **mainly Python** and some R code.
+
+I am an R user who is leaning Python. I'm building my reference of **Python** and may be some R code.
 
 Note that this is a work in progress book, so the content is imperfect and constantly changing.
 

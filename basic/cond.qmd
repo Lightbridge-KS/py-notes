@@ -1,0 +1,84 @@
+---
+title: "Conditional"
+---
+
+```{r setup, include=FALSE}
+here::i_am("basic/cond.qmd")
+options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
+knitr::opts_chunk$set(collapse = TRUE)
+library(reticulate)
+library(here)
+```
+
+## IF statement
+
+#### `if` `elif` `else` Structure
+
+```{python}
+temp = 15
+
+if temp > 30:
+  print("Too hot")
+elif temp > 20:
+  print("It's about right")
+else:
+  print("It's cold")
+  
+print("Bye!")
+```
+
+#### Ternary Operator
+
+This is long
+
+```{python}
+score = 4
+
+if score >= 5:
+  msg = "pass"
+else:
+  msg = "fail"
+
+print(msg)
+```
+
+
+use **Ternary Operator** instead
+
+```python
+value_if_true if condition else value_if_false
+```
+
+
+```{python}
+score = 7
+
+msg = "pass" if score >= 5 else "fail"
+msg
+```
+
+#### Logical Operators
+
+`and` `or` `not` they can be short-circuited.
+
+```{python}
+high_income = True
+good_credit = False
+student = False
+
+if (high_income or good_credit) and not student:
+  print("eligible")
+else:
+  print("not eligible")
+```
+
+#### Chaining Comparison Operators
+
+
+```{python}
+age = 23
+
+if 18 < age < 60:
+  print("eligible")
+```
+
