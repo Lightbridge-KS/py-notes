@@ -1,4 +1,4 @@
-# My Python Cheat sheet
+# My Python Notes
 
 <!-- badges: start -->
 

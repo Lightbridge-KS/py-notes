@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Python Cheat Sheet"
+  title: "Python Notes"
   author: "Kittipos Sirivongrungson"
   date: "3/29/2022"
   chapters:

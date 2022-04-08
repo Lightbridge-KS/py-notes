@@ -2,7 +2,7 @@
 
 :::{.callout-note}
 ## About
-This is my Python cheat sheet book
+This is my Python notes
 :::
 
 
