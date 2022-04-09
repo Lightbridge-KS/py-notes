@@ -1,5 +1,13 @@
 # Preface {.unnumbered}
 
+```{r setup, include=FALSE}
+library(here)
+here::i_am("index.qmd")
+source(here("_common.R"))
+```
+
+
+
 :::{.callout-note}
 ## About
 This is my Python notes
@@ -13,6 +21,19 @@ I am an R user who is learning Python. I'm building my reference for **Python**.
 Note that this is a work in progress book, so the content is imperfect and subject to change.
 
 :::
+
+```{python}
+prices = {'apple': 0.75, 'egg': 0.50}
+cart = {
+  'apple': 1,
+  'egg': 6
+}
+
+bill = sum(prices[item] * cart[item]
+           for item in cart)
+
+print(f'I have to pay {bill:.2f}')
+```
 
 ---
 
