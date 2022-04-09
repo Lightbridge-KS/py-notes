@@ -37,6 +37,7 @@ def greet(first, last):
   """Greeeting someone"""
   print(f"Hello {first} {last}")
   print("Welcome aboard!")
+
 ```
 
 **Parameters** = `first`, `last`
@@ -44,6 +45,26 @@ def greet(first, last):
 ```{python}
 greet("Ada", "Lovelace")
 ```
+
+```{python}
+# Using Keyword args
+greet(first = "Mary",last="John")
+```
+
+Default parameter must come after required parameter
+
+```{python}
+def increment(x, by = 1):
+  return x + by
+
+
+```
+
+```{python}
+increment(2)
+increment(2, 2)
+```
+
 
 **Arguments** = "Ada", "Lovelace"
 
@@ -74,7 +95,73 @@ def myfun():
 print(myfun())
 ```
 
+## xargs
 
+use `*args` to receives any number of arguments to the function.
 
+```{python}
+def multi(*numbers):
+  return numbers
+
+ 
+a = multi(1, 3)
+a
+type(a)
+```
+
+**xargs** is a **tuple**. Let's iterate over "tuple"
+
+```{python}
+def multi(*numbers):
+  for number in numbers:
+    print(number)
+
+    
+```
+
+```{python}
+multi(1, 2, 3)
+```
+
+### Exercise
+
+Let's multiply any input of numbers.
+
+```{python}
+def multiply(*numbers):
+  total = 1
+  for number in numbers:
+    total *= number
+  return(total)
+
+```
+
+```{python}
+multiply(2, 3, 4)
+```
+
+Same logic using `R`
+
+```{r multiply_r1}
+multiply_r1 <- function(...) {
+  
+  numbers <- list(...)
+  total <- 1
+  for (number in numbers) {
+    total <- total * number
+  }
+  total
+}
+
+multiply_r1(1, 2, 3)
+```
+
+Or using `R` functional programming by `base::Reduce()` or `purrr::reduce()`
+
+```{r multiply_r2}
+multiply_r2 <- function(...) Reduce(`*`, list(...))
+
+multiply_r2(1, 2, 3)
+```
 
 
