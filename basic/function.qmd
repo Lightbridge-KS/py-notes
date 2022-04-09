@@ -8,8 +8,6 @@ here::i_am("basic/function.qmd")
 source(here("_common.R"))
 ```
 
-
-
 ## Define a Function
 
 ```{python}
@@ -17,7 +15,6 @@ def greet():
   """Greeeting"""
   print("Hello World")
 ```
-
 
 ```{python}
 greet()
@@ -27,9 +24,8 @@ greet()
 
 Terminology: `key` = `value`
 
-- **Parameters** are like `key`
-- **Arguments** are like `value` that supply to the parameters
-
+-   **Parameters** are like `key`
+-   **Arguments** are like `value` that supply to the parameters
 
 ```{python}
 def greet(first, last):
@@ -64,7 +60,6 @@ increment(2)
 increment(2, 2)
 ```
 
-
 **Arguments** = "Ada", "Lovelace"
 
 ## Return
@@ -76,7 +71,6 @@ def get_greet(name):
   return f"Hello {name}"
 
 ```
-
 
 ```{python}
 print(get_greet("mom"))
@@ -94,9 +88,39 @@ def myfun():
 print(myfun())
 ```
 
-## xargs 
+## Scoping
+
+::: callout-note
+Variables are scoped at the **function level**
+:::
+
+This is similar to `R`.
+
+
+```{python}
+# Global Var
+name, age = "Joy", 10
+```
+
+```{python}
+def greet(name = "mark"):
+  age = 20
+  return {"name": name, "age": age}
+
+```
+
+```{python}
+greet()
+name
+age
+```
+
+
+## xargs
 
 use `*args` to receives any number of arguments to the function.
+
+Ref: [official doc](https://docs.python.org/3/tutorial/controlflow.html#arbitrary-argument-lists)
 
 ```{python}
 def multi(*numbers):
@@ -129,7 +153,6 @@ keyword args is not allowed
 ```{python}
 multi(a = 1)
 ```
-
 
 ### Exercise
 
@@ -172,12 +195,9 @@ multiply_r2 <- function(...) Reduce(`*`, list(...))
 multiply_r2(1, 2, 3)
 ```
 
+## xxargs
 
-
-
-## xxargs 
-
-Use `**args` to capture any number of **keyword arguments**
+Use `**args` to capture any number of **keyword arguments** as **dictionary**.
 
 ```{python}
 def save_user(**user):
@@ -191,10 +211,13 @@ usr
 type(usr)
 ```
 
+```{python}
+usr["id"]
+usr["name"]
+```
+
 If supply positional arg will fail.
 
 ```{python}
 save_user("mike")
 ```
-
-
