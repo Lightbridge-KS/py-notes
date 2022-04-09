@@ -3,11 +3,9 @@ title: "Primitive Types"
 ---
 
 ```{r setup, include=FALSE}
-here::i_am("basic/primitive.qmd")
-options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
-knitr::opts_chunk$set(collapse = TRUE)
-library(reticulate)
 library(here)
+here::i_am("basic/primitive.qmd")
+source(here("_common.R"))
 ```
 
 ```{python}

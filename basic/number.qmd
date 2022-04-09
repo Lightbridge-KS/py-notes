@@ -4,11 +4,9 @@ title: "Number"
 
 
 ```{r setup, include=FALSE}
-here::i_am("basic/number.qmd")
-options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
-knitr::opts_chunk$set(collapse = TRUE)
-library(reticulate)
 library(here)
+here::i_am("basic/number.qmd")
+source(here("_common.R"))
 ```
 
 ### Number Types
