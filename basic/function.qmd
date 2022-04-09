@@ -3,12 +3,11 @@ title: "Functions"
 ---
 
 ```{r setup, include=FALSE}
-here::i_am("basic/function.qmd")
-options(reticulate.repl.quiet = TRUE) # To quiet python interpreter
-knitr::opts_chunk$set(collapse = TRUE)
-library(reticulate)
 library(here)
+here::i_am("basic/function.qmd")
+source(here("_common.R"))
 ```
+
 
 
 ## Define a Function
@@ -95,7 +94,7 @@ def myfun():
 print(myfun())
 ```
 
-## xargs
+## xargs 
 
 use `*args` to receives any number of arguments to the function.
 
@@ -119,9 +118,18 @@ def multi(*numbers):
     
 ```
 
+Must be positional argument only
+
 ```{python}
 multi(1, 2, 3)
 ```
+
+keyword args is not allowed
+
+```{python}
+multi(a = 1)
+```
+
 
 ### Exercise
 
@@ -162,6 +170,31 @@ Or using `R` functional programming by `base::Reduce()` or `purrr::reduce()`
 multiply_r2 <- function(...) Reduce(`*`, list(...))
 
 multiply_r2(1, 2, 3)
+```
+
+
+
+
+## xxargs 
+
+Use `**args` to capture any number of **keyword arguments**
+
+```{python}
+def save_user(**user):
+  return user
+
+```
+
+```{python}
+usr = save_user(id = 1, name = "mike")
+usr
+type(usr)
+```
+
+If supply positional arg will fail.
+
+```{python}
+save_user("mike")
 ```
 
 
