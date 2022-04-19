@@ -5,6 +5,8 @@ book:
   title: "Python Notes"
   author: "Kittipos Sirivongrungson"
   date: "3/29/2022"
+  repo-url: https://github.com/Lightbridge-KS/py-notes
+  site-url: https://py-notes-lightbridge.netlify.app
   chapters:
     - index.qmd
     - part: "Primitive"
