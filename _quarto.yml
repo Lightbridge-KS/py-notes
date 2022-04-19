@@ -29,5 +29,5 @@ format:
   #pdf:
     #documentclass: scrreprt
 
-
+freeze: auto
 

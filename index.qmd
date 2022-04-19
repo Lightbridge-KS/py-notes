@@ -38,4 +38,3 @@ print(f'I have to pay {bill:.2f}')
 ---
 
 Last updated: `r Sys.Date()`
-

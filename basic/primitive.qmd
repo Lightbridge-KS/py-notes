@@ -41,5 +41,3 @@ bool("F")
 
 bool(None)
 ```
-
-
