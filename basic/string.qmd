@@ -150,7 +150,14 @@ Logical testing with string
 Group 3 digits with `,`
 
 ```{python}
-num = 1000000
-f"{num:,}"
+x = 1000000
+f"{x:,}"
+```
+
+round digits
+
+```{python}
+x = 2/3
+f"{x:.2f}"
 ```
 
