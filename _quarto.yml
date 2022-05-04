@@ -21,7 +21,11 @@ book:
     - part: "Functions"
       chapters:
       - basic/function.qmd
+    - part: "Exercises"
+      chapters:
+      - basic/ctr-flow-ex.qmd
     - references.qmd
+
 
 bibliography: references.bib
 

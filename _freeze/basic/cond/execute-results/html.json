@@ -1,0 +1,14 @@
+{
+  "hash": "2ac5dd76f6566a75fe70e02e335b1884",
+  "result": {
+    "markdown": "---\ntitle: \"Conditional\"\n---\n\n\n\n\n## IF statement\n\n#### `if` `elif` `else` Structure\n\n\n::: {.cell}\n\n```{.python .cell-code}\ntemp = 15\n\nif temp > 30:\n  print(\"Too hot\")\nelif temp > 20:\n  print(\"It's about right\")\nelse:\n  print(\"It's cold\")\n  \n#> It's cold\nprint(\"Bye!\")\n#> Bye!\n```\n:::\n\n\n#### Ternary Operator\n\nThis is long\n\n\n::: {.cell}\n\n```{.python .cell-code}\nscore = 4\n\nif score >= 5:\n  msg = \"pass\"\nelse:\n  msg = \"fail\"\n\nprint(msg)\n#> fail\n```\n:::\n\n\n\nuse **Ternary Operator** instead\n\n```python\nvalue_if_true if condition else value_if_false\n```\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\nscore = 7\n\nmsg = \"pass\" if score >= 5 else \"fail\"\nmsg\n#> 'pass'\n```\n:::\n\n\n#### Logical Operators\n\n`and` `or` `not` they can be short-circuited.\n\n\n::: {.cell}\n\n```{.python .cell-code}\nhigh_income = True\ngood_credit = False\nstudent = False\n\nif (high_income or good_credit) and not student:\n  print(\"eligible\")\nelse:\n  print(\"not eligible\")\n#> eligible\n```\n:::\n\n\n#### Chaining Comparison Operators\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\nage = 23\n\nif 18 < age < 60:\n  print(\"eligible\")\n#> eligible\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": null
+  }
+}

@@ -1,0 +1,95 @@
+# Control Flow Exercise
+
+
+```{r}
+#| include: false
+library(here)
+here::i_am("basic/ctr-flow-ex.qmd")
+source(here("_common.R"))
+```
+
+
+## Meaw 
+
+`meaw()`: using for loop
+
+```{python}
+def meaw(n):
+    for _ in range(n):
+        print("Meaw")
+
+```
+
+let's print "meaw" 3 times
+
+```{python}
+meaw(3)
+```
+
+`meaw()`: pythonista way
+
+```{python}
+def meaw(n):
+    print("Meaw\n" * n, end="")
+
+```
+
+
+```{python}
+meaw(4)
+```
+
+
+## Hogwarts 
+
+### List of Students
+
+```{python}
+students = ["Hermione", "Harry", "Ron"]
+students
+```
+
+```{python}
+for student in students:
+    print(student)
+```
+
+### Dictionary of Students
+
+```{python}
+students = [
+    {"name": "Hermione", "house": "Gryffindor", "patronus": "Otter"},
+    {"name": "Harry", "house": "Gryffindor", "patronous": "Stag"},
+    {"name": "Draco", "house": "Slytherin", "patronous": None}
+]
+```
+
+Iterate though array of student (row by row)
+
+```{python}
+for student in students:
+    print(student["name"], student["house"], sep=", ")
+```
+
+Define a function to print information from each student
+
+```{python}
+def print_student_info(i):
+    print("Student No.", i + 1)
+    for k, v in students[i].items() :
+        print("- ", k, ": ", v)
+
+```
+
+
+```{python}
+print_student_info(0)
+```
+
+
+Now, print information from all students
+
+```{python}
+for i in  range(len(students)):
+    print_student_info(i)
+```
