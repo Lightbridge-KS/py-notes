@@ -21,6 +21,9 @@ book:
     - part: "Functions"
       chapters:
       - basic/function.qmd
+    - part: "Error & Exception"
+      chapters:
+      - basic/exception.qmd
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd

@@ -1,0 +1,60 @@
+# Exception 
+
+```{r}
+#| include: false
+library(here)
+here::i_am("basic/exception.qmd")
+source(here("_common.R"))
+```
+
+
+## Try and Except
+
+
+```{python}
+def get_int(x):
+    try:
+        return int(x)
+    except ValueError:
+        print(f"'{x}' is not a number")
+
+```
+
+```{python}
+get_int(5)
+get_int(-1)
+get_int(5.6)
+get_int("cat")
+```
+
+
+using `pass` to return `NoneType` and not print anything
+
+```{python}
+def get_int2(x):
+    try:
+        return int(x)
+    except ValueError:
+        pass
+
+```
+
+
+```{python}
+get_int2(2)
+get_int2("Cat") # Nothing
+
+type(get_int2("Cat"))
+```
+
+
+
+`isnumeric()` to check whether string is all numeric. But, it's not very effective:
+
+
+```{python}
+"123".isnumeric() # Only case that works
+"12.3".isnumeric()
+"-1".isnumeric()
+"cat".isnumeric()
+```
