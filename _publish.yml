@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: "f05e8d2c-c255-4123-8465-db11588ea171"
+      url: "https://py-notes-lightbridge.netlify.app"
