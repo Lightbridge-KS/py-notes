@@ -3,5 +3,21 @@
 In summary, this book has no content whatsoever.
 
 ```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+```{r}
 1 + 1
 ```
+
+```{r }
+1 + 1
+```
+
+

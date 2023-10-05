@@ -1,0 +1,14 @@
+{
+  "hash": "2dc3a9d2477520b68da75c4d94618db7",
+  "result": {
+    "markdown": "# File \n\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\nfrom pathlib import Path\n```\n:::\n\n\n# Path\n\n\n::: {.cell}\n\n```{.python .cell-code}\nPath(\"C:\\\\Program Files\\\\...\")\n#> PosixPath('C:\\\\Program Files\\\\...')\n\n# Combine Path\nPath(\"A\") / Path(\"B\")\n#> PosixPath('A/B')\n\n# Home Directory\nPath.home()\n#> PosixPath('/Users/kittipos')\nstr(Path.home())\n#> '/Users/kittipos'\n```\n:::\n\n\n## Path Operation \n\n\n::: {.cell}\n\n```{.python .cell-code}\nmy_path = Path(\"file.qmd\")\n\nmy_path.exists()\n#> True\nmy_path.is_dir()\n#> False\nmy_path.is_file()\n#> True\n\nmy_path.absolute() # Absolute Value\n#> PosixPath('/Users/kittipos/my_book/py-notes/basic/file.qmd')\n\nmy_path.name # File name\n#> 'file.qmd'\nmy_path.stem # File name, no ext\n#> 'file'\nmy_path.suffix # Ext\n#> '.qmd'\nmy_path.parent # Parent Folder\n#> PosixPath('.')\n```\n:::\n\n\nChange Name, Suffix, Stem\n\n\n::: {.cell}\n\n```{.python .cell-code}\nmy_path = my_path.with_name(\"file.txt\")\nprint(my_path)\n#> file.txt\n\nmy_path = my_path.with_suffix(\".py\")\nprint(my_path)\n#> file.py\n```\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

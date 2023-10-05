@@ -1,14 +1,16 @@
 {
-  "hash": "534a623f3b18b70d40f06309c73be70a",
+  "hash": "0259a4b2834b96b43a206173354b63fa",
   "result": {
-    "markdown": "---\ntitle: \"Primitive Types\"\n---\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\ntype(42)\n#> <class 'int'>\ntype(4.2)              \n#> <class 'float'>\ntype('forty-two')      \n#> <class 'str'>\ntype(True)             \n#> <class 'bool'>\n```\n:::\n\n\n### Type Conversion\n\n\n::: {.cell}\n\n```{.python .cell-code}\nint(2.8)\n#> 2\nfloat(1)\n#> 1.0\nstr(3)\n#> '3'\nbool(0)\n#> False\n```\n:::\n\n\nThese considered **\"Falsy\"**\n\n```python\n\"\"\n0\nNone\n```\n\n\n::: {.cell}\n\n```{.python .cell-code}\nbool(0)\n#> False\nbool(1)\n#> True\nbool(\"\")\n#> False\nbool(\"F\")\n#> True\nbool(None)\n#> False\n```\n:::",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Primitive Types\"\n---\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\ntype(42)\n#> <class 'int'>\ntype(4.2)              \n#> <class 'float'>\ntype('forty-two')      \n#> <class 'str'>\ntype(True)             \n#> <class 'bool'>\n```\n:::\n\n\n### Type Conversion\n\n\n::: {.cell}\n\n```{.python .cell-code}\nint(2.8)\n#> 2\nfloat(1)\n#> 1.0\nstr(3)\n#> '3'\nbool(0)\n#> False\n```\n:::\n\n\nThese considered **\"Falsy\"**\n\n```python\n\"\"\n0\nNone\n```\n\n\n::: {.cell}\n\n```{.python .cell-code}\nbool(0)\n#> False\nbool(1)\n#> True\n\nbool(\"\")\n#> False\nbool(\"F\")\n#> True\n\nbool(None)\n#> False\n```\n:::\n\n\n\n### Attribute\n\n\n::: {.cell}\n\n```{.python .cell-code}\na = \"foo\"\na.capitalize()\n#> 'Foo'\n```\n:::\n",
+    "supporting": [
+      "primitive_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
     "includes": {},
     "engineDependencies": {},
     "preserve": {},
-    "postProcess": null
+    "postProcess": true
   }
 }

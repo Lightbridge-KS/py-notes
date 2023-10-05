@@ -1,0 +1,45 @@
+---
+title: "Data Structure"
+---
+
+```{r setup, include=FALSE}
+library(here)
+here::i_am("basic/data-str.qmd")
+source(here("_common.R"))
+```
+
+## Dict
+
+### Create dict from sequence
+
+Traditional
+
+```python
+mapping = {}
+for key, value in zip(key_list, value_list):
+    mapping[key] = value
+```
+
+Better way:
+
+```{python}
+tuples = zip(range(5), reversed(range(5)))
+dict(tuples)
+```
+
+
+
+## List 
+
+### List of List is not a list
+
+```{python}
+a = [1, 2, 3]
+c = list(a)
+
+a == c
+a is c
+```
+
+Since the list function always creates a new Python list (i.e., a copy)
+

@@ -41,3 +41,13 @@ bool("F")
 
 bool(None)
 ```
+
+
+### Attribute
+
+```{python}
+a = "foo"
+a.capitalize()
+```
+
+

@@ -1,0 +1,53 @@
+# File 
+
+```{r}
+#| include: false
+library(here)
+here::i_am("basic/file.qmd")
+source(here("_common.R"))
+```
+
+
+```{python}
+from pathlib import Path
+```
+
+# Path
+
+```{python}
+Path("C:\\Program Files\\...")
+
+# Combine Path
+Path("A") / Path("B")
+
+# Home Directory
+Path.home()
+str(Path.home())
+```
+
+## Path Operation 
+
+```{python}
+my_path = Path("file.qmd")
+
+my_path.exists()
+my_path.is_dir()
+my_path.is_file()
+
+my_path.absolute() # Absolute Value
+
+my_path.name # File name
+my_path.stem # File name, no ext
+my_path.suffix # Ext
+my_path.parent # Parent Folder
+```
+
+Change Name, Suffix, Stem
+
+```{python}
+my_path = my_path.with_name("file.txt")
+print(my_path)
+
+my_path = my_path.with_suffix(".py")
+print(my_path)
+```
