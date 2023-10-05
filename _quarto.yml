@@ -14,6 +14,7 @@ book:
       - basic/primitive.qmd
       - basic/number.qmd
       - basic/string.qmd
+      - basic/data-str.qmd
     - part: "Control Flow"
       chapters:
       - basic/cond.qmd
@@ -24,6 +25,9 @@ book:
     - part: "Error & Exception"
       chapters:
       - basic/exception.qmd
+    - part: "OS"
+      chapters: 
+      - basic/file.qmd
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd
