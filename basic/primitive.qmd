@@ -2,15 +2,19 @@
 title: "Primitive Types"
 ---
 
+
 ```{r setup, include=FALSE}
 library(here)
 here::i_am("basic/primitive.qmd")
 source(here("_common.R"))
 ```
 
+
+
 ```{python}
 type(42)
-type(4.2)              
+type(4.2) 
+type(4.)
 type('forty-two')      
 type(True)             
 ```

@@ -2,8 +2,15 @@
 title: "Intro to PD"
 ---
 
+```{r setup, include=FALSE}
+library(here)
+here::i_am("basic/primitive.qmd")
+source(here("_common.R"))
+```
+
 ```{python}
 import pandas as pd
+import numpy as np
 from pandas import Series, DataFrame
 ```
 
@@ -100,6 +107,243 @@ x.notna()
 ```
 
 
+### Auto-align arithmatic
 
+```{python}
+states = ["California", "Ohio", "Oregon", "Texas"]
+obj4 = pd.Series(sdata, index=states)
+```
+
+```{python}
+obj3
+obj4
+```
+
+Data alignment features
+
+```{python}
+obj3 + obj4
+```
+
+
+### `name` Attribute
+
+```{python}
+obj4.name = "population"
+obj4.index.name = "state"
+obj4
+```
+
+
+## DataFrame
+
+See [Comparison with R data.frame](https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_r.html#compare-with-r)
+
+
+it can be thought of as a dictionary of Series all sharing the same index.
+
+### Creation
+
+```{python}
+data = {"state": ["Ohio", "Ohio", "Ohio", "Nevada", "Nevada", "Nevada"],
+        "year": [2000, 2001, 2002, 2001, 2002, 2003],
+        "pop": [1.5, 1.7, 3.6, 2.4, 2.9, 3.2]}
+        
+frame = pd.DataFrame(data)
+type(frame)
+frame
+```
+
+With specified column arrangement 
+  
+```{python}
+frame2 = pd.DataFrame(data, columns=["year", "state", "pop", "debt"])
+frame2
+
+# Column names
+frame2.columns.to_list()
+```
+ 
+ 
+```{python}
+# Shape
+frame.shape
+# Head
+frame.head()
+# Tail
+frame.tail(3)
+```
+ 
+ 
+Nested dictionary
+
+```{python}
+populations = {"Ohio": {2000: 1.5, 2001: 1.7, 2002: 3.6},
+               "Nevada": {2001: 2.4, 2002: 2.9}}
+
+pd.DataFrame(populations)
+```
+
+ 
+ 
+### Subset
+
+```{python}
+frame2.head()
+```
+ 
+### Select -> `[[`
+
+`R`
+
+```r
+select(df, col1, col2)
+```
+
+`Py`
+
+```python
+df[['col1', 'col2']]
+```
+ 
+ 
+Select 1 column
+
+```{python}
+# Quote or unquote
+frame2["state"]
+
+frame2["state"] is frame2.state
+
+type(frame2.state) # Series
+```
+
+ Select multiple column
+ 
+```{python}
+frame2sub = frame2[["state", "pop"]]
+type(frame2sub) # DF
+frame2sub
+```
+ 
+ 
+### Slice 
+
+`R`
+
+```r
+slice(df, 1:10)
+```
+
+`Py`
+
+```python
+df.iloc[:9]
+```
+
+```{python}
+frame
+frame.iloc[:3]
+```
+
+
+ 
+### Filter -> `query`
+ 
+`R`
+
+```r
+filter(df, col1 == 1, col2 == 1)
+```
+
+`Py`
+
+```python
+df.query('col1 == 1 & col2 == 1')
+```
+
+```{python}
+frame2
+
+frame2[frame2.state == "Ohio"]
+# Or
+frame2.query('state == "Ohio"')
+
+frame2.query('pop > 1.5')
+```
+
+
+
+ 
+### Mutate -> `assign`
+
+`R`: `mutate(df, c=a-b)`
+
+`Py`: `df.assign(c=df['a']-df['b'])`
+
+```{python}
+frame2.assign(pop2 = frame2["pop"] * 2)
+```
+
+
+```{python}
+frame2["debt"] = np.arange(6.)
+frame2
+```
+ 
+Assign by index of series 
+ 
+```{python}
+val = pd.Series([-1.2, -1.5, -1.7], index=[2, 4, 5])
+val
+```
+ 
+```{python}
+frame2.debt = val
+frame2
+```
+ 
+ 
+ 
+```{python}
+frame2["pop2"] = frame2["pop"] * 2
+frame2
+```
+ 
+
+ 
+ 
+### Rename
+
+```r
+rename(df, col_one = col1)
+```
+
+```python
+df.rename(columns={'col1': 'col_one'})
+```
+
+
+```{python}
+frame2.rename(columns = {'year': 'yr'})
+```
+
+
+### Summarize
+
+```{python}
+frame2.describe()
+```
+
+### Group by, Summarize
+
+```{python}
+frame2.head()
+```
+
+
+```{python}
+frame2.groupby('state').agg({'pop': 'mean'})
+```
 
  

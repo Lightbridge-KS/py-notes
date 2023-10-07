@@ -27,6 +27,20 @@ get_int(5.6)
 get_int("cat")
 ```
 
+```{python}
+def attempt_float(x):
+    try:
+        return float(x)
+    except ValueError:
+        return x
+```
+
+```{python}
+attempt_float("2")
+attempt_float("X")
+```
+
+
 
 using `pass` to return `NoneType` and not print anything
 
@@ -58,3 +72,20 @@ type(get_int2("Cat"))
 "-1".isnumeric()
 "cat".isnumeric()
 ```
+
+
+## Always close File 
+
+```python
+f = open(path, mode="w")
+
+try:
+    write_to_file(f)
+except:
+    print("Failed")
+else:
+    print("Succeeded")
+finally:
+    f.close()
+```
+

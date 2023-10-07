@@ -1,7 +1,7 @@
 {
-  "hash": "90e2f698f235c868bccaa62e5cf47f06",
+  "hash": "c2cbefcc32a5d893909c6f76abe83d30",
   "result": {
-    "markdown": "# Exception \n\n\n\n\n\n\n## Try and Except\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\ndef get_int(x):\n    try:\n        return int(x)\n    except ValueError:\n        print(f\"'{x}' is not a number\")\n```\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\nget_int(5)\n#> 5\nget_int(-1)\n#> -1\nget_int(5.6)\n#> 5\nget_int(\"cat\")\n#> 'cat' is not a number\n```\n:::\n\n\n\nusing `pass` to return `NoneType` and not print anything\n\n\n::: {.cell}\n\n```{.python .cell-code}\ndef get_int2(x):\n    try:\n        return int(x)\n    except ValueError:\n        pass\n```\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\nget_int2(2)\n#> 2\nget_int2(\"Cat\") # Nothing\n\ntype(get_int2(\"Cat\"))\n#> <class 'NoneType'>\n```\n:::\n\n\n\n\n`isnumeric()` to check whether string is all numeric. But, it's not very effective:\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\n\"123\".isnumeric() # Only case that works\n#> True\n\"12.3\".isnumeric()\n#> False\n\"-1\".isnumeric()\n#> False\n\"cat\".isnumeric()\n#> False\n```\n:::\n",
+    "markdown": "# Exception \n\n\n\n\n\n\n## Try and Except\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\ndef get_int(x):\n    try:\n        return int(x)\n    except ValueError:\n        print(f\"'{x}' is not a number\")\n```\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\nget_int(5)\n#> 5\nget_int(-1)\n#> -1\nget_int(5.6)\n#> 5\nget_int(\"cat\")\n#> 'cat' is not a number\n```\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\ndef attempt_float(x):\n    try:\n        return float(x)\n    except ValueError:\n        return x\n```\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\nattempt_float(\"2\")\n#> 2.0\nattempt_float(\"X\")\n#> 'X'\n```\n:::\n\n\n\n\nusing `pass` to return `NoneType` and not print anything\n\n\n::: {.cell}\n\n```{.python .cell-code}\ndef get_int2(x):\n    try:\n        return int(x)\n    except ValueError:\n        pass\n```\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\nget_int2(2)\n#> 2\nget_int2(\"Cat\") # Nothing\n\ntype(get_int2(\"Cat\"))\n#> <class 'NoneType'>\n```\n:::\n\n\n\n\n`isnumeric()` to check whether string is all numeric. But, it's not very effective:\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\n\"123\".isnumeric() # Only case that works\n#> True\n\"12.3\".isnumeric()\n#> False\n\"-1\".isnumeric()\n#> False\n\"cat\".isnumeric()\n#> False\n```\n:::\n\n\n\n## Always close File \n\n```python\nf = open(path, mode=\"w\")\n\ntry:\n    write_to_file(f)\nexcept:\n    print(\"Failed\")\nelse:\n    print(\"Succeeded\")\nfinally:\n    f.close()\n```\n\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
@@ -9,6 +9,6 @@
     "includes": {},
     "engineDependencies": {},
     "preserve": {},
-    "postProcess": null
+    "postProcess": true
   }
 }

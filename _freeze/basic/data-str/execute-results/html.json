@@ -2,9 +2,7 @@
   "hash": "d5b018097c57bc38e71c2bdeb87e87a3",
   "result": {
     "markdown": "---\ntitle: \"Data Structure\"\n---\n\n\n\n\n## Dict\n\n### Create dict from sequence\n\nTraditional\n\n```python\nmapping = {}\nfor key, value in zip(key_list, value_list):\n    mapping[key] = value\n```\n\nBetter way:\n\n\n::: {.cell}\n\n```{.python .cell-code}\ntuples = zip(range(5), reversed(range(5)))\ndict(tuples)\n#> {0: 4, 1: 3, 2: 2, 3: 1, 4: 0}\n```\n:::\n\n\n\n\n## List \n\n### List of List is not a list\n\n\n::: {.cell}\n\n```{.python .cell-code}\na = [1, 2, 3]\nc = list(a)\n\na == c\n#> True\na is c\n#> False\n```\n:::\n\n\nSince the list function always creates a new Python list (i.e., a copy)\n\n",
-    "supporting": [
-      "data-str_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
