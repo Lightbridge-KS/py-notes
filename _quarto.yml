@@ -31,6 +31,9 @@ book:
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd
+    - part: "Pandas"
+      chapters: 
+        - ds/pd-intro.qmd
     - references.qmd
 
 

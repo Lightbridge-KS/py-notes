@@ -4,4 +4,5 @@
 .Ruserdata
 
 /.quarto/
+/.venv/
 _book
