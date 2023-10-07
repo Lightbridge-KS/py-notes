@@ -25,9 +25,10 @@ book:
     - part: "Error & Exception"
       chapters:
       - basic/exception.qmd
-    - part: "OS"
+    - part: "Module & PKG"
       chapters: 
       - basic/file.qmd
+      - basic/pkg.qmd
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd

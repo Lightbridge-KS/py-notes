@@ -1,0 +1,49 @@
+# Package 
+
+```{r}
+#| include: false
+library(here)
+here::i_am("basic/pkg.qmd")
+source(here("_common.R"))
+```
+
+-   [Python PKG User Guide](https://packaging.python.org/en/latest/)
+-   [PKG layout](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html) (from setuptools)
+
+
+## Change WD of a script
+
+```text
+.
+├── dev
+│  ├── child.qmd
+│  ├── design.qmd
+│  └── test.qmd
+└── src
+   ├── peddesign
+   │  ├── __init__.py
+   │  ├── __pycache__
+   │  ├── _child.py
+   │  ├── ct.py
+   │  └── main.py
+```
+
+In `test.qmd` change working dir to inside `src/`
+
+```python
+import sys
+sys.path.insert(1, '../src') 
+print(sys.path)
+import peddesign as pd
+```
+
+## Package Structure
+
+In `__init__.py`
+
+```python
+# Export User-facing function:
+from .main import design_ct
+from .ct import design_chest, design_whole_abd, design_chest_whole_abd, design_cta_liver
+```
+
