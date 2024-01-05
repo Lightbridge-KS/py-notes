@@ -1,0 +1,15 @@
+---
+title: "Intro to PD"
+---
+
+```{python}
+import pandas as pd
+```
+
+## Summation
+
+```{python}
+summation = sum(2*i for i in range(1,6))
+summation
+```
+
