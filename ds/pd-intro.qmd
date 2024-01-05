@@ -2,11 +2,6 @@
 title: "Intro to PD"
 ---
 
-```{r setup, include=FALSE}
-library(here)
-here::i_am("basic/primitive.qmd")
-source(here("_common.R"))
-```
 
 ```{python}
 import pandas as pd
