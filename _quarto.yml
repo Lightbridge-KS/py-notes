@@ -25,6 +25,9 @@ book:
     - part: "Error & Exception"
       chapters:
       - basic/exception.qmd
+    - part: "OOP"
+      chapters:
+      - basic/oop.qmd
     - part: "Module & PKG"
       chapters: 
       - basic/file.qmd

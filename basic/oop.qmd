@@ -1,0 +1,165 @@
+---
+title: "OOP in Python"
+---
+```{r}
+#| include: false
+library(here)
+here::i_am("basic/pkg.qmd")
+source(here("_common.R"))
+```
+
+- [OOP in Python (real python)](https://realpython.com/python3-object-oriented-programming/#what-is-object-oriented-programming-in-python)
+
+
+## Class
+
+### Define Class
+
+```{python}
+class Car:
+    "Car Class"
+    # Class Attribute
+    fuel = "Electric"
+    # initialize dunder
+    def __init__(self, color: str, mileage: int):
+        self.color = color
+        self.mileage = mileage
+    # Print dunder
+    def __str__(self) -> str:
+        return f"color: {self.color}, mileage: {self.mileage}"
+    # Instance method
+    def drive(self):
+        return f"Ventured {self.mileage} miles"            
+```
+
+### Create instance
+
+Create instance of a class `Car`
+
+```{python}
+car_blue = Car("blue", 20000)
+print(car_blue)
+```
+
+
+```{python}
+# Doc string
+car_blue.__doc__
+```
+
+```{python}
+car_blue.__dict__
+```
+
+Access Attribute
+
+```{python}
+car_turbo.fuel
+```
+
+Access method
+
+```{python}
+car_turbo.drive()
+```
+
+### Interitance
+
+```{python}
+class Parent:
+    hair_color = "brown"
+
+class Child(Parent):
+    pass
+```
+
+```{python}
+ch1 = Child()
+ch1.hair_color
+```
+
+**Overwrite Parent**
+
+```{python}
+class Parent:
+    hair_color = "brown"
+
+class Child(Parent):
+    hair_color = "purple" # Overwrite
+```
+
+```{python}
+ch2 = Child()
+ch2.hair_color
+```
+
+**Extend Parent Attribute**
+
+```{python}
+class Parent:
+    speaks = ["English"]
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.speaks.append("German")
+```
+
+```{python}
+ch3 = Child()
+ch3.hair_color
+```
+
+```{python}
+# Check parent class
+type(ch3) 
+isinstance(ch3, Parent)
+```
+
+### Multiple Child from Parent Class
+
+**Parent Class**
+
+```{python}
+class Dog:
+    species = "Canis familiaris"
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name} is {self.age} years old"
+
+    def speak(self, sound="..."):
+        return f"{self.name} says {sound}"
+```
+
+**Child Class**
+
+Each dog breed bark differently
+
+```{python}
+class JackRussellTerrier(Dog):
+    def speak(self, sound="Arf"):
+        return super().speak(sound)
+
+class Bulldog(Dog):
+    def speak(self, sound="Woof"):
+        return super().speak(sound)
+
+class Dachshund(Dog):
+    pass
+```
+
+```{python}
+miles = JackRussellTerrier("Miles", 4)
+buddy = Dachshund("Buddy", 9)
+jack = Bulldog("Jack", 3)
+jim = Bulldog("Jim", 5)
+```
+
+```{python}
+miles.speak()
+buddy.speak()
+```
