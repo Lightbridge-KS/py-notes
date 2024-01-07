@@ -1,0 +1,127 @@
+---
+title: "Functions 02"
+---
+
+## Arguments
+
+### Postion & Keywords
+
+```python
+def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
+```
+
+`/` and `*` are optional. If used, these symbols indicate the kind of parameter by how the arguments may be passed to the function: positional-only, positional-or-keyword, and keyword-only. Keyword parameters are also referred to as named parameters.
+
+
+```{python}
+def cheeseshop(kind, *arguments, **keywords):
+    print("-- Do you have any", kind, "?")
+    print("-- I'm sorry, we're all out of", kind)
+    for arg in arguments:
+        print(arg)
+    print("-" * 40)
+    for kw in keywords:
+        print(kw, ":", keywords[kw])
+```
+
+
+```{python}
+cheeseshop("Limburger", 
+            # Postional as tuple
+            "It's very runny, sir.",
+           "It's really very, VERY runny, sir.",
+            # Keywords as dict
+           shopkeeper="Michael Palin",
+           client="John Cleese",
+           sketch="Cheese Shop Sketch")
+```
+
+### Unpacking Args
+
+**List**
+
+```{python}
+list(range(3, 6))            # normal call with separate arguments
+```
+
+```{python}
+args = [3, 6]
+list(range(*args))            # call with arguments unpacked from a list
+```
+
+**Dict**
+
+```{python}
+def parrot(voltage, state='a stiff', action='voom'):
+    print("-- This parrot wouldn't", action, end=' ')
+    print("if you put", voltage, "volts through it.", end=' ')
+    print("E's", state, "!")
+
+d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
+parrot(**d)
+```
+
+## Function Factory
+
+```{python}
+def make_incrementor(n):
+    return lambda x: x + n
+
+f = make_incrementor(42)
+f(0)
+```
+
+```{python}
+f(1)
+```
+
+
+## Function Annotation
+
+```{python}
+def f(ham: str, eggs: str = 'eggs') -> str:
+    print("Annotations:", f.__annotations__)
+    print("Arguments:", ham, eggs)
+    return ham + ' and ' + eggs
+
+f('spam')
+```
+
+NB: Type hinting doesn't throw error when input the wrong type.
+
+## Function Documentation
+
+```{python}
+def say_hello(name):
+    """A simple function that says hello... Richie style"""
+    print(f"Hello {name}, is it me you're looking for?")
+```
+
+Obtain docstring by:
+
+- `help()`
+
+```{python}
+help(say_hello)
+```
+
+- `__doc__`
+
+```{python}
+say_hello.__doc__
+```
+
+`print()` will invoke `str()` 
+
+```{python}
+print(say_hello)
+```
+
+```{python}
+str(say_hello)
+```
+
+```{python}
+repr(say_hello)
+```
+
