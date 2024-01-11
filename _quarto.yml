@@ -29,6 +29,9 @@ book:
     - part: "OOP"
       chapters:
       - basic/oop.qmd
+    - part: "File system"
+      chapters: 
+      - basic/path.qmd
     - part: "Module & PKG"
       chapters: 
       - basic/file.qmd
