@@ -1,0 +1,124 @@
+# Context Manager
+
+<!-- ```{r}
+#| include: false
+library(here)
+here::i_am("basic/context/context.qmd")
+source(here("_common.R"))
+``` -->
+
+
+[Python `with` statement (realpython)](https://realpython.com/python-with-statement/)
+
+```{python}
+from pathlib import Path
+```
+
+About `cwd()`
+
+- In Quarto or Jupyter it is the directory that .qmd or .ipynb in.
+- In Python script it is the project root (where the terminal was run)
+
+
+```{python}
+Path().cwd() # Check WD
+```
+
+## Write file (Error Prone)
+
+```{python}
+file = open("hello.txt", "w")
+file.write("Hello, World!")
+file.close()
+```
+
+To improve ...
+
+In Python, you can use two general approaches to deal with resource management. You can wrap your code in:
+
+- **A `try … finally` construct** (more general)
+
+- **A `with` construct** (more concise)
+    - Works only objects that support the context management protocol
+
+## Write file (`try ... finally`)
+
+```{python}
+# Safely open the file
+file = open("hello.txt", "w")
+
+try:
+    file.write("Hello, World!")
+except Exception as e:
+    print(f"An error occurred while writing to the file: {e}")
+finally:
+    # Make sure to close the file after using it
+    file.close()
+```
+
+
+## Write file (`with` Statement)
+
+### Simple
+
+```python
+with expression as target_var:
+    do_something(target_var)
+```
+
+`expression` must return an object that implements the context management protocol. This protocol consists of two special methods:
+
+- `.__enter__()` is called by the with statement to enter the runtime context.
+- `.__exit__()` is called when the execution leaves the with code block.
+
+```{python}
+with open("hello.txt", mode="w") as file:
+    file.write("Hello, World!")
+```
+
+When you run this with statement, `open()` returns an `io.TextIOBase` object. This object is also a context manager, so the with statement calls .__enter__() and assigns its return value to file. Then you can manipulate the file inside the with code block. When the block ends, .__exit__() automatically gets called and closes the file for you, even if an exception is raised inside the with block.
+
+### Multiple
+
+multiple context managers 
+
+```python
+with A() as a, B() as b:
+    pass
+```
+
+```python
+with open("input.txt") as in_file, open("output.txt", "w") as out_file:
+    # Read content from input.txt
+    # Transform the content
+    # Write the transformed content to output.txt
+    pass
+```
+
+### 👍 Better (pathlib)
+
+you should consider using `Path.open()` in your with statements as a best practice in Python.
+
+```{python}
+from pathlib import Path
+
+with Path("hello.txt").open("w") as file:
+    file.write("Hello, World!")
+```
+
+
+In this example, you wrap the with statement in a try … except statement. If an OSError occurs during the execution of with, then you use logging to log the error with a user-friendly and descriptive message.
+
+```{python}
+import pathlib
+import logging
+
+file_path = pathlib.Path("hellos.txt")
+
+try:
+    with file_path.open(mode="w") as file:
+        file.write("Hello, World!")
+except OSError as error:
+    logging.error("Writing to file %s failed due to: %s", file_path, error)
+```
+

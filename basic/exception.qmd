@@ -217,3 +217,22 @@ finally:
     f.close()
 ```
 
+## Custom Exception
+
+Custom exceptions initialize by creating a class that inherits from the base `Exception` class of Python
+
+```{python}
+class MyCustomException(Exception):
+    pass
+```
+
+```{python}
+raise MyCustomException('A custom message for my custom exception')
+```
+
+```{python}
+try:
+    raise MyCustomException('A custom message for my custom exception')
+except MyCustomException:
+    print('My custom exception was raised')
+```

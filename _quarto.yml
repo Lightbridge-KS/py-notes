@@ -32,6 +32,9 @@ book:
     - part: "File system"
       chapters: 
       - basic/path.qmd
+    - part: "Context"
+      chapters: 
+      - basic/context/context.qmd
     - part: "Module & PKG"
       chapters: 
       - basic/file.qmd

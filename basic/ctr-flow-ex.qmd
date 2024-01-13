@@ -1,15 +1,16 @@
 # Control Flow Exercise
 
 
-```{r}
+<!-- ```{r}
 #| include: false
 library(here)
 here::i_am("basic/ctr-flow-ex.qmd")
 source(here("_common.R"))
-```
+``` -->
 
+## For Loop
 
-## Meaw 
+### Meaw 
 
 `meaw()`: using for loop
 
@@ -17,8 +18,8 @@ source(here("_common.R"))
 def meaw(n):
     for _ in range(n):
         print("Meaw")
-
 ```
+
 
 let's print "meaw" 3 times
 
@@ -40,9 +41,9 @@ meaw(4)
 ```
 
 
-## Hogwarts 
+### Hogwarts 
 
-### List of Students
+#### List of Students
 
 ```{python}
 students = ["Hermione", "Harry", "Ron"]
@@ -54,7 +55,7 @@ for student in students:
     print(student)
 ```
 
-### Dictionary of Students
+#### Dictionary of Students
 
 ```{python}
 students = [
@@ -93,3 +94,5 @@ Now, print information from all students
 for i in  range(len(students)):
     print_student_info(i)
 ```
+
+
