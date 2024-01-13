@@ -7,9 +7,65 @@ here::i_am("basic/exception.qmd")
 source(here("_common.R"))
 ```
 
+[Python Exception (realpython)](https://realpython.com/python-exceptions/)
 
-## Try and Except
+- `raise`: allows you to throw an exception at any time.
+- `assert`: enables you to verify if a certain condition is met and throw an exception if it isn’t.
+- In the `try` clause, all statements are executed until an exception is encountered.
+- `except` is used to catch and handle the exception(s) that are encountered in the try clause.
+- `else` lets you code sections that should run only when no exceptions are encountered in the try clause.
+- `finally` enables you to execute sections of code that should always run, with or without any previously encountered exceptions.
 
+## Raising Exception
+
+
+```{python}
+x = 10
+if x > 5:
+    raise Exception('x should not exceed 5. The value of x was: {}'.format(x))
+```
+
+## `AssertionError` Exception
+
+```{python}
+import sys
+assert ('linux' in sys.platform), "This code runs on Linux only."
+```
+
+## `try` and `except` Block
+
+Python executes code following the `try` statement as a “normal” part of the program. The code that follows the `except` statement is the program’s response to any exceptions in the preceding `try` clause.
+
+### Ex: Linux function
+
+```{python}
+def linux_interaction():
+    assert ('linux' in sys.platform), "Function can only run on Linux systems."
+    print('Doing something.')
+```
+
+```{python}
+def mac_interaction():
+    assert ('darwin' in sys.platform), "Function can only run on MacOS systems."
+    print('Doing something.')
+```
+
+```{python}
+try:
+    linux_interaction()
+except:
+    print('Linux function was not executed')
+```
+
+```{python}
+try:
+    linux_interaction()
+except AssertionError as error:
+    print(error)
+    print('The linux_interaction() function was not executed')
+```
+
+### Ex: Int & Float
 
 ```{python}
 def get_int(x):
@@ -73,8 +129,80 @@ type(get_int2("Cat"))
 "cat".isnumeric()
 ```
 
+### Ex: Try open file
 
-## Always close File 
+```{python}
+try:
+    with open('file.log') as file:
+        read_data = file.read()
+except:
+    print('Could not open file.log')
+```
+
+```{python}
+try:
+    with open('file.log') as file:
+        read_data = file.read()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+```
+
+
+```{python}
+try:
+    linux_interaction() # <-- AssertionError trigger in this line
+    with open('file.log') as file:
+        read_data = file.read()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+except AssertionError as error: 
+    print(error) 
+    print('Linux linux_interaction() function was not executed')
+```
+
+
+```{python}
+try:
+    mac_interaction()
+    with open('file.log') as file: # <-- FileNotFoundError trigger in this line
+        read_data = file.read()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+except AssertionError as error:
+    print(error)
+    print('Linux mac_interaction() function was not executed')
+```
+
+## `else` clause
+
+```{python}
+try:
+    mac_interaction() # Pass
+except AssertionError as error:
+    print(error)
+else:
+    print('Executing the else clause.')
+```
+
+### `try-except-else-finally`
+
+```{python}
+try:
+    mac_interaction()
+except AssertionError as error:
+    print(error)
+else:
+    try:
+        with open('file.log') as file:
+            read_data = file.read()
+    except FileNotFoundError as fnf_error:
+        print(fnf_error)
+finally:
+    print('Cleaning up, irrespective of any exceptions.')
+```
+
+
+### Always close File 
 
 ```python
 f = open(path, mode="w")
