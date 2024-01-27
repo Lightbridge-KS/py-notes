@@ -1,0 +1,103 @@
+---
+title: "Decorator"
+---
+
+```{python}
+from functools import wraps
+```
+
+- [Python Decorator Cheatsheet](https://www.pythoncheatsheet.org/cheatsheet/decorators)
+  
+## Concept
+
+```{python}
+def outer_func(msg):
+    def inner_func():
+        print(msg)
+    return inner_func
+```
+
+Traditional function factory
+
+```{python}
+my_func_1 = outer_func("hi")
+my_func_2 = outer_func("bro")
+
+my_func_1()
+my_func_2()
+```
+
+
+## Basic Usage
+
+```{python}
+def your_decorator(func):
+  def wrapper():
+    # Do stuff before func...
+    print("Before func!")
+    func()
+    # Do stuff after func...
+    print("After func!")
+  return wrapper
+```
+
+### Decorator
+
+```{python}
+@your_decorator
+def foo():
+  print("Hello World!")
+
+foo()
+```
+
+```{python}
+del foo # Clean up
+```
+
+### Manually
+
+```{python}
+def foo():
+  print("Hello World!")
+```
+
+```{python}
+foo_dec = your_decorator(foo)
+foo_dec()
+```
+
+
+## Decorator with Parameters
+
+```{python}
+def your_decorator(func):
+  def wrapper(*args,**kwargs):
+    # Do stuff before func...
+    print("Before func!") 
+    func(*args,**kwargs)
+    # Do stuff after func...
+    print("After func!")
+  return wrapper
+
+@your_decorator
+def foo(bar):
+  print("My name is " + bar)
+
+foo("Jack")
+```
+
+## Decorator Template
+
+```python
+import functools
+
+def your_decorator(func):
+  @functools.wraps(func) # For preserving the metadata of func.
+  def wrapper(*args,**kwargs):
+    # Do stuff before func...
+    result = func(*args,**kwargs)
+    # Do stuff after func..
+    return result
+  return wrapper
+```
