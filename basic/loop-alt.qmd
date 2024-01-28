@@ -1,0 +1,60 @@
+---
+title: "For Loop Alternative"
+---
+
+```{r setup, include=FALSE}
+library(here)
+here::i_am("basic/loop-alt.qmd")
+source(here("_common.R"))
+```
+
+
+## Comprehension
+
+```python
+[expression for item in iterable if condition]
+```
+
+```{python}
+numbers = [1, 2, 3, 4, 5]
+[n ** 2 for n in numbers if n % 2 == 0] 
+```
+
+```{python}
+ls = ["a", "b", "c"]
+
+# Equivalent
+[x.upper() for x in ls]
+[str.upper(x) for x in ls]
+```
+
+```{python}
+dd = {"a": "aa", "b": "bb"}
+
+{k: v for k, v in dd.items()} # Dict
+[k for k in dd.keys()] # Keys
+[v for v in dd.values()] # Values
+```
+
+## `map()` Function
+
+`map(function, iterable)`
+
+`map()` applies a function to all the items in an input list. It returns a map object (an iterator) of the results after applying the given function to each item of the given iterable (list, tuple etc.).
+
+
+
+```{python}
+numbers = [1, 2, 3, 4, 5]
+squares = map(lambda x: x**2, numbers)  
+list(squares)  # Converting the map object to a list
+```
+
+## Differences and When to Use
+
+- **Readability**: List comprehensions are often more readable and succinct, especially for simple operations or when filtering conditions are involved.
+- **Performance**: Both list comprehensions and `map()` are faster than a for loop. However, for very large data sets, `map()` can be more memory-efficient (since it returns an iterator), but the difference is often negligible.
+- **Function Application**: If you're applying an existing function (especially a more complex one), `map()` can be more convenient. For operations that can be expressed as a single expression, or where you need conditional logic (like filtering), a list comprehension is often the better choice.
+- **Return Type**: `map()` returns a map object (iterator), which you often need to convert back to a list or another iterable type. List comprehensions return a list directly.
+
+In summary, use list comprehensions when you need a readable and concise way to generate a new list by applying an expression to each item in an iterable, possibly with filtering. Use `map()` when you need to apply an already-defined function to each item in an iterable and are okay with receiving an iterator as the result.
