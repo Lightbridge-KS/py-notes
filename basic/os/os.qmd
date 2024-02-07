@@ -5,7 +5,7 @@ import os
 ```
 
 
-## Working Dir
+## File system
 
 ### Navigate 
 
@@ -95,4 +95,55 @@ for dirpath, dirnames, filenames in os.walk("."):
     print("Current path: ", dirpath)
     print("Directory: ", dirnames)
     print("Files: ", filenames, "\n")
+```
+
+## Environment var
+
+
+```{python}
+print(os.environ.get('PATH'))
+```
+
+## Os Path
+
+**Join**
+
+```{python}
+os.path.join("d", "f1.txt")
+```
+
+**Base**
+
+```{python}
+os.path.basename("/tmp/f1.txt")
+```
+
+```{python}
+os.path.dirname("/tmp/f1.txt")
+```
+
+**Split**
+
+```{python}
+os.path.split("/tmp/f1.txt")
+```
+
+```{python}
+os.path.splitext("/tmp/f1.txt")
+```
+
+**Exist ?**
+
+```{python}
+os.path.exists("/tmp/f1.txt")
+```
+
+**Is dir, file ?**
+
+```{python}
+os.path.isdir("fold2")
+```
+
+```{python}
+os.path.isfile("fold2")
 ```
