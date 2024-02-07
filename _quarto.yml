@@ -33,6 +33,7 @@ book:
       - basic/oop.qmd
     - part: "File system"
       chapters: 
+      - basic/os/os.qmd
       - basic/path.qmd
     - part: "Context"
       chapters: 

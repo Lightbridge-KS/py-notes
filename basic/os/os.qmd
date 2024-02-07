@@ -1,0 +1,98 @@
+# OS module
+
+```{python}
+import os
+```
+
+
+## Working Dir
+
+### Navigate 
+
+**Current working dir**
+
+```{python}
+os.getcwd()
+```
+
+**Change Dir**
+
+```{python}
+os.chdir("fold")
+os.getcwd()
+```
+
+### Files
+
+#### List files
+
+```{python}
+os.listdir()
+```
+
+#### Rename
+
+```{python}
+os.rename("f1.txt", "f2.txt")
+os.listdir()
+```
+
+```{python}
+os.rename("f2.txt", "f1.txt") # Clean-up
+```
+
+#### File Stats
+
+```{python}
+os.stat("f1.txt")
+```
+
+**Size** 
+
+```{python}
+mod_time1 = os.stat("f1.txt").st_size 
+mod_time1
+```
+
+**Modification Time**
+
+```{python}
+from datetime import datetime
+print(datetime.fromtimestamp(mod_time1))
+```
+
+### Make folders
+
+#### One-level folder
+
+```{python}
+os.mkdir("fold-d") # Make
+```
+
+
+```{python}
+os.rmdir("fold-d") # Remove
+```
+
+
+#### Multi-level folders
+
+```{python}
+os.makedirs("fold-d2/fold-dd2") # Make
+```
+
+```{python}
+os.removedirs("fold-d2/fold-dd2") # Remove
+```
+
+
+### Walk
+
+`os.walk()` return tuples with 3 elements
+
+```{python}
+for dirpath, dirnames, filenames in os.walk("."):
+    print("Current path: ", dirpath)
+    print("Directory: ", dirnames)
+    print("Files: ", filenames, "\n")
+```
