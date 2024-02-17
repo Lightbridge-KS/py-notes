@@ -62,6 +62,32 @@ increment(2, 2)
 
 **Arguments** = "Ada", "Lovelace"
 
+### Args Type Hint
+
+For Python 3.9 and earlier:
+
+```{python}
+from typing import Union, List
+
+def num_or_list(x: Union[float, List[float]]) -> None:
+    if isinstance(x, float):
+        print("x is float")
+    elif isinstance(x, list):
+        print("x is list")
+```
+
+For Python 3.10 and later:
+
+```{python}
+def num_or_list(x: float | list[float]) -> None:
+    if isinstance(x, float):
+        print("x is float")
+    elif isinstance(x, list):
+        print("x is list")
+
+```
+
+
 ## Return
 
 return a value with `return` statement

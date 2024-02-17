@@ -197,3 +197,36 @@ if isinstance(point, Point):
 ```
 
 In this example, the match statement checks if point is an instance of Point and then automatically unpacks its x and y attributes according to the order specified in `__match_args__`.
+
+
+## Execute based on argument type
+
+```{python}
+def handle_float(x: float) -> None:
+    print("x is float")
+
+def handle_list(x: list) -> None:
+    print("x is list")
+
+def num_or_list(x: float | list) -> None:
+    type_handler = {
+        float: handle_float,
+        list: handle_list,
+    }
+    handler = type_handler.get(type(x))
+    if handler:
+        handler(x)
+    else:
+        print("Unsupported type")
+
+```
+
+
+```{python}
+num_or_list(2.1)
+```
+
+
+```{python}
+num_or_list(["x", "y"])
+```
