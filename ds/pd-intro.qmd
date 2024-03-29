@@ -179,8 +179,17 @@ populations = {"Ohio": {2000: 1.5, 2001: 1.7, 2002: 3.6},
 pd.DataFrame(populations)
 ```
 
- 
- 
+### Rows & Colums
+
+```{python}
+frame.shape
+```
+
+```{python}
+frame.columns
+```
+
+
 ### Subset
 
 ```{python}
@@ -236,11 +245,23 @@ slice(df, 1:10)
 df.iloc[:9]
 ```
 
+**`.iloc`**: integer location
+
 ```{python}
 frame
 frame.iloc[:3]
 ```
 
+```{python}
+# Rows, Colums
+frame.iloc[[0,1], [0, 2]]
+```
+
+**`.loc`:** Location by name
+
+```{python}
+frame.loc[[0, 1], ["state", "year"]]
+```
 
  
 ### Filter -> `query`
