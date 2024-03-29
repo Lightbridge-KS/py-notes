@@ -257,7 +257,7 @@ frame.iloc[:3]
 frame.iloc[[0,1], [0, 2]]
 ```
 
-**`.loc`:** Location by name
+**`.loc`:** Location by Labels
 
 ```{python}
 frame.loc[[0, 1], ["state", "year"]]
@@ -362,4 +362,12 @@ frame2.head()
 frame2.groupby('state').agg({'pop': 'mean'})
 ```
 
- 
+### Count
+
+```{python}
+frame2.value_counts("year")
+```
+
+```{python}
+frame2.value_counts(["year", "state"], sort=True)
+```
