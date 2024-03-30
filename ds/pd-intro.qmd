@@ -248,8 +248,7 @@ df.iloc[:9]
 **`.iloc`**: integer location
 
 ```{python}
-frame
-frame.iloc[:3]
+frame.iloc[:3] # First 3 rows
 ```
 
 ```{python}
@@ -261,6 +260,12 @@ frame.iloc[[0,1], [0, 2]]
 
 ```{python}
 frame.loc[[0, 1], ["state", "year"]]
+```
+
+Slicing also works
+
+```{python}
+frame.loc[0:2, "state":"pop"]
 ```
 
  
