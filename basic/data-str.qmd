@@ -73,6 +73,51 @@ a is c
 
 Since the list function always creates a new Python list (i.e., a copy)
 
+### Append Two List
+
+```{python}
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+```
+
+#### Using the `+` Operator
+
+```{python}
+combined_list = list1 + list2
+combined_list
+```
+
+#### Using the `extend()` Method
+
+```{python}
+list1.extend(list2)
+list1
+```
+
+#### Using the `*` Operator (Python 3.5+)
+
+```{python}
+combined_list = [*list1, *list2, 7]
+combined_list
+```
+
+#### Using a List Comprehension
+
+```{python}
+combined_list = [item for sublist in (list1, list2) for item in sublist]
+combined_list
+```
+
+#### Using the `itertools.chain()` Function
+
+```{python}
+import itertools
+
+combined_list = list(itertools.chain(list1, list2))
+combined_list
+```
+
+
 ### How to unnest list
 
 Input: `[["a"], ["b", "c"], ["d"]]`
