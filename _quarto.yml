@@ -20,6 +20,7 @@ book:
       - basic/cond.qmd
       - basic/loop.qmd
       - basic/loop-alt.qmd
+      - basic/fun-prog.qmd
     - part: "Functions"
       chapters:
       - basic/function.qmd
