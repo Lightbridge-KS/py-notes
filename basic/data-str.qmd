@@ -2,15 +2,17 @@
 title: "Data Structure"
 ---
 
-```{r setup, include=FALSE}
+<!-- ```{r setup, include=FALSE}
 library(here)
 here::i_am("basic/data-str.qmd")
 source(here("_common.R"))
-```
+``` -->
 
 ## Dict
 
 ### Create dict from sequence
+
+How can I create dict from two list with keys from the first list and values from the secound?
 
 Traditional
 
@@ -22,12 +24,40 @@ for key, value in zip(key_list, value_list):
 
 Better way:
 
+#### Using the `dict` Constructor
+
 ```{python}
-tuples = zip(range(5), reversed(range(5)))
-dict(tuples)
+keys = ['a', 'b', 'c']
+values = [1, 2, 3]
+
+# Create the dictionary using the dict constructor and zip
+result_dict = dict(zip(keys, values))
+result_dict
 ```
 
+#### Using a Dictionary Comprehension
 
+```{python}
+keys = ['a', 'b', 'c']
+values = [1, 2, 3]
+
+# Create the dictionary using a dictionary comprehension
+result_dict = {key: value for key, value in zip(keys, values)}
+result_dict
+```
+
+#### Handling Unequal Length Lists
+
+```{python}
+from itertools import zip_longest
+
+keys = ['a', 'b', 'c']
+values = [1, 2]
+
+# Create the dictionary using zip_longest to handle unequal lengths
+result_dict = {key: value for key, value in zip_longest(keys, values)}
+result_dict
+```
 
 ## List 
 
@@ -43,3 +73,38 @@ a is c
 
 Since the list function always creates a new Python list (i.e., a copy)
 
+### How to unnest list
+
+Input: `[["a"], ["b", "c"], ["d"]]`
+
+Desired output: `["a", "b", "c", "d"]`
+
+#### Using List Comprehension
+
+```{python}
+nested_list =[["a"], ["b", "c"], ["d"]]
+flattened_list = [item for sublist in nested_list for item in sublist]
+flattened_list
+```
+
+#### Using `itertools.chain`
+
+This is particularly useful for larger datasets:
+
+```{python}
+import itertools
+
+nested_list = [["a"], ["b", "c"], ["d"]]
+flattened_list = list(itertools.chain(*nested_list))
+flattened_list
+```
+
+#### Using `sum()` with an Empty List
+
+may not be as efficient for very large lists:
+
+```{python}
+nested_list = [["a"], ["b", "c"], ["d"]]
+flattened_list = sum(nested_list, [])
+flattened_list
+```

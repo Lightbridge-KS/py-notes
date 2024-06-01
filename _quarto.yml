@@ -59,6 +59,7 @@ format:
     theme:
       light: zephyr
       dark: solar
+    toc-depth: 4
   #pdf:
     #documentclass: scrreprt
 

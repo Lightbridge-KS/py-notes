@@ -1,14 +1,12 @@
 {
-  "hash": "d5b018097c57bc38e71c2bdeb87e87a3",
+  "hash": "130713948ec964b639f5d9ace287be22",
   "result": {
-    "markdown": "---\ntitle: \"Data Structure\"\n---\n\n\n\n\n## Dict\n\n### Create dict from sequence\n\nTraditional\n\n```python\nmapping = {}\nfor key, value in zip(key_list, value_list):\n    mapping[key] = value\n```\n\nBetter way:\n\n\n::: {.cell}\n\n```{.python .cell-code}\ntuples = zip(range(5), reversed(range(5)))\ndict(tuples)\n#> {0: 4, 1: 3, 2: 2, 3: 1, 4: 0}\n```\n:::\n\n\n\n\n## List \n\n### List of List is not a list\n\n\n::: {.cell}\n\n```{.python .cell-code}\na = [1, 2, 3]\nc = list(a)\n\na == c\n#> True\na is c\n#> False\n```\n:::\n\n\nSince the list function always creates a new Python list (i.e., a copy)\n\n",
-    "supporting": [],
-    "filters": [
-      "rmarkdown/pagebreak.lua"
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Data Structure\"\n---\n\n<!-- ```{r setup, include=FALSE}\nlibrary(here)\nhere::i_am(\"basic/data-str.qmd\")\nsource(here(\"_common.R\"))\n``` -->\n\n## Dict\n\n### Create dict from sequence\n\nHow can I create dict from two list with keys from the first list and values from the secound?\n\nTraditional\n\n```python\nmapping = {}\nfor key, value in zip(key_list, value_list):\n    mapping[key] = value\n```\n\nBetter way:\n\n#### Using the `dict` Constructor\n\n::: {#30dccde2 .cell execution_count=1}\n``` {.python .cell-code}\nkeys = ['a', 'b', 'c']\nvalues = [1, 2, 3]\n\n# Create the dictionary using the dict constructor and zip\nresult_dict = dict(zip(keys, values))\nresult_dict\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n{'a': 1, 'b': 2, 'c': 3}\n```\n:::\n:::\n\n\n#### Using a Dictionary Comprehension\n\n::: {#b9e032ca .cell execution_count=2}\n``` {.python .cell-code}\nkeys = ['a', 'b', 'c']\nvalues = [1, 2, 3]\n\n# Create the dictionary using a dictionary comprehension\nresult_dict = {key: value for key, value in zip(keys, values)}\nresult_dict\n```\n\n::: {.cell-output .cell-output-display execution_count=2}\n```\n{'a': 1, 'b': 2, 'c': 3}\n```\n:::\n:::\n\n\n#### Handling Unequal Length Lists\n\n::: {#06e702be .cell execution_count=3}\n``` {.python .cell-code}\nfrom itertools import zip_longest\n\nkeys = ['a', 'b', 'c']\nvalues = [1, 2]\n\n# Create the dictionary using zip_longest to handle unequal lengths\nresult_dict = {key: value for key, value in zip_longest(keys, values)}\nresult_dict\n```\n\n::: {.cell-output .cell-output-display execution_count=3}\n```\n{'a': 1, 'b': 2, 'c': None}\n```\n:::\n:::\n\n\n## List \n\n### List of List is not a list\n\n::: {#6e29b989 .cell execution_count=4}\n``` {.python .cell-code}\na = [1, 2, 3]\nc = list(a)\n\na == c\na is c\n```\n\n::: {.cell-output .cell-output-display execution_count=4}\n```\nFalse\n```\n:::\n:::\n\n\nSince the list function always creates a new Python list (i.e., a copy)\n\n### How to unnest list\n\nInput: `[[\"a\"], [\"b\", \"c\"], [\"d\"]]`\n\nDesired output: `[\"a\", \"b\", \"c\", \"d\"]`\n\n#### Using List Comprehension\n\n::: {#23b7b7fd .cell execution_count=5}\n``` {.python .cell-code}\nnested_list =[[\"a\"], [\"b\", \"c\"], [\"d\"]]\nflattened_list = [item for sublist in nested_list for item in sublist]\nflattened_list\n```\n\n::: {.cell-output .cell-output-display execution_count=5}\n```\n['a', 'b', 'c', 'd']\n```\n:::\n:::\n\n\n#### Using `itertools.chain`\n\nThis is particularly useful for larger datasets:\n\n::: {#718c96c9 .cell execution_count=6}\n``` {.python .cell-code}\nimport itertools\n\nnested_list = [[\"a\"], [\"b\", \"c\"], [\"d\"]]\nflattened_list = list(itertools.chain(*nested_list))\nflattened_list\n```\n\n::: {.cell-output .cell-output-display execution_count=6}\n```\n['a', 'b', 'c', 'd']\n```\n:::\n:::\n\n\n#### Using `sum()` with an Empty List\n\nmay not be as efficient for very large lists:\n\n::: {#d5bc554e .cell execution_count=7}\n``` {.python .cell-code}\nnested_list = [[\"a\"], [\"b\", \"c\"], [\"d\"]]\nflattened_list = sum(nested_list, [])\nflattened_list\n```\n\n::: {.cell-output .cell-output-display execution_count=7}\n```\n['a', 'b', 'c', 'd']\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "data-str_files/figure-html"
     ],
-    "includes": {},
-    "engineDependencies": {},
-    "preserve": {},
-    "postProcess": true
+    "filters": [],
+    "includes": {}
   }
 }
