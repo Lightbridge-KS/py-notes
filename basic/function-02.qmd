@@ -125,3 +125,71 @@ str(say_hello)
 repr(say_hello)
 ```
 
+## Wrapper function
+
+```{python}
+def external_fn(a, b, c=10, d=20, *args, **kwargs):
+    print(f"a: {a}, b: {b}, c: {c}, d: {d}")
+    print(f"Additional positional arguments: {args}")
+    print(f"Additional keyword arguments: {kwargs}")
+```
+
+```{python}
+def my_wrapper(a, b, *args, **kwargs):
+    # You can add any pre-processing logic here
+    print("Inside my_wrapper:")
+    
+    # Call the external function with the provided arguments
+    external_fn(a, b, *args, **kwargs)
+
+    # You can add any post-processing logic here
+    print("Exiting my_wrapper")
+```
+
+```{python}
+my_wrapper(1, 2, 3, 4, 5, e=50, f=60)
+```
+
+## Wrapper Class
+
+```{python}
+class External_Class:
+    def __init__(self, a, b, c=10, d=20, *args, **kwargs):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+        self.additional_args = args
+        self.additional_kwargs = kwargs
+        print(f"External_Class initialized with: a={a}, b={b}, c={c}, d={d}")
+        print(f"Additional positional arguments: {args}")
+        print(f"Additional keyword arguments: {kwargs}")
+
+    def display(self):
+        print(f"a: {self.a}, b: {self.b}, c: {self.c}, d: {self.d}")
+        print(f"Additional positional arguments: {self.additional_args}")
+        print(f"Additional keyword arguments: {self.additional_kwargs}")
+```
+
+
+```{python}
+class My_Wrapper(External_Class):
+    def __init__(self, a, b, *args, **kwargs):
+        # You can add any pre-initialization logic here
+        print("Inside My_Wrapper __init__")
+
+        # Initialize the base class (External_Class) with the provided arguments
+        super().__init__(a, b, *args, **kwargs)
+
+        # You can add any post-initialization logic here
+        print("Exiting My_Wrapper __init__")
+
+```
+
+```{python}
+# Example usage of My_Wrapper
+wrapper_instance = My_Wrapper(1, 2, 3, 4, 5, e=50, f=60)
+
+# Call a method from the base class to see the stored values
+wrapper_instance.display()
+```
