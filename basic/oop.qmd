@@ -4,7 +4,7 @@ title: "OOP in Python"
 ```{r}
 #| include: false
 library(here)
-here::i_am("basic/pkg.qmd")
+here::i_am("basic/oop.qmd")
 source(here("_common.R"))
 ```
 
@@ -62,6 +62,86 @@ Access method
 ```{python}
 car_turbo.drive()
 ```
+
+### Class attribute vs Instance attribute
+
+
+1. **Class Attributes**:
+    - Defined directly in the class body.
+    - Shared across all instances of the class.
+    - Accessed using the class name or through an instance.
+    - Changes to a class attribute affect all instances that haven’t overridden the attribute.
+
+Example:
+```{python}
+class Manual:
+    A = "hi"
+    B = "there"
+
+# Accessing class attributes
+print(Manual.A)  # Output: hi
+print(Manual.B)  # Output: there
+
+# Creating instances
+m1 = Manual()
+m2 = Manual()
+
+# Accessing class attributes through instances
+print(m1.A)  
+print(m2.A) 
+
+# Modifying class attribute
+Manual.A = "hello"
+print(m1.A)  
+print(m2.A)   
+```
+
+2. **Instance Attributes**:
+    - Defined within the `__init__` method.
+    - Unique to each instance of the class.
+    - Accessed using the instance name.
+    - Changes to an instance attribute affect only that instance.
+
+Example:
+
+```{python}
+class Manual:
+    def __init__(self):
+        self.A = "hi"
+        self.B = "there"
+
+# Creating instances
+m1 = Manual()
+m2 = Manual()
+
+# Accessing instance attributes
+print(m1.A)  
+print(m2.A)  
+
+# Modifying instance attribute
+m1.A = "hello"
+print(m1.A)  
+print(m2.A)  
+```
+
+#### Key Differences
+
+1. **Scope and Sharing**:
+    - **Class Attributes**: Shared by all instances of the class. If you change a class attribute, the change is reflected in all instances unless overridden.
+    - **Instance Attributes**: Unique to each instance. Changing an instance attribute affects only that particular instance.
+
+2. **Definition and Initialization**:
+    - **Class Attributes**: Defined directly in the class body, outside any methods.
+    - **Instance Attributes**: Defined within the `__init__` method, which is called when a new instance of the class is created.
+
+3. **Usage Context**:
+    - **Class Attributes**: Useful for constants or attributes that should be shared across all instances.
+    - **Instance Attributes**: Used for attributes that need to be unique to each instance, such as data specific to that instance.
+
+#### Summary
+
+- Use **class attributes** when you want to share data across all instances of the class.
+- Use **instance attributes** when you need each instance of the class to have its own unique data.
 
 ### Interitance
 
