@@ -243,3 +243,61 @@ jim = Bulldog("Jim", 5)
 miles.speak()
 buddy.speak()
 ```
+
+## DataClass
+
+
+### Ex1: Create Simple (Recist) 
+
+
+You can convert the `Recist` class to a `dataclass` in Python by using the `dataclasses` module, which simplifies the creation of classes by automatically generating special methods like `__init__`, `__repr__`, and `__eq__`. Here’s how you can do it:
+
+
+```{python}
+from dataclasses import dataclass, field
+
+@dataclass
+class Recist:
+    category: str
+    category_full: str = field(init=False)
+    
+    _category_dict = {
+        "PR": "Partial Response (PR)",
+        "CR": "Complete Response (CR)",
+        "PD": "Progressive Disease (PD)",
+        "SD": "Stable Disease (SD)"
+    }
+
+    def __post_init__(self):
+        # Set the full category name based on the provided short category
+        if self.category in self._category_dict:
+            self.category_full = self._category_dict[self.category]
+        else:
+            raise ValueError(f"Unknown category: {self.category}")
+
+```
+
+**Explanation:**
+
+- **`@dataclass` Decorator:** This decorator is used to create a data class, which automatically generates the `__init__` method and other utility methods based on the fields you define.
+- **Fields:**
+  - `category`: This is the input field where you pass the short form of the RECIST category.
+  - `category_full`: This field is automatically computed based on the `category` and does not need to be initialized by the user. It is marked with `field(init=False)` to exclude it from the generated `__init__` method.
+- **`__post_init__` Method:** This special method is automatically called after the `__init__` method. It's used here to set `category_full` based on the provided `category` value. If the `category` is not in the `_category_dict`, an exception is raised.
+
+
+
+```{python}
+# Creating an instance of the Recist class
+recist_instance = Recist(category="PR")
+print(recist_instance.category)       # Output: "PR"
+print(recist_instance.category_full)  # Output: "Partial Response (PR)"
+
+# Handling an invalid category
+try:
+    invalid_instance = Recist(category="XX")
+except ValueError as e:
+    print(e)  # Output: "Unknown category: XX"
+```
+
+

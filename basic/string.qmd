@@ -161,3 +161,32 @@ x = 2/3
 f"{x:.2f}"
 ```
 
+### String Unpacking Trick
+
+```{python}
+line = 'nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false'
+uname, *fields, homedir, sh = line.split(':')
+```
+
+```{python}
+line.split(':')
+```
+
+```{python}
+uname
+fields
+homedir
+```
+
+### Cool thing
+
+```{python}
+def sum(items):
+    head, *tail = items
+    return head + sum(tail) if tail else head
+
+```
+
+```{python}
+sum([1, 2, 3])
+```
