@@ -332,8 +332,99 @@ a.first_name = 42
 
 ## DataClass
 
+### Intro
 
-### Ex1: Create Simple (Recist) 
+```{python}
+from dataclasses import dataclass, field, asdict, astuple
+
+@dataclass(frozen=True, order=True)
+class Comment:
+    id: int
+    text: str = ""
+    replies: list[int] = field(default_factory=list, repr=False, compare=False)
+
+```
+
+```{python}
+import attr
+
+@attr.s(frozen=True, order=True, slots=True)
+class AttrComment:
+    id: int = 0
+    text: str = ""
+```
+
+```{python}
+comment_1 = Comment(1, "I just subscribed!")
+comment_2 = Comment(2, "Hi there")
+# comment.id = 3  # can't immutable
+print(comment_1)
+```
+
+**To Dict or Tuple**
+
+```{python}
+asdict(comment_1)
+astuple(comment_1)
+```
+
+```{python}
+copy = dataclasses.replace(comment, id=3)
+print(copy)
+
+pprint(inspect.getmembers(Comment, inspect.isfunction))
+```
+
+### Extract each compoent to List
+
+#### List Comprehension
+
+```{python}
+# List of Comment instances
+comments = [comment_1, comment_2]
+
+# Extract the 'id' and 'text' properties into separate lists
+ids = [comment.id for comment in comments]
+ids
+texts = [comment.text for comment in comments]
+texts
+```
+
+#### Zip with Unpacking
+
+```{python}
+[(comment.id, comment.text) for comment in comments]
+```
+
+```{python}
+# Using zip with unpacking
+ids, texts = zip(*[(comment.id, comment.text) for comment in comments])
+```
+
+```{python}
+# Convert to list if needed (since zip returns tuples)
+ids = list(ids)
+texts = list(texts)
+```
+
+#### 👋 To Data Frame
+
+```{python}
+import pandas as pd
+from dataclasses import asdict
+```
+
+```{python}
+comments
+```
+
+```{python}
+# Convert to a DataFrame
+df = pd.DataFrame([asdict(comment) for comment in comments])
+df
+```
+
+### Ex2: Create Simple (Recist) 
 
 
 You can convert the `Recist` class to a `dataclass` in Python by using the `dataclasses` module, which simplifies the creation of classes by automatically generating special methods like `__init__`, `__repr__`, and `__eq__`. Here’s how you can do it:

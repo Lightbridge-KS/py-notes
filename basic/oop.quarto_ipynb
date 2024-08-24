@@ -1,0 +1,869 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"OOP in Python\"\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "<!-- ```{r}\n",
+        "#| include: false\n",
+        "library(here)\n",
+        "here::i_am(\"basic/oop.qmd\")\n",
+        "source(here(\"_common.R\"))\n",
+        "``` -->\n",
+        "\n",
+        "- [OOP in Python (real python)](https://realpython.com/python3-object-oriented-programming/#what-is-object-oriented-programming-in-python)\n",
+        "\n",
+        "\n",
+        "## Class\n",
+        "\n",
+        "### Define Class"
+      ],
+      "id": "c64484c7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Car:\n",
+        "    \"Car Class\"\n",
+        "    # Class Attribute\n",
+        "    fuel = \"Electric\"\n",
+        "    # initialize dunder\n",
+        "    def __init__(self, color: str, mileage: int):\n",
+        "        self.color = color\n",
+        "        self.mileage = mileage\n",
+        "    # Print dunder\n",
+        "    def __str__(self) -> str:\n",
+        "        return f\"color: {self.color}, mileage: {self.mileage}\"\n",
+        "    # Instance method\n",
+        "    def drive(self):\n",
+        "        return f\"Ventured {self.mileage} miles\"            "
+      ],
+      "id": "d2288ccb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Create instance\n",
+        "\n",
+        "Create instance of a class `Car`\n"
+      ],
+      "id": "16f79f7a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "car_blue = Car(\"blue\", 20000)\n",
+        "print(car_blue)"
+      ],
+      "id": "2e3e9def",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Doc string\n",
+        "car_blue.__doc__"
+      ],
+      "id": "b01d39fe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "car_blue.__dict__"
+      ],
+      "id": "08c5fa52",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Access Attribute\n"
+      ],
+      "id": "735e20cd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "car_turbo.fuel"
+      ],
+      "id": "c87e8fa8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Access method\n"
+      ],
+      "id": "692740cf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "car_turbo.drive()"
+      ],
+      "id": "41353337",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Class attribute vs Instance attribute\n",
+        "\n",
+        "\n",
+        "1. **Class Attributes**:\n",
+        "    - Defined directly in the class body.\n",
+        "    - Shared across all instances of the class.\n",
+        "    - Accessed using the class name or through an instance.\n",
+        "    - Changes to a class attribute affect all instances that haven’t overridden the attribute.\n",
+        "\n",
+        "Example:\n"
+      ],
+      "id": "2620dd52"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Manual:\n",
+        "    A = \"hi\"\n",
+        "    B = \"there\"\n",
+        "\n",
+        "# Accessing class attributes\n",
+        "print(Manual.A)  # Output: hi\n",
+        "print(Manual.B)  # Output: there\n",
+        "\n",
+        "# Creating instances\n",
+        "m1 = Manual()\n",
+        "m2 = Manual()\n",
+        "\n",
+        "# Accessing class attributes through instances\n",
+        "print(m1.A)  \n",
+        "print(m2.A) \n",
+        "\n",
+        "# Modifying class attribute\n",
+        "Manual.A = \"hello\"\n",
+        "print(m1.A)  \n",
+        "print(m2.A)   "
+      ],
+      "id": "4fd29c38",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "2. **Instance Attributes**:\n",
+        "    - Defined within the `__init__` method.\n",
+        "    - Unique to each instance of the class.\n",
+        "    - Accessed using the instance name.\n",
+        "    - Changes to an instance attribute affect only that instance.\n",
+        "\n",
+        "Example:\n"
+      ],
+      "id": "1f143862"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Manual:\n",
+        "    def __init__(self):\n",
+        "        self.A = \"hi\"\n",
+        "        self.B = \"there\"\n",
+        "\n",
+        "# Creating instances\n",
+        "m1 = Manual()\n",
+        "m2 = Manual()\n",
+        "\n",
+        "# Accessing instance attributes\n",
+        "print(m1.A)  \n",
+        "print(m2.A)  \n",
+        "\n",
+        "# Modifying instance attribute\n",
+        "m1.A = \"hello\"\n",
+        "print(m1.A)  \n",
+        "print(m2.A)  "
+      ],
+      "id": "8cbb641b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Key Differences\n",
+        "\n",
+        "1. **Scope and Sharing**:\n",
+        "    - **Class Attributes**: Shared by all instances of the class. If you change a class attribute, the change is reflected in all instances unless overridden.\n",
+        "    - **Instance Attributes**: Unique to each instance. Changing an instance attribute affects only that particular instance.\n",
+        "\n",
+        "2. **Definition and Initialization**:\n",
+        "    - **Class Attributes**: Defined directly in the class body, outside any methods.\n",
+        "    - **Instance Attributes**: Defined within the `__init__` method, which is called when a new instance of the class is created.\n",
+        "\n",
+        "3. **Usage Context**:\n",
+        "    - **Class Attributes**: Useful for constants or attributes that should be shared across all instances.\n",
+        "    - **Instance Attributes**: Used for attributes that need to be unique to each instance, such as data specific to that instance.\n",
+        "\n",
+        "#### Summary\n",
+        "\n",
+        "- Use **class attributes** when you want to share data across all instances of the class.\n",
+        "- Use **instance attributes** when you need each instance of the class to have its own unique data.\n",
+        "\n",
+        "### Interitance\n"
+      ],
+      "id": "d7b3586f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Parent:\n",
+        "    hair_color = \"brown\"\n",
+        "\n",
+        "class Child(Parent):\n",
+        "    pass"
+      ],
+      "id": "60a79603",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ch1 = Child()\n",
+        "ch1.hair_color"
+      ],
+      "id": "11fc8894",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Overwrite Parent**\n"
+      ],
+      "id": "82ebb92d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Parent:\n",
+        "    hair_color = \"brown\"\n",
+        "\n",
+        "class Child(Parent):\n",
+        "    hair_color = \"purple\" # Overwrite"
+      ],
+      "id": "299cbde2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ch2 = Child()\n",
+        "ch2.hair_color"
+      ],
+      "id": "f52cb12a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Extend Parent Attribute**\n"
+      ],
+      "id": "bae61de7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Parent:\n",
+        "    speaks = [\"English\"]\n",
+        "\n",
+        "class Child(Parent):\n",
+        "    def __init__(self):\n",
+        "        super().__init__()\n",
+        "        self.speaks.append(\"German\")"
+      ],
+      "id": "14f51933",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ch3 = Child()\n",
+        "ch3.hair_color"
+      ],
+      "id": "62972dcc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Check parent class\n",
+        "type(ch3) \n",
+        "isinstance(ch3, Parent)"
+      ],
+      "id": "2061efd9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Multiple Child from Parent Class\n",
+        "\n",
+        "**Parent Class**\n"
+      ],
+      "id": "85a20e32"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Dog:\n",
+        "    species = \"Canis familiaris\"\n",
+        "\n",
+        "    def __init__(self, name, age):\n",
+        "        self.name = name\n",
+        "        self.age = age\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return f\"{self.name} is {self.age} years old\"\n",
+        "\n",
+        "    def speak(self, sound=\"...\"):\n",
+        "        return f\"{self.name} says {sound}\""
+      ],
+      "id": "0b8bd127",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Child Class**\n",
+        "\n",
+        "Each dog breed bark differently\n"
+      ],
+      "id": "c233e14b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class JackRussellTerrier(Dog):\n",
+        "    def speak(self, sound=\"Arf\"):\n",
+        "        return super().speak(sound)\n",
+        "\n",
+        "class Bulldog(Dog):\n",
+        "    def speak(self, sound=\"Woof\"):\n",
+        "        return super().speak(sound)\n",
+        "\n",
+        "class Dachshund(Dog):\n",
+        "    pass"
+      ],
+      "id": "2bb4ddba",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "miles = JackRussellTerrier(\"Miles\", 4)\n",
+        "buddy = Dachshund(\"Buddy\", 9)\n",
+        "jack = Bulldog(\"Jack\", 3)\n",
+        "jim = Bulldog(\"Jim\", 5)"
+      ],
+      "id": "7aaaa084",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "miles.speak()\n",
+        "buddy.speak()"
+      ],
+      "id": "33dbeca2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Class Method (Dunder)\n",
+        "\n",
+        "### String Representation `__repr__`, `__str__`\n"
+      ],
+      "id": "83335a5e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Pair:\n",
+        "    def __init__(self, x, y):\n",
+        "        self.x = x\n",
+        "        self.y = y\n",
+        "    def __repr__(self):\n",
+        "        return 'Pair({0.x!r}, {0.y!r})'.format(self) \n",
+        "    def __str__(self):\n",
+        "        return '({0.x!s}, {0.y!s})'.format(self)"
+      ],
+      "id": "4e91e067",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = Pair(3, 4)\n",
+        "p"
+      ],
+      "id": "bd721d1b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "the special !r formatting code indicates that the output of `__repr__()` should be used\n"
+      ],
+      "id": "a5ea5255"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print('p is {0!r}'.format(p)) \n",
+        "print('p is {0}'.format(p))"
+      ],
+      "id": "6b2c3524",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### String Formatting `__format__()`\n"
+      ],
+      "id": "8ebee30e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "_formats = {\n",
+        "        'ymd' : '{d.year}-{d.month}-{d.day}',\n",
+        "        'mdy' : '{d.month}/{d.day}/{d.year}',\n",
+        "        'dmy' : '{d.day}/{d.month}/{d.year}'\n",
+        "        }\n",
+        "\n",
+        "class Date:\n",
+        "    def __init__(self, year, month, day):\n",
+        "                self.year = year\n",
+        "                self.month = month\n",
+        "                self.day = day\n",
+        "    def __format__(self, code): \n",
+        "        if code == '':\n",
+        "            code = 'ymd'    \n",
+        "        fmt = _formats[code] \n",
+        "        return fmt.format(d=self)"
+      ],
+      "id": "9b5564a0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "d = Date(2012, 12, 21)\n",
+        "format(d)\n",
+        "format(d, 'mdy')\n",
+        "'The date is {:ymd}'.format(d)"
+      ],
+      "id": "2795e059",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Setter / Getter\n"
+      ],
+      "id": "ec180426"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class Person:\n",
+        "    def __init__(self, first_name):\n",
+        "        self.first_name = first_name\n",
+        "    # Getter function\n",
+        "    @property\n",
+        "    def first_name(self): \n",
+        "        return self._first_name\n",
+        "    # Setter function\n",
+        "    @first_name.setter\n",
+        "    def first_name(self, value):\n",
+        "        if not isinstance(value, str):\n",
+        "            raise TypeError('Expected a string') \n",
+        "        self._first_name = value\n",
+        "    # Deleter function (optional)\n",
+        "    @first_name.deleter\n",
+        "    def first_name(self):\n",
+        "        raise AttributeError(\"Can't delete attribute\")"
+      ],
+      "id": "e3192dbb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a = Person('Guido')\n",
+        "a.first_name"
+      ],
+      "id": "499e1104",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a.first_name = 42"
+      ],
+      "id": "eacaa60d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## DataClass\n",
+        "\n",
+        "### Intro\n"
+      ],
+      "id": "828c264c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from dataclasses import dataclass, field, asdict, astuple\n",
+        "\n",
+        "@dataclass(frozen=True, order=True)\n",
+        "class Comment:\n",
+        "    id: int\n",
+        "    text: str = \"\"\n",
+        "    replies: list[int] = field(default_factory=list, repr=False, compare=False)"
+      ],
+      "id": "2c3d743c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import attr\n",
+        "\n",
+        "@attr.s(frozen=True, order=True, slots=True)\n",
+        "class AttrComment:\n",
+        "    id: int = 0\n",
+        "    text: str = \"\""
+      ],
+      "id": "22d43112",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "comment_1 = Comment(1, \"I just subscribed!\")\n",
+        "comment_2 = Comment(2, \"Hi there\")\n",
+        "# comment.id = 3  # can't immutable\n",
+        "print(comment_1)"
+      ],
+      "id": "497a2436",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**To Dict or Tuple**\n"
+      ],
+      "id": "8dca887d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "asdict(comment_1)\n",
+        "astuple(comment_1)"
+      ],
+      "id": "e4a2b7bd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "copy = dataclasses.replace(comment, id=3)\n",
+        "print(copy)\n",
+        "\n",
+        "pprint(inspect.getmembers(Comment, inspect.isfunction))"
+      ],
+      "id": "ab2f719a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Extract each compoent to List\n",
+        "\n",
+        "#### List Comprehension\n"
+      ],
+      "id": "8c1fa8e3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# List of Comment instances\n",
+        "comments = [comment_1, comment_2]\n",
+        "\n",
+        "# Extract the 'id' and 'text' properties into separate lists\n",
+        "ids = [comment.id for comment in comments]\n",
+        "ids\n",
+        "texts = [comment.text for comment in comments]\n",
+        "texts"
+      ],
+      "id": "f8866613",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Zip with Unpacking\n"
+      ],
+      "id": "f9585c1a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "[(comment.id, comment.text) for comment in comments]"
+      ],
+      "id": "90ab94cc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Using zip with unpacking\n",
+        "ids, texts = zip(*[(comment.id, comment.text) for comment in comments])"
+      ],
+      "id": "3b10ca3e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Convert to list if needed (since zip returns tuples)\n",
+        "ids = list(ids)\n",
+        "texts = list(texts)"
+      ],
+      "id": "6f8e12ba",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### 👋 To Data Frame\n"
+      ],
+      "id": "7e85eef1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "from dataclasses import asdict"
+      ],
+      "id": "c0d1bfe0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "comments"
+      ],
+      "id": "0207f6f7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Convert to a DataFrame\n",
+        "df = pd.DataFrame([asdict(comment) for comment in comments])\n",
+        "df"
+      ],
+      "id": "a1097b6b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Ex2: Create Simple (Recist) \n",
+        "\n",
+        "\n",
+        "You can convert the `Recist` class to a `dataclass` in Python by using the `dataclasses` module, which simplifies the creation of classes by automatically generating special methods like `__init__`, `__repr__`, and `__eq__`. Here’s how you can do it:\n"
+      ],
+      "id": "7e306cfd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from dataclasses import dataclass, field\n",
+        "\n",
+        "@dataclass\n",
+        "class Recist:\n",
+        "    category: str\n",
+        "    category_full: str = field(init=False)\n",
+        "    \n",
+        "    _category_dict = {\n",
+        "        \"PR\": \"Partial Response (PR)\",\n",
+        "        \"CR\": \"Complete Response (CR)\",\n",
+        "        \"PD\": \"Progressive Disease (PD)\",\n",
+        "        \"SD\": \"Stable Disease (SD)\"\n",
+        "    }\n",
+        "\n",
+        "    def __post_init__(self):\n",
+        "        # Set the full category name based on the provided short category\n",
+        "        if self.category in self._category_dict:\n",
+        "            self.category_full = self._category_dict[self.category]\n",
+        "        else:\n",
+        "            raise ValueError(f\"Unknown category: {self.category}\")"
+      ],
+      "id": "f011def1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**Explanation:**\n",
+        "\n",
+        "- **`@dataclass` Decorator:** This decorator is used to create a data class, which automatically generates the `__init__` method and other utility methods based on the fields you define.\n",
+        "- **Fields:**\n",
+        "  - `category`: This is the input field where you pass the short form of the RECIST category.\n",
+        "  - `category_full`: This field is automatically computed based on the `category` and does not need to be initialized by the user. It is marked with `field(init=False)` to exclude it from the generated `__init__` method.\n",
+        "- **`__post_init__` Method:** This special method is automatically called after the `__init__` method. It's used here to set `category_full` based on the provided `category` value. If the `category` is not in the `_category_dict`, an exception is raised.\n"
+      ],
+      "id": "b9400332"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Creating an instance of the Recist class\n",
+        "recist_instance = Recist(category=\"PR\")\n",
+        "print(recist_instance.category)       # Output: \"PR\"\n",
+        "print(recist_instance.category_full)  # Output: \"Partial Response (PR)\"\n",
+        "\n",
+        "# Handling an invalid category\n",
+        "try:\n",
+        "    invalid_instance = Recist(category=\"XX\")\n",
+        "except ValueError as e:\n",
+        "    print(e)  # Output: \"Unknown category: XX\""
+      ],
+      "id": "d08b7e58",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/kittipos/.pyenv/versions/3.10.10/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
