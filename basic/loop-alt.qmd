@@ -36,6 +36,14 @@ dd = {"a": "aa", "b": "bb"}
 [v for v in dd.values()] # Values
 ```
 
+Using `_` varible
+
+```{python}
+d = [1, 2]
+l = [list(d) for _ in d]
+l
+```
+
 ## `map()` Function
 
 `map(function, iterable)`
