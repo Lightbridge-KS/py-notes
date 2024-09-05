@@ -1,0 +1,200 @@
+---
+title: "Comprehension & Others"
+---
+
+```{r setup, include=FALSE}
+library(here)
+here::i_am("basic/comprehen.qmd")
+source(here("_common.R"))
+```
+
+
+## List Comprehension
+
+### Syntax
+
+```python
+[expression for item in iterable if condition]
+```
+
+**Longer version:**
+
+
+::: {.panel-tabset}
+#### Comprehension
+
+```python
+[expression for item1 in iterable1 if condition1
+            for item2 in iterable2 if condition2
+            ...
+            for itemN in iterableN if conditionN ]
+```
+#### For Loop
+
+```python
+result = []
+for item1 in iterable1:
+    if condition1:
+        for item2 in iterable2:
+           if condition2:
+               ...
+               for itemN in iterableN:
+                   if conditionN:
+                       result.append(expression)
+```
+
+:::
+
+### Basic
+
+```{python}
+nums = [1, 2, 3, 4, 5]
+squares = [n * n for n in nums]
+squares
+```
+
+**Comprehension with filter**
+
+```{python}
+numbers = [1, 2, 3, 4, 5]
+[n ** 2 for n in numbers if n % 2 == 0] 
+```
+
+```{python}
+ls = ["a", "b", "c"]
+
+# Equivalent
+[x.upper() for x in ls]
+[str.upper(x) for x in ls]
+```
+
+
+### Using `_` varible
+
+```{python}
+d = [1, 2]
+l = [list(d) for _ in d]
+l
+```
+
+### Ex 1: List of Dict
+
+```{python}
+portfolio = [
+  {'name': 'IBM', 'shares': 100, 'price': 91.1 },
+  {'name': 'MSFT', 'shares': 50, 'price': 45.67 },
+  {'name': 'HPE', 'shares': 75, 'price': 34.51 },
+  {'name': 'CAT', 'shares': 60, 'price': 67.89 },
+  {'name': 'IBM', 'shares': 200, 'price': 95.25 }
+]
+```
+
+Collect all names
+
+```{python}
+names = [s['name'] for s in portfolio]
+names
+```
+
+Find all entries with more than 100 shares ['IBM']
+
+```{python}
+more100 = [s['name'] for s in portfolio if s['shares'] > 100 ]
+more100
+```
+
+Find the total shares*price
+
+```{python}
+cost = sum([s['shares']*s['price'] for s in portfolio])
+cost
+```
+
+Collect (name, shares) tuples
+
+```{python}
+name_shares = [ (s['name'], s['shares']) for s in portfolio ] 
+name_shares
+```
+
+### Ex 2: Wrapping Function
+
+```{python}
+def toint(x):
+    try:
+        return int(x)
+    except ValueError:
+        return None
+```
+
+```{python}
+values = [ '1', '2', '-4', 'n/a', '-3', '5' ]
+
+data1 = [ toint(x) for x in values ]
+print(data1)
+
+data2 = [ toint(x) for x in values if toint(x) is not None ]
+print(data2)
+```
+
+Using `:=`
+
+```{python}
+data3 = [ v for x in values if (v:=toint(x)) is not None ]
+print(data3)
+
+data4 = [ v for x in values if (v:=toint(x)) is not None and v >= 0 ]
+print(data4)
+```
+
+
+
+## Set & Dict Comprehension
+
+### Set Comprehension
+
+A set of distinct values
+
+```{python}
+# Set comprehension
+names = { s['name'] for s in portfolio }
+names
+```
+
+### Dict Comprehension
+
+```{python}
+prices = { s['name']:s['price'] for s in portfolio }
+prices
+```
+
+```{python}
+dd = {"a": "aa", "b": "bb"}
+
+{k: v for k, v in dd.items()} # Dict
+[k for k in dd.keys()] # Keys
+[v for v in dd.values()] # Values
+```
+
+
+## `map()` Function
+
+`map(function, iterable)`
+
+`map()` applies a function to all the items in an input list. It returns a map object (an iterator) of the results after applying the given function to each item of the given iterable (list, tuple etc.).
+
+
+```{python}
+numbers = [1, 2, 3, 4, 5]
+squares = map(lambda x: x**2, numbers)  
+list(squares)  # Converting the map object to a list
+```
+
+## Differences and When to Use
+
+- **Readability**: List comprehensions are often more readable and succinct, especially for simple operations or when filtering conditions are involved.
+- **Performance**: Both list comprehensions and `map()` are faster than a for loop. However, for very large data sets, `map()` can be more memory-efficient (since it returns an iterator), but the difference is often negligible.
+- **Function Application**: If you're applying an existing function (especially a more complex one), `map()` can be more convenient. For operations that can be expressed as a single expression, or where you need conditional logic (like filtering), a list comprehension is often the better choice.
+- **Return Type**: `map()` returns a map object (iterator), which you often need to convert back to a list or another iterable type. List comprehensions return a list directly.
+
+In summary, use list comprehensions when you need a readable and concise way to generate a new list by applying an expression to each item in an iterable, possibly with filtering. Use `map()` when you need to apply an already-defined function to each item in an iterable and are okay with receiving an iterator as the result.
