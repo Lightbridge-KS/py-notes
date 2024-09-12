@@ -2,6 +2,8 @@
 title: "Abstract Base Class"
 ---
 
+## ABC 
+
 **Goal:**
 
 - Prevents a user from creating an object of that class
@@ -71,4 +73,60 @@ motorcycle.go()
 #vehicle.stop()
 car.stop()
 motorcycle.stop()
+```
+
+## ABC with Data Class
+
+```{python}
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
+@dataclass
+class Shape(ABC):
+    name: str  # Field automatically added by @dataclass
+
+    @abstractmethod
+    def area(self) -> float:
+        pass
+
+    @abstractmethod
+    def perimeter(self) -> float:
+        pass
+
+# Subclass that implements the abstract methods
+@dataclass
+class Rectangle(Shape):
+    width: float
+    height: float
+
+    def area(self) -> float:
+        return self.width * self.height
+
+    def perimeter(self) -> float:
+        return 2 * (self.width + self.height)
+
+# Subclass that implements the abstract methods
+@dataclass
+class Circle(Shape):
+    radius: float
+
+    def area(self) -> float:
+        return 3.14159 * self.radius ** 2
+
+    def perimeter(self) -> float:
+        return 2 * 3.14159 * self.radius
+```
+
+
+```{python}
+
+# Now you can instantiate the subclasses
+rect = Rectangle(name="My Rectangle", width=10, height=5)
+circle = Circle(name="My Circle", radius=7)
+
+print(f"{rect.name} Area: {rect.area()}")        # Output: My Rectangle Area: 50
+print(f"{rect.name} Perimeter: {rect.perimeter()}") # Output: My Rectangle Perimeter: 30
+
+print(f"{circle.name} Area: {circle.area()}")      # Output: My Circle Area: 153.93791
+print(f"{circle.name} Perimeter: {circle.perimeter()}") # Output: My Circle Perimeter: 43.98226
 ```
