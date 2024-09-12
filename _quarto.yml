@@ -29,6 +29,9 @@ book:
     - part: "Error & Exception"
       chapters:
       - basic/exception.qmd
+    - part: "Iterate"
+      chapters:
+      - "concept/iterable-iterator-generator.qmd"
     - part: "OOP"
       chapters:
       - basic/oop.qmd

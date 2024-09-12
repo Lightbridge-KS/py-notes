@@ -1,0 +1,128 @@
+---
+title: "Iterator, iterable, and Generator"
+---
+
+::: {.callout-note appearance="minimal"}
+
+**Q:** What's the difference between iterator, iterable, and generator?
+:::
+
+
+## Iterable
+
+An **iterable** is any Python object that can return an iterator. These objects implement the `__iter__()` method, which returns an iterator when called. 
+
+- **Examples of iterables**: Lists, tuples, dictionaries, sets, strings, and any object that implements `__iter__()`.
+  
+### Characteristics:
+
+- **Can be iterated** over in a `for` loop.
+- **Does not** necessarily keep track of its iteration state.
+- Calling `iter(iterable)` will return an **iterator** for that iterable.
+
+### Example:
+
+```python
+# A list is an iterable
+my_list = [1, 2, 3]
+
+for item in my_list:  # Iterating over the iterable
+    print(item)
+```
+
+In this example, `my_list` is an iterable because it can return an iterator that can be used in a `for` loop.
+
+## Iterator
+
+An **iterator** is an object that represents a stream of data. It implements the `__iter__()` and `__next__()` methods:
+
+- **`__iter__()`**: Returns the iterator object itself.
+- **`__next__()`**: Returns the next value from the iterator. When there are no more items, it raises the `StopIteration` exception.
+
+An iterator **remembers its state** during iteration, meaning once a value has been accessed, it cannot be revisited without creating a new iterator.
+
+### Characteristics:
+
+- **Maintains state**: Keeps track of where it is during iteration.
+- **Consumes values** as they are accessed.
+- Can only move forward, not backward.
+
+### Example:
+
+```{python}
+# Getting an iterator from an iterable
+my_list = [1, 2, 3]
+my_iter = iter(my_list)  # my_iter is an iterator
+
+# Manually iterate using next()
+print(next(my_iter))  # Output: 1
+print(next(my_iter))  # Output: 2
+print(next(my_iter))  # Output: 3
+# The following will raise StopIteration
+# print(next(my_iter))
+```
+
+In this example, `my_iter` is an iterator that returns one element of the list at a time when `next()` is called.
+
+## Generator
+
+A **generator** is a special type of iterator that is defined using a function with the `yield` keyword. Generators allow you to **generate values lazily**, meaning values are produced only when requested, not all at once.
+
+Generators are a type of iterator because they also implement the `__iter__()` and `__next__()` methods, but they are written in a simpler way, using `yield`.
+
+### Characteristics:
+
+- **Lazy evaluation**: Values are generated on the fly, one at a time, which makes generators memory-efficient for large datasets.
+- Once a generator has been exhausted, it **cannot be reused** unless recreated.
+- **Simpler syntax**: Typically easier to write than iterators, using `yield` instead of managing `__iter__()` and `__next__()` methods manually.
+
+### Example:
+
+```{python}
+# A generator function
+def my_generator():
+    yield 1
+    yield 2
+    yield 3
+
+gen = my_generator()  # gen is a generator
+
+# Iterate over the generator
+for value in gen:
+    print(value)
+```
+
+In this example, the `my_generator()` function is a generator. It "yields" values one at a time and can be used like an iterator.
+
+### Generator Expression:
+
+You can also create a generator using a **generator expression**, which is similar to a list comprehension but with parentheses:
+
+```python
+# Generator expression
+gen_exp = (x * x for x in range(3))
+
+# Iterate over the generator expression
+for value in gen_exp:
+    print(value)  # Output: 0, 1, 4
+```
+
+## Key Differences:
+
+| Concept     | Characteristics | Methods | Example Usage |
+|-------------|------------------|---------|---------------|
+| **Iterable** | Any object you can iterate over (e.g., lists, strings, etc.). Produces an iterator when `iter()` is called. | `__iter__()` | Lists, sets, strings, dictionaries, etc. |
+| **Iterator** | Object that represents a stream of data. Iterates once and keeps its state. | `__iter__()`, `__next__()` | Result of calling `iter()` on an iterable. |
+| **Generator** | A type of iterator created using a function with `yield`. Lazily produces values on demand. | `__iter__()`, `__next__()` | Generator functions or generator expressions. |
+
+### Summary:
+
+- **Iterable**: Anything that can be iterated over, like a list, tuple, or string.
+- **Iterator**: An object that keeps track of its position during iteration and produces the next value when requested.
+- **Generator**: A type of iterator that is defined using `yield` and is more memory-efficient because it generates values on the fly.
+
+In short:
+
+- **Iterable**: Can return an iterator.
+- **Iterator**: An object that can iterate over its values, one by one.
+- **Generator**: A special iterator that is lazily evaluated, producing values as needed.
