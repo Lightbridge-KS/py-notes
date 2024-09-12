@@ -32,6 +32,7 @@ book:
     - part: "OOP"
       chapters:
       - basic/oop.qmd
+      - basic/oop-abc.qmd
       - basic/dataclass.qmd
     - part: "File system"
       chapters: 
