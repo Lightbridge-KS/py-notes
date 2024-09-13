@@ -51,6 +51,7 @@ book:
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd
+      - "playground/pg-sort.ipynb"
     - part: "Pandas"
       chapters: 
         - ds/pd-intro.qmd
