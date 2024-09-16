@@ -36,7 +36,9 @@ book:
       chapters:
       - basic/oop.qmd
       - basic/oop-abc.qmd
+      - "basic/oop-class-instance-method.ipynb"
       - basic/dataclass.qmd
+      - "playground/shape.ipynb"
     - part: "File system"
       chapters: 
       - basic/os/os.qmd
