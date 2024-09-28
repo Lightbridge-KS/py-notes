@@ -26,6 +26,9 @@ book:
       - basic/function.qmd
       - basic/function-02.qmd
       - basic/function-dec.qmd
+    - part: "Func Prog"
+      chapters: 
+      - "concept/map-reduce.qmd"
     - part: "Error & Exception"
       chapters:
       - basic/exception.qmd
