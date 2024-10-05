@@ -18,6 +18,7 @@ book:
     - part: "Control Flow"
       chapters:
       - basic/cond.qmd
+      - "basic/match-case.qmd"
       - basic/loop.qmd
       - "basic/comprehen.qmd"
       - basic/fun-prog.qmd
