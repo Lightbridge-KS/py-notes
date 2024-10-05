@@ -52,6 +52,30 @@ print(copy)
 pprint(inspect.getmembers(Comment, inspect.isfunction))
 ```
 
+### Interitance
+
+```{python}
+from dataclasses import dataclass
+
+# Define the base dataclass
+@dataclass
+class Person:
+    name: str
+    age: int
+
+# Define a derived dataclass that inherits from Person
+@dataclass
+class Employee(Person):
+    employee_id: int
+    department: str
+
+# Create an instance of the derived class
+employee = Employee(name="John Doe", age=30, employee_id=1234, department="Engineering")
+
+# Display the inherited and new fields
+print(employee)
+```
+
 ### Extract each compoent to List
 
 ```{python}
