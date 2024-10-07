@@ -50,6 +50,9 @@ book:
     - part: "Context"
       chapters: 
       - basic/context/context.qmd
+    - part: "Typing"
+      chapters: 
+      - "basic/typing.qmd"
     - part: "Module & PKG"
       chapters: 
       - basic/file.qmd

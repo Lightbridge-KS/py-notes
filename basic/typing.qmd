@@ -1,0 +1,43 @@
+---
+title: Typing
+---
+
+## TypedDict
+
+[TypedDict](https://typing.readthedocs.io/en/latest/spec/typeddict.html#typeddict)
+
+```{python}
+from typing import TypedDict
+
+class Movie(TypedDict):
+    name: str
+    year: int
+```
+
+```{python}
+movie: Movie = {'name': 'Blade Runner',
+                'year': 1982}
+```
+
+
+```{python}
+def record_movie(movie: Movie) -> None: ...
+
+record_movie({'name': 'Blade Runner', 'year': 1982})
+```
+
+### Example
+
+- [Ollama-Python Example](https://github.com/ollama/ollama-python/blob/main/ollama/_types.py)
+
+```{python}
+class BaseGenerateResponse(TypedDict):
+  model: str
+  'Model used to generate response.'
+
+  created_at: str
+  'Time when the request was created.'
+
+  done: bool
+  'True if response is complete, otherwise False. Useful for streaming to detect the final response.'
+```
