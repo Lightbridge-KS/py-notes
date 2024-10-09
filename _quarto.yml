@@ -47,6 +47,9 @@ book:
       chapters: 
       - basic/os/os.qmd
       - basic/path.qmd
+    - part: "Web"
+      chapters: 
+      - "basic/request.qmd"
     - part: "Context"
       chapters: 
       - basic/context/context.qmd

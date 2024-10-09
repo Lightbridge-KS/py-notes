@@ -1,0 +1,294 @@
+---
+title: Request
+---
+
+## HTTP Basic
+
+The Hypertext Transfer Protocol (HTTP) is the foundation of any data exchange on the Web and it is a protocol used to transfer hypertext requests and information between clients (typically web browsers) and servers. Here’s a breakdown of some basic HTTP methods and their typical use cases:
+
+### HTTP Basics
+
+- **Request/Response Model**: HTTP operates as a request-response protocol. A client (such as a web browser) sends an HTTP request to the server, which then sends back an HTTP response. This communication can include the transfer of HTML, images, video, and other types of data.
+  
+- **Stateless**: Each request from the client to the server is independent. This means that the server does not retain any information about previous requests from the client (unless mechanisms like cookies or sessions are used).
+
+### HTTP Methods
+
+HTTP defines a set of request methods to indicate the desired action to be performed on a particular resource. The most common methods are:
+
+#### **GET**
+
+- **Purpose**: Retrieve data from the server.
+- **Usage**: Used for fetching documents, images, or any resource.
+- **Characteristics**:
+  - Should not modify any resources on the server (idempotent and safe).
+  - Can include URL parameters (query strings) to request specific data.
+  - Example: `GET /index.html`
+- **Example Use Case**: Accessing a webpage, fetching user profile data.
+
+#### **POST**
+
+- **Purpose**: Submit data to the server, usually for creating or updating resources.
+- **Usage**: Used when sending form data, uploading a file, or creating a new database record.
+- **Characteristics**:
+  - Data is sent in the body of the request, not the URL.
+  - May cause a change in the server state (non-idempotent).
+  - Example: `POST /submit-form`
+- **Example Use Case**: Submitting a login form or posting a comment on a blog.
+
+#### **PUT**
+
+- **Purpose**: Replace or update an existing resource.
+- **Usage**: Used when updating an entire resource or creating a resource at a specific location.
+- **Characteristics**:
+  - If the resource does not exist, it can create a new one.
+  - It is idempotent (sending the same PUT request multiple times will have the same effect as sending it once).
+  - Example: `PUT /users/123`
+- **Example Use Case**: Updating user information.
+
+#### **PATCH**
+
+- **Purpose**: Partially update an existing resource.
+- **Usage**: Used when only specific fields of a resource need to be updated.
+- **Characteristics**:
+  - Not necessarily idempotent.
+  - Example: `PATCH /users/123`
+- **Example Use Case**: Updating a single field in a user's profile, such as their email address.
+
+#### **DELETE**
+
+- **Purpose**: Remove a resource from the server.
+- **Usage**: Used when deleting a specific resource (e.g., user, article).
+- **Characteristics**:
+  - Typically idempotent.
+  - Example: `DELETE /users/123`
+- **Example Use Case**: Deleting a user account or removing a comment.
+
+#### **OPTIONS**
+
+- **Purpose**: Describe the communication options for the target resource.
+- **Usage**: Used to determine the capabilities of the server (e.g., which HTTP methods are allowed for a particular URL).
+- **Characteristics**:
+  - Does not modify server state.
+  - Example: `OPTIONS /users`
+- **Example Use Case**: Pre-flight requests in CORS (Cross-Origin Resource Sharing).
+
+#### **HEAD**
+
+- **Purpose**: Similar to GET, but only retrieves the headers (no body).
+- **Usage**: Used to check what a GET request would return, before making the actual request.
+- **Characteristics**:
+  - No body content is returned, only headers.
+  - Example: `HEAD /index.html`
+- **Example Use Case**: Checking if a resource exists or getting the last modified date without downloading the entire resource.
+
+### HTTP Status Codes
+
+HTTP responses include status codes that indicate the result of the request:
+
+- **1xx**: Informational – Request received, continuing process.
+- **2xx**: Success – The request was successfully received, understood, and accepted.
+  - `200 OK`: Successful GET, POST, etc.
+  - `201 Created`: Successful POST (new resource created).
+- **3xx**: Redirection – Further action needs to be taken to complete the request.
+  - `301 Moved Permanently`: The resource has been permanently moved to a new URL.
+- **4xx**: Client Error – The request contains bad syntax or cannot be fulfilled.
+  - `400 Bad Request`: Malformed request syntax.
+  - `404 Not Found`: Resource not found.
+- **5xx**: Server Error – The server failed to fulfill a valid request.
+  - `500 Internal Server Error`: An unexpected condition was encountered.
+
+### Examples
+
+- **GET Request Example:**
+  
+  ```http
+  GET /api/v1/users HTTP/1.1
+  Host: www.example.com
+  ```
+
+- **POST Request Example:**
+
+  ```http
+  POST /api/v1/users HTTP/1.1
+  Host: www.example.com
+  Content-Type: application/json
+
+  {
+    "username": "example_user",
+    "password": "example_pass"
+  }
+  ```
+
+### Security Considerations
+
+- **HTTPS**: HTTP Secure (HTTPS) is the secure version of HTTP, which encrypts the communication using SSL/TLS to protect against eavesdropping and man-in-the-middle attacks.
+- **Authentication**: Common methods include Basic Auth, Token-based Auth (JWT), and OAuth.
+- **CSRF & CORS**: Cross-Site Request Forgery (CSRF) and Cross-Origin Resource Sharing (CORS) are considerations when building secure web applications.
+
+HTTP is fundamental to web development, and understanding these concepts is crucial for working with APIs, web services, or any network-based communication.
+
+The `requests` package is a popular Python library used for making HTTP requests. It abstracts the complexities of making requests behind a simple API, allowing you to send HTTP requests and handle responses easily.
+
+
+## Request Package
+
+### `GET`
+
+```{python}
+import requests
+
+# Send a GET request to a URL
+response = requests.get('https://jsonplaceholder.typicode.com/posts/1')
+
+# Print response status and content
+print(f"Status Code: {response.status_code}")
+print("Response Content:", response.json())
+```
+
+
+### `POST`
+
+```{python}
+import requests
+
+# Data to be sent in the body of the POST request
+data = {
+    "title": "foo",
+    "body": "bar",
+    "userId": 1
+}
+
+# Send a POST request to create a new post
+response = requests.post('https://jsonplaceholder.typicode.com/posts', json=data)
+
+# Print response status and content
+print(f"Status Code: {response.status_code}")
+print("Response Content:", response.json())
+```
+
+**Explanation**:  
+
+- This example sends a `POST` request to create a new post on the server.
+- The `json=data` parameter automatically serializes the `data` dictionary into JSON format.
+- The response should contain the details of the newly created resource.
+
+### `PUT`
+
+```{python}
+import requests
+
+# Data to update an existing post
+update_data = {
+    "title": "Updated Title",
+    "body": "Updated Body",
+    "userId": 1
+}
+
+# Send a PUT request to update a specific post
+response = requests.put('https://jsonplaceholder.typicode.com/posts/1', json=update_data)
+
+# Print response status and content
+print(f"Status Code: {response.status_code}")
+print("Response Content:", response.json())
+```
+
+**Explanation**:  
+
+- This example updates an existing post (with ID = 1) using the `PUT` method.
+- The entire resource is replaced with the new content provided in `update_data`.
+
+
+### `DELETE`
+
+```{python}
+import requests
+
+# Send a DELETE request to remove a specific post
+response = requests.delete('https://jsonplaceholder.typicode.com/posts/1')
+
+# Print response status
+print(f"Status Code: {response.status_code}")
+```
+
+**Explanation**:  
+
+- This example sends a `DELETE` request to remove the post with ID = 1.
+- The response does not contain content but should return a status code indicating the result of the operation.
+
+
+### Handling Response Headers and Parameters
+
+```{python}
+import requests
+
+# Specify headers and query parameters
+headers = {'Authorization': 'Bearer <your-token>'}
+params = {'userId': 1}
+
+# Send a GET request with custom headers and query parameters
+response = requests.get('https://jsonplaceholder.typicode.com/posts', headers=headers, params=params)
+
+# Print response status and content
+print(f"Status Code: {response.status_code}")
+print("Response Content:", response.json())
+```
+
+**Explanation**:  
+
+- Custom headers (`headers`) and query parameters (`params`) are used in this request.
+- The `params` dictionary is serialized and appended to the URL as a query string, while the `headers` dictionary is sent with the request headers.
+
+
+### Error Handling with `requests`
+
+It’s essential to handle errors, as network requests can fail for various reasons (e.g., server not responding, timeout).
+
+```{python}
+import requests
+
+try:
+    # Send a GET request to an invalid URL
+    response = requests.get('https://jsonplaceholder.typicode.com/invalid-url')
+    response.raise_for_status()  # Check if the request was successful
+except requests.exceptions.HTTPError as http_err:
+    print(f"HTTP error occurred: {http_err}")  # HTTP error (e.g., 404, 500)
+except requests.exceptions.ConnectionError:
+    print("Error connecting to the server")
+except requests.exceptions.Timeout:
+    print("Request timed out")
+except requests.exceptions.RequestException as err:
+    print(f"An error occurred: {err}")  # Catch all other errors
+else:
+    print("Request was successful!")
+    print("Response Content:", response.json())
+```
+
+
+### Using Sessions for Persistent Parameters
+
+If you need to maintain certain parameters or headers across multiple requests (e.g., authentication tokens), you can use a `Session`:
+
+```{python}
+import requests
+
+# Create a session object
+session = requests.Session()
+
+# Set default headers for the session
+session.headers.update({'Authorization': 'Bearer <your-token>'})
+
+# Send multiple requests using the same session
+response1 = session.get('https://jsonplaceholder.typicode.com/posts')
+response2 = session.get('https://jsonplaceholder.typicode.com/users')
+
+# Print response status and content
+print("Response 1 Status Code:", response1.status_code)
+print("Response 2 Status Code:", response2.status_code)
+```
+
+**Explanation**:
+
+- The `Session` object allows you to persist headers, cookies, and other parameters across multiple requests without redefining them for each request.
+
+These examples cover the basic usage of `requests` for interacting with APIs and servers using HTTP methods such as GET, POST, PUT, and DELETE, as well as handling errors and maintaining persistent sessions.
