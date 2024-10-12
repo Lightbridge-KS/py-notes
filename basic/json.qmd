@@ -1,0 +1,90 @@
+---
+title: JSON
+---
+
+**Basic Operations in the `json` Module**
+
+1. **Serialization**: Converting a Python object (e.g., dictionary, list, etc.) into a JSON string.
+2. **Deserialization**: Converting a JSON string into a Python object (e.g., dictionary, list, etc.).
+
+```{python}
+import json
+```
+
+
+## Serialization (Convert Python -> JSON)
+
+### `json.dumps()`
+
+This function is used to convert (serialize) a Python object into a JSON-formatted string.
+
+```{python}
+import json
+
+# Python dictionary
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York",
+    "is_employee": True
+}
+
+# Convert Python object to JSON string
+json_string = json.dumps(person)
+print(json_string)
+```
+
+- **`dumps()`** converts the Python object to a **JSON string**.
+- Python data types like `dict`, `list`, `int`, `str`, and `bool` are automatically converted to corresponding JSON types.
+  - `True` becomes `true` (in JSON format).
+  - Strings are enclosed in double quotes in JSON.
+
+---
+
+To save the JSON string to a file, use the `json.dump()` function. This function writes the JSON representation directly to a file.
+
+```python
+with open('person.json', 'w') as file:
+    json.dump(person, file)
+```
+
+## Deserialization (JSON -> Python Object)
+
+### `json.loads()`
+
+This function is used to parse (deserialize) a JSON-formatted string into a Python object.
+
+```{python}
+import json
+
+# JSON string
+json_string = '{"name": "Alice", "age": 30, "city": "New York", "is_employee": true}'
+
+# Convert JSON string to Python object (dictionary)
+person_dict = json.loads(json_string)
+print(person_dict)
+```
+
+
+- **`loads()`** converts a **JSON string** to a corresponding Python object.
+  - `true` in JSON becomes `True` in Python.
+  - JSON strings are converted to Python dictionaries.
+
+
+To read JSON data from a file and convert it into a Python object, use the `json.load()` function.
+
+```python
+with open('person.json', 'r') as file:
+    person_dict = json.load(file)
+
+print(person_dict)
+```
+
+### Summary:
+
+- **`json.dumps()`** converts a Python object to a JSON string.
+- **`json.loads()`** converts a JSON string back to a Python object.
+- **`json.dump()`** writes a Python object as JSON data to a file.
+- **`json.load()`** reads JSON data from a file and converts it back to a Python object.
+
+The `json` module makes it easy to work with JSON data, whether you are reading from or writing to files, or converting between Python objects and JSON strings.

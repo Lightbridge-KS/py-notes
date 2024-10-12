@@ -43,10 +43,11 @@ book:
       - "basic/oop-class-instance-method.ipynb"
       - basic/dataclass.qmd
       - "playground/shape.ipynb"
-    - part: "File system"
+    - part: "I/O"
       chapters: 
       - basic/os/os.qmd
       - basic/path.qmd
+      - basic/json.qmd
     - part: "Web"
       chapters: 
       - "basic/request.qmd"
