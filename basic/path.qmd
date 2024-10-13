@@ -62,7 +62,7 @@ use **raw string literals** (`r'string'`) to represent Windows paths
 
 ```{python}
 Path(".").absolute()
-Path(".").resolve()
+Path(".").resolve() # Better
 ```
 
 ### Check Existance
