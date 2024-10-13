@@ -43,6 +43,10 @@ book:
       - "basic/oop-class-instance-method.ipynb"
       - basic/dataclass.qmd
       - "playground/shape.ipynb"
+    - part: "Data Validation"
+      chapters: 
+      - "howto/typecheck.ipynb"
+      - "pkg/pydantic.ipynb"
     - part: "I/O"
       chapters: 
       - basic/os/os.qmd
