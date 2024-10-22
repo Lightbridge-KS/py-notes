@@ -1,0 +1,188 @@
+---
+title: "OOP Tricks"
+---
+
+
+## Avoiding Inheritance via Composition
+
+
+::: {.panel-tabset}
+#### Bad
+
+```{python}
+class Stack(list):
+    def push(self, item):
+        self.append(item)
+```
+
+#### Good (Composition)
+
+```{python}
+class Stack:
+    def __init__(self, *, container=None):
+        if container is None:
+            container = list()
+        self._items = container
+
+    def push(self, item):
+        self._items.append(item)
+
+    def pop(self):
+        return self._items.pop()
+
+    def __len__(self):
+        return len(self._items)
+```
+
+:::
+
+Ref: Beazley, David M. Python Distilled (p. 259). Pearson Education. Kindle Edition. 
+
+## Avoiding Inheritance via Functions
+
+::: {.panel-tabset}
+#### Complex
+
+```{python}
+class DataParser:
+    def parse(self, lines):
+        records = []
+        for line in lines:
+            row = line.split(',')
+            record = self.make_record(row)
+            records.append(row)
+        return records
+
+    def make_record(self, row):
+        raise NotImplementedError()
+
+class PortfolioDataParser(DataParser):
+    def make_record(self, row):
+        return {
+           'name': row[0],
+           'shares': int(row[1]),
+           'price': float(row[2])
+        }
+```
+
+```python
+parser = PortfolioDataParser()
+data = parser.parse(open('portfolio.csv'))
+```
+
+#### Simple
+
+```{python}
+def parse_data(lines, make_record):
+    records = []
+    for line in lines:
+        row = line.split(',')
+        record = make_record(row)
+        records.append(row)
+    return records
+
+def make_dict(row):
+    return {
+        'name': row[0],
+        'shares': int(row[1]),
+        'price': float(row[2])
+    }
+```
+
+```python
+data = parse_data(open('portfolio.csv'), make_dict)
+```
+
+:::
+
+
+## Static Methods
+
+Sometimes a class is merely used as a namespace for functions declared as static methods using `@staticmethod`. Unlike a normal method or class method, a static method does not take an extra self or cls argument. A static method is just a ordinary function that happens to be defined inside a class.
+
+### Simple
+
+```{python}
+class Ops:
+    @staticmethod
+    def add(x, y):
+        return x + y
+
+    @staticmethod
+    def sub(x, y):
+        return x - y
+```
+
+```{python}
+a = Ops.add(2, 3)
+b = Ops.sub(4, 5)
+```
+
+
+Ref: Beazley, David M. Python Distilled (p. 272). Pearson Education. Kindle Edition. 
+
+### Advanced
+
+```{python}
+class StandardPolicy:
+    @staticmethod
+    def deposit(account, amount):
+        account.balance += amount
+
+    @staticmethod
+    def withdraw(account, amount):
+        account.balance -= amount
+
+    @staticmethod
+    def inquiry(account):
+        return account.balance
+
+class EvilPolicy(StandardPolicy):
+    @staticmethod
+    def deposit(account, amount):
+        account.balance += 0.95*amount
+
+    @staticmethod
+    def inquiry(account):
+        import random
+        if random.randint(0,4) == 1:
+           return 1.10 * account.balance
+        else:
+           return account.balance
+
+```
+
+```{python}
+class Account:
+    def __init__(self, owner, balance, *, policy=StandardPolicy):
+        self.owner = owner
+        self.balance = balance
+        self.policy = policy
+
+    def __repr__(self):
+        return f'Account({self.policy}, {self.owner!r}, {self.balance!r})'
+
+    def deposit(self, amount):
+        self.policy.deposit(self, amount)
+
+    def withdraw(self, amount):
+        self.policy.withdraw(self, amount)
+
+    def inquiry(self):
+        return self.policy.inquiry(self)
+```
+
+
+```{python}
+a = Account('Guido', 1000.0)
+a.policy 
+a.deposit(500)
+a.inquiry()
+```
+
+
+```{python}
+b = Account('Guido', 1000.0, policy=EvilPolicy)
+b.deposit(500)
+b.inquiry()
+```

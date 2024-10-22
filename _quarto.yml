@@ -42,6 +42,7 @@ book:
     - part: "OOP"
       chapters:
       - basic/oop.qmd
+      - "basic/oop-trick.qmd"
       - basic/oop-abc.qmd
       - "basic/oop-class-instance-method.ipynb"
       - basic/dataclass.qmd
