@@ -1,0 +1,12 @@
+{
+  "hash": "29867caf82e7ba38593bdc7bfb56e62b",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Try-fails-NA\n---\n\n\n\n\n## Try, fails -> return missing\n\nTry do something, if fails, return missing value, and log the warning message. No error is thrown. \n\n::: {#eb2518b0 .cell execution_count=1}\n``` {.python .cell-code}\nimport logging\n\n# Configure logging\nlogging.basicConfig(level=logging.WARNING, format=\"%(asctime)s - %(levelname)s - %(message)s\")\n\ndef complex_fn(data):\n    \"\"\"\n    A function to extract data with error handling.\n    If data extraction fails, returns a missing value (\"\") and logs a warning.\n    \"\"\"\n    try:\n        # Simulate data extraction logic\n        extracted_value = data.get(\"key\")  # Example: Extract value for \"key\"\n        if extracted_value is None:\n            raise ValueError(\"Key not found in data.\")\n        return extracted_value\n    except Exception as e:\n        # Log the warning and return missing value\n        logging.warning(f\"Data extraction failed: {e}\")\n        return \"\"\n```\n:::\n\n\n::: {#5437f8b4 .cell execution_count=2}\n``` {.python .cell-code}\ndata = {\"key\": \"value\"}\nprint(complex_fn(data))  \n```\n\n::: {.cell-output .cell-output-stdout}\n```\nvalue\n```\n:::\n:::\n\n\n::: {#569cd7ad .cell execution_count=3}\n``` {.python .cell-code}\ndata_missing = {\"another_key\": \"value\"}\nprint(complex_fn(data_missing)) \n```\n\n::: {.cell-output .cell-output-stderr}\n```\n2024-11-18 17:25:27,830 - WARNING - Data extraction failed: Key not found in data.\n```\n:::\n\n::: {.cell-output .cell-output-stdout}\n```\n\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "try-else-na_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

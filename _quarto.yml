@@ -33,6 +33,7 @@ book:
     - part: "Error & Exception"
       chapters:
       - basic/exception.qmd
+      - "try/try-else-na.qmd"
     - part: "Regex"
       chapters: 
       - "basic/regex.qmd"
