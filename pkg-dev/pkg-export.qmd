@@ -1,0 +1,133 @@
+---
+title: "Export using `__all__`"
+---
+
+
+Using the `__all__` variable in Python packaging allows you to control what gets exported when someone imports from a module using from module import *. Here's an example showing how to manage `__all__` at different levels of a package, lifting it from innermost modules up to the top-level `__init__.py`.
+
+
+**Example: Package Structure:**
+
+```
+mypackage/
+├── __init__.py
+├── module_a/
+│   ├── __init__.py
+│   ├── submodule1.py
+│   └── submodule2.py
+└── module_b/
+    ├── __init__.py
+    └── submodule3.py
+```
+
+
+### Step 1: Submodules Define Their `__all__`
+
+**`submodule1.py`:**
+
+```python
+# submodule1.py
+def func_a1():
+    return "Function A1"
+
+def func_a2():
+    return "Function A2"
+
+__all__ = ["func_a1"]
+```
+
+**`submodule2.py`:**
+
+```python
+# submodule2.py
+def func_b1():
+    return "Function B1"
+
+def func_b2():
+    return "Function B2"
+
+__all__ = ["func_b2"]
+```
+
+**`submodule3.py`:**
+
+```python
+# submodule3.py
+def func_c1():
+    return "Function C1"
+
+def func_c2():
+    return "Function C2"
+
+__all__ = ["func_c1", "func_c2"]
+```
+
+
+### Step 2: Aggregate `__all__` at Intermediate Levels
+
+**`module_a/__init__.py`:**
+
+```python
+from .submodule1 import *
+from .submodule2 import *
+
+# Unpack `__all__` from submodules
+__all__ = [
+    *submodule1.__all__,
+    *submodule2.__all__
+]
+```
+
+**`module_b/__init__.py`:**
+
+```python
+from .submodule3 import *
+
+# Unpack `__all__` from submodules
+__all__ = [
+    *submodule3.__all__
+]
+```
+
+
+### Step 3: Combine `__all__` at the Top Level
+
+
+**`mypackage/__init__.py`:**
+
+```python
+from .module_a import *
+from .module_b import *
+
+# Combine `__all__` from inner modules
+__all__ = [
+    *module_a.__all__,
+    *module_b.__all__
+]
+```
+
+---
+
+### Benefits & Usage
+
+
+1. **No Hard-Coded Names**:
+   - The names of exported functions are dynamically fetched from inner `__all__` variables, ensuring no duplication or hard-coding.
+
+2. **Modularity**:
+   - Each submodule and module remains self-contained, and exports can be managed independently.
+
+3. **Maintainability**:
+   - Changes in one submodule’s `__all__` automatically propagate to the top level, simplifying maintenance.
+
+
+**Example Usage**
+
+```python
+from mypackage import *
+
+print(func_a1())  # Output: Function A1
+print(func_b2())  # Output: Function B2
+print(func_c1())  # Output: Function C1
+print(func_c2())  # Output: Function C2
+```

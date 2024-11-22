@@ -73,6 +73,9 @@ book:
       chapters: 
       - basic/file.qmd
       - basic/pkg.qmd
+    - part: "PKG Dev"
+      chapters: 
+      - "pkg-dev/pkg-export.qmd"
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd
