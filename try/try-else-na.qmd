@@ -7,6 +7,43 @@ title: Try-fails-NA
 Try do something, if fails, return missing value, and log the warning message. No error is thrown. 
 
 
+### Use `warnings.warn`
+
+
+```{python}
+import warnings
+
+
+def complex_fn(data):
+    """
+    A function to extract data with error handling.
+    If data extraction fails, returns a missing value ("") and logs a warning.
+    """
+    try:
+        # Simulate data extraction logic
+        extracted_value = data.get("key")  # Example: Extract value for "key"
+        if extracted_value is None:
+            raise ValueError("Key not found in data.")
+        return extracted_value
+    except Exception as e:
+        # Log the warning and return missing value
+        warnings.warn(f"Data extraction failed: {e}")
+        return ""
+```
+
+
+```{python}
+data = {"key": "value"}
+print(complex_fn(data))  
+```
+
+```{python}
+data_missing = {"another_key": "value"}
+print(complex_fn(data_missing)) 
+```
+
+### Use `logging`
+
 ```{python}
 import logging
 
