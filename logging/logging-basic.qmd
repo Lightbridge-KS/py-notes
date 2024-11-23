@@ -76,7 +76,6 @@ To achieve logging to a new file with a timestamped filename each time `wrapper_
 
 ---
 
-
 ```{python}
 import logging
 import os
@@ -84,34 +83,33 @@ from datetime import datetime
 
 # Custom function to be wrapped
 def custom_function(param):
-    """Example custom function that logs a warning."""
+    """Logs a warning if param is negative."""
     if param < 0:
         logging.warning(f"Received negative value: {param}")
         return "Invalid input"
     else:
-        logging.info(f"Processed value: {param}")
         return f"Processed value: {param}"
 
-# Wrapper function
-def wrapper_function(params):
-    """Wrapper function that runs custom_function in a loop and logs to a new file."""
+# Logging setup function
+def _log():
+    """Sets up logging for wrapper_function with a timestamped log file."""
     # Create a timestamped log file name
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     log_dir = "log"
     os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
     log_file = os.path.join(log_dir, f"app-{timestamp}.log")
 
     # Create a logger
     logger = logging.getLogger("custom_logger")
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.WARNING)
 
-    # Clear any existing handlers (important if `wrapper_function` is called multiple times)
+    # Clear any existing handlers
     if logger.hasHandlers():
         logger.handlers.clear()
 
-    # Create a file handler for the logger
+    # Create a file handler
     file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(logging.INFO)
+    file_handler.setLevel(logging.WARNING)
 
     # Set the logging format
     formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
@@ -120,14 +118,18 @@ def wrapper_function(params):
     # Add the handler to the logger
     logger.addHandler(file_handler)
 
-    # Log in the loop
+    # Return the logger instance and log file path
+    return logger, log_file
+
+# Wrapper function
+def wrapper_function(params):
+    """Wrapper function that runs custom_function in a loop."""
+    logger, log_file = _log()  # Set up logging
     for param in params:
         result = custom_function(param)  # Call custom_function
-        logger.info(f"Result: {result}")  # Log the result of custom_function
-
-    # Print the log file location
-    print(f"Logs for this run are saved in {log_file}")
-
+        if "Invalid" in result:  # Log result if it's a warning
+            logger.warning(f"Result: {result}")
+    print(f"Warnings for this run are saved in {log_file}")
 ```
 
 
