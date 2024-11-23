@@ -1,0 +1,184 @@
+---
+title: "Logging (to file)"
+---
+
+::: {.callout-note appearance="minimal"}
+Q: How to log a warning message of a given custom function to a log file?
+:::
+
+## Log Single to File
+
+To log a **warning message** from a custom function to a log file, you can use Python's built-in `logging` module. Here's how you can set it up step-by-step:
+
+1. **Set Up Logging Configuration**
+- The `logging` module allows you to log messages at different levels (e.g., DEBUG, INFO, WARNING, ERROR). You can configure it to log messages to a file.
+
+2. **Log a Warning in a Custom Function**
+- Define your function and log a warning when necessary.
+
+
+```{python}
+import logging
+
+# Configure logging
+logging.basicConfig(
+    filename="app.log",  # Log file name
+    level=logging.WARNING,  # Log level
+    format="%(asctime)s - %(levelname)s - %(message)s"  # Log format
+)
+
+def custom_function(param):
+    """Example custom function that logs a warning."""
+    if param < 0:
+        logging.warning(f"Received negative value: {param}")
+        return "Invalid input"
+    else:
+        return f"Processed value: {param}"
+
+# Example usage
+custom_function(10)  # No warning logged
+custom_function(-4)  # Logs a warning
+```
+
+
+When `custom_function(-5)` is called, the following entry is logged in `app.log`:
+
+```
+2024-11-23 12:00:00,123 - WARNING - Received negative value: -5
+```
+
+**Explanation**:
+
+1. **Logging Configuration**:
+   
+   - `filename="app.log"`: Logs are written to a file named `app.log`.
+   - `level=logging.WARNING`: Only logs messages of level WARNING or higher (e.g., ERROR).
+   - `format="..."`: Specifies the log format, including timestamp, log level, and message.
+
+2. **Logging in the Function**:
+   
+   - The `logging.warning()` method logs a message at the WARNING level.
+   - Custom messages are added dynamically based on the function's logic.
+
+## Log Wrapper to Multiple Files
+
+
+To achieve logging to a new file with a timestamped filename each time `wrapper_function()` runs, you can dynamically configure the logging setup in `wrapper_function()` before calling `custom_function()` in a loop.
+
+---
+
+**Implementation Steps**:
+
+1. Generate a unique timestamp for the log file each time `wrapper_function()` is run.
+2. Configure the logging to output messages to `log/app-<timestamp>.log`.
+3. Inside the loop, call `custom_function()` and log messages for each iteration using the configured logging setup.
+4. Use the same logging format as before.
+
+---
+
+
+```{python}
+import logging
+import os
+from datetime import datetime
+
+# Custom function to be wrapped
+def custom_function(param):
+    """Example custom function that logs a warning."""
+    if param < 0:
+        logging.warning(f"Received negative value: {param}")
+        return "Invalid input"
+    else:
+        logging.info(f"Processed value: {param}")
+        return f"Processed value: {param}"
+
+# Wrapper function
+def wrapper_function(params):
+    """Wrapper function that runs custom_function in a loop and logs to a new file."""
+    # Create a timestamped log file name
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    log_dir = "log"
+    os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
+    log_file = os.path.join(log_dir, f"app-{timestamp}.log")
+
+    # Create a logger
+    logger = logging.getLogger("custom_logger")
+    logger.setLevel(logging.INFO)
+
+    # Clear any existing handlers (important if `wrapper_function` is called multiple times)
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
+    # Create a file handler for the logger
+    file_handler = logging.FileHandler(log_file)
+    file_handler.setLevel(logging.INFO)
+
+    # Set the logging format
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    file_handler.setFormatter(formatter)
+
+    # Add the handler to the logger
+    logger.addHandler(file_handler)
+
+    # Log in the loop
+    for param in params:
+        result = custom_function(param)  # Call custom_function
+        logger.info(f"Result: {result}")  # Log the result of custom_function
+
+    # Print the log file location
+    print(f"Logs for this run are saved in {log_file}")
+
+```
+
+
+```{python}
+custom_function(-1)
+custom_function(1)
+```
+
+
+```{python}
+params = [10, -5, -3, 20]
+wrapper_function(params)
+```
+
+**Explanation**:
+
+1. **Dynamic Log File Creation**:
+   - `datetime.now().strftime("%Y%m%d-%H%M%S")` generates a timestamp in the format `YYYYMMDD-HHMMSS` for the log file.
+   - A new log file (`app-<timestamp>.log`) is created inside the `log/` directory every time `wrapper_function()` runs.
+
+2. **Logging Configuration**:
+   - `logging.basicConfig()` is called inside `wrapper_function()` to configure logging dynamically for the current run.
+   - The `filemode="w"` ensures that each log file starts fresh for each run.
+
+3. **Iterative Logging**:
+   - Inside the loop, `custom_function()` logs messages for each parameter, which are written to the timestamped log file.
+
+4. **Directory Management**:
+   - The `os.makedirs(log_dir, exist_ok=True)` ensures the `log/` directory exists. If it doesn’t, it is created automatically.
+
+
+
+### Example Output
+
+**Log File Path**:
+
+For a run on `2024-11-23` at `15:45:30`, the log file would be saved as:
+```
+log/app-20241123-154530.log
+```
+
+**Log File Content**:
+
+Inside `log/app-20241123-154530.log`, you would see:
+```
+2024-11-23 15:45:30,123 - INFO - Processed value: 10
+2024-11-23 15:45:30,124 - WARNING - Received negative value: -5
+2024-11-23 15:45:30,125 - INFO - Processed value: 0
+2024-11-23 15:45:30,126 - INFO - Processed value: 20
+2024-11-23 15:45:30,127 - INFO - Result: Processed value: 10
+2024-11-23 15:45:30,128 - INFO - Result: Invalid input
+2024-11-23 15:45:30,129 - INFO - Result: Processed value: 0
+2024-11-23 15:45:30,130 - INFO - Result: Processed value: 20
+```
