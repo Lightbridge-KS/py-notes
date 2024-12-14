@@ -121,6 +121,9 @@ for i, flavor in enumerate(flavor_list):
     print(f"{i + 1}: {flavor}")
 ```
 
+- Prefer enumerate instead of looping over a range and indexing into a sequence.  
+- You can supply a second, optional parameter to enumerate that specifies the beginning number for counting (zero is the default).
+
 
 ## While Loop
 
