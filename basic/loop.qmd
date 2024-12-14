@@ -100,6 +100,27 @@ print(f"We have {count} even numbers")
 10 % 3
 ```
 
+### Enumerate
+
+```{python}
+flavor_list = ["vanilla", "chocolate", "pecan", "strawberry"]
+```
+
+**Using `range(len())`**
+
+```{python}
+for i in range(len(flavor_list)):
+    flavor = flavor_list[i]
+    print(f"{i + 1}: {flavor}")
+```
+
+**Using `enumerate()`** (better)
+
+```{python}
+for i, flavor in enumerate(flavor_list):
+    print(f"{i + 1}: {flavor}")
+```
+
 
 ## While Loop
 
