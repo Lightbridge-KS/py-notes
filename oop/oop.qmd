@@ -5,7 +5,7 @@ title: "OOP in Python"
 ```{r}
 #| include: false
 library(here)
-here::i_am("basic/oop.qmd")
+here::i_am("oop/oop.qmd")
 source(here("_common.R"))
 ```
 

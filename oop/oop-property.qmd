@@ -1,0 +1,276 @@
+---
+title: "OOP Property"
+---
+
+Using `@property` in Python provides several key benefits over directly accessing class attributes. These benefits are centered around encapsulation, flexibility, and maintainability.
+
+
+## `Book` Example
+
+### Encapsulation and Control
+
+With `@property`, you can control how attributes are accessed and modified without exposing the underlying implementation. This allows for:
+
+- **Validation**: Add logic to validate or transform data before returning or setting values.
+- **Read-only Attributes**: Mark certain attributes as read-only by providing only a getter.
+- **Future-proofing**: You can later modify the property logic (e.g., calculate a value on the fly) without changing how it's accessed.
+
+
+```{python}
+class Book:
+    def __init__(self, title, last, first):
+        self._title = title
+
+    @property
+    def title(self):
+        # Add validation or transformation logic
+        return self._title.upper()  # Automatically return uppercase
+
+book = Book("The Great Gatsby", "Fitzgerald", "F. Scott")
+print(book.title)  # Output: THE GREAT GATSBY
+```
+
+
+### Encapsulation of Implementation Details
+
+By using `@property`, you abstract away the implementation details from the user of the class. The user does not need to know whether the value is stored as a private variable, computed dynamically, or retrieved from another source.
+
+
+```{python}
+class Book:
+    def __init__(self, title):
+        self._raw_title = title
+
+    @property
+    def title(self):
+        return self._raw_title.title()  # Dynamically format
+
+    @title.setter
+    def title(self, value):
+        self._raw_title = value.strip()  # Clean user input
+
+book = Book(" the great gatsby ")
+print(book.title)  # Output: The Great Gatsby
+```
+
+If you accessed `self._raw_title` directly, you'd lose the automatic formatting and validation benefits.
+
+---
+
+### Compatibility and API Stability
+
+When designing a public-facing API, using properties allows you to ensure backward compatibility if the implementation changes. 
+
+For example:
+
+- Initially, `title` could be a stored attribute.
+- Later, you might calculate `title` dynamically based on other attributes, and no user code would need to change.
+
+
+
+```{python}
+class Book:
+    def __init__(self, title, subtitle):
+        self._title = title
+        self._subtitle = subtitle
+
+    @property
+    def title(self):
+        return f"{self._title}: {self._subtitle}"  # Dynamically computed
+
+book = Book("The Great Gatsby", "A Classic Novel")
+print(book.title)  # Output: The Great Gatsby: A Classic Novel
+```
+
+---
+
+### Cleaner Syntax Compared to Getters/Setters
+
+Using `@property` is cleaner and more Pythonic compared to Java-style explicit getter and setter methods.
+
+
+::: {.panel-tabset}
+#### **Without `@property`:**
+
+```{python}
+class Book:
+    def __init__(self, title):
+        self._title = title
+
+    def get_title(self):
+        return self._title
+
+    def set_title(self, value):
+        self._title = value
+
+book = Book("The Great Gatsby")
+print(book.get_title())  # Verbose
+book.set_title("New Title")
+```
+
+#### **With `@property`:**
+
+```{python}
+class Book:
+    def __init__(self, title):
+        self._title = title
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        self._title = value
+
+book = Book("The Great Gatsby")
+print(book.title)  # Cleaner syntax
+book.title = "New Title"
+```
+
+:::
+
+---
+
+### Enhanced Readability and Usage
+
+The use of properties makes code more readable and intuitive. It allows attribute-like access (`obj.title`) while still enabling additional logic under the hood.
+
+---
+
+### Summary Table
+
+| **Aspect**                  | **Direct Attribute Access**                     | **Using `@property`**                              |
+|-----------------------------|------------------------------------------------|--------------------------------------------------|
+| **Encapsulation**            | No control over attribute access or modification | Enables validation, transformation, or computed values |
+| **Read-only Attributes**     | Not possible                                   | Possible by defining only a getter               |
+| **API Stability**            | Changes in implementation break user code      | Implementation changes don't affect the interface |
+| **Readability**              | Less readable (e.g., `get_title()`)            | More readable (`book.title`)                     |
+| **Validation or Logic**      | Must be implemented separately                 | Can be embedded in getter/setter                 |
+
+Using `@property` is particularly useful for creating robust, maintainable, and user-friendly classes in Python.
+
+
+## `Circle` Example
+
+```{python}
+from math import pi
+```
+
+Another significant benefit of using `@property` in this example is **"on-demand calculation of derived attributes"**. Here's how this principle applies in the `Circle` class:
+
+The `@property` decorator allows you to define **calculated attributes** like `circumference` and `area` as properties, rather than storing them as separate attributes. This approach has several advantages:
+
+---
+
+### No Need to Manually Update Derived Attributes
+
+- If the `radius` changes, the `circumference` and `area` will always reflect the latest value without requiring manual updates.
+- This avoids the risk of inconsistency between the `radius` and the derived values.
+
+::: {.panel-tabset}
+#### without `@property`
+
+```{python}
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+        self._circumference = 2 * pi * radius  # Manually set
+        self._area = pi * radius ** 2          # Manually set
+
+    def update_radius(self, radius):
+        self._radius = radius
+        self._circumference = 2 * pi * radius  # Must update manually
+        self._area = pi * radius ** 2          # Must update manually
+
+circle = Circle(10)
+circle.update_radius(20)
+print(circle._circumference)  # Correct only if manually updated
+```
+
+
+#### with `@property`
+
+
+```{python}
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def circumference(self):
+        return 2 * pi * self._radius  # Always up-to-date
+
+    @property
+    def area(self):
+        return pi * self._radius ** 2  # Always up-to-date
+
+circle = Circle(10)
+print(circle.circumference)  # Automatically correct
+```
+
+:::
+
+
+- The `@property` approach ensures the derived values (`circumference` and `area`) are always consistent with `radius`, eliminating the need to manually synchronize them.
+
+---
+
+### Improved Memory Efficiency
+
+- The `circumference` and `area` are not stored as separate attributes, reducing memory usage.
+- These values are calculated only when accessed, saving memory for cases where these properties are not needed.
+
+
+```{python}
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def circumference(self):
+        return 2 * pi * self._radius
+
+    @property
+    def area(self):
+        return pi * self._radius ** 2
+```
+
+- The above implementation doesn't store `_circumference` or `_area` in memory but computes them dynamically.
+
+---
+
+### Readability and Intuitiveness
+
+
+- The use of `@property` makes the code intuitive to use, as `circumference` and `area` behave like attributes even though they are computed properties.
+
+
+```{python}
+circle = Circle(5)
+print(circle.circumference)  # Easy-to-read syntax
+print(circle.area)
+```
+
+Compared to manually calling methods for derived values:
+
+
+```python
+circle.get_circumference()  # Less intuitive
+circle.get_area()
+```
+
+---
+
+### Summary Table: Benefits of Using `@property`
+
+| **Aspect**                   | **Without `@property`**                            | **With `@property`**                              |
+|------------------------------|--------------------------------------------------|-------------------------------------------------|
+| **Derived Value Consistency** | Must manually update derived values when `radius` changes | Automatically consistent with the latest `radius` |
+| **Memory Efficiency**         | Derived values stored, taking additional memory  | Derived values computed only when accessed       |
+| **Code Readability**          | Requires explicit methods (e.g., `get_circumference`) | Attribute-like access (`circle.circumference`)  |
+| **Error-Prone**               | Risk of forgetting to update derived attributes  | Eliminates manual synchronization               |
+
+---
+
+By using `@property`, the `Circle` class ensures that attributes like `circumference` and `area` are always accurate, efficient, and easy to access, while avoiding potential issues like data inconsistency or unnecessary memory usage.

@@ -45,11 +45,12 @@ book:
       - "concept/iterable-iterator-generator.qmd"
     - part: "OOP"
       chapters:
-      - basic/oop.qmd
-      - "basic/oop-trick.qmd"
-      - basic/oop-abc.qmd
-      - "basic/oop-class-instance-method.ipynb"
-      - basic/dataclass.qmd
+      - "oop/oop.qmd"
+      - "oop/oop-trick.qmd"
+      - "oop/oop-property.qmd"
+      - "oop/oop-abc.qmd"
+      - "oop/oop-class-instance-method.ipynb"
+      - "basic/dataclass.qmd"
       - "playground/shape.ipynb"
     - part: "Data Validation"
       chapters: 
