@@ -52,6 +52,7 @@ book:
       - "oop/oop-class-instance-method.ipynb"
       - "basic/dataclass.qmd"
       - "playground/shape.ipynb"
+      - "playground/book-catalog.ipynb"
     - part: "Data Validation"
       chapters: 
       - "howto/typecheck.ipynb"
