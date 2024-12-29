@@ -53,6 +53,7 @@ book:
       - "basic/dataclass.qmd"
       - "playground/shape.ipynb"
       - "playground/book-catalog.ipynb"
+      - "playground/fruits.ipynb"
     - part: "Data Validation"
       chapters: 
       - "howto/typecheck.ipynb"
