@@ -86,6 +86,7 @@ book:
       chapters:
       - basic/ctr-flow-ex.qmd
       - "playground/pg-sort.ipynb"
+      - "playground/minimax-game.qmd"
     - part: "Pandas"
       chapters: 
         - ds/pd-intro.qmd

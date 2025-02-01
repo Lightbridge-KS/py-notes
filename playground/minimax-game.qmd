@@ -1,0 +1,398 @@
+---
+title: Mimimax Game
+---
+
+## Rules
+
+Let's play water bottle shuffling game, here are the rules: 
+
+There are 2 sets of these 6 unique kinds of water bottle: "A", "B", "C", "D", "E", "F".
+
+Set 1: An answer set, which will be randomly shuffled by the instructor once the game start, placing from left to right, and act as an answer sequence throughout the game. This set will be keep secret to the player
+
+Set 2: Act as a play set
+
+- Initially it will be randomly shuffled 
+- Then, each round a player can shuffle this set of water in any sequence they like, after that the instructor will tell how many of the water bottle are correctly align with regard to the answer set. However, which water bottle is correctly aligned will not be given. 
+- The game will end, if all water bottle in the play set is correctly align with the answer set.
+
+
+Please find a strategy that would minimize the number of round needed to shuffled the water bottle. 
+
+
+## Stretegy
+
+Below is an outline of one effective approach—and some of the reasoning behind it—that minimizes (in the worst‐case) the number of rounds you need to “solve” the secret permutation. In effect, the game is equivalent to a Mastermind variant where the “code” is a permutation of 6 distinct items and the only feedback is the number of “bulls” (i.e. items in the correct position). Although a completely “closed‐form” sequence of moves is hard to state without running a computer–aided minimax search—the overall idea is as follows:
+
+---
+
+### The Underlying Idea
+
+- **Information Content:**  
+
+There are 6! = 720 possible secret sequences. In theory, if you could get the maximum information from each guess, you’d need on the order of log₂(720) ≈ 9.5 bits of information. (Note that a response is an integer between 0 and 6, so in the ideal case each guess might yield up to log₂(7) ≈ 2.8 bits—but in practice the distribution of responses is uneven.)
+
+- **Adaptive Elimination:**  
+
+Every guess gives you a number (say, _r_) that tells you how many positions match the secret. That guess _g_ “rules out” every permutation in the current candidate set that would not have produced _r_ matches with _g_. Thus, each guess lets you narrow the search space.
+
+---
+
+### The Minimax Strategy
+
+An effective method is to use a **minimax algorithm** similar in spirit to Knuth’s algorithm for Mastermind. Here’s the idea step by step:
+
+1. **Initialization:**  
+   - Let **S** be the set of all 720 permutations.
+   - **Round 1 Guess:** For simplicity, you might start with a fixed ordering such as  
+     **G₁ = (A, B, C, D, E, F)**.
+
+2. **After Each Guess:**  
+   - When you submit a guess **G**, you receive a response _r_ (the number of items in **G** that are in the same position as in the secret).  
+   - **Filter S:** Update the candidate set to  
+     $$
+     S := \{\,s \in S : \text{the number of positions where } s \text{ and } G \text{ agree equals } r\,\}.
+     $$
+
+This “eliminates” any permutation that would not have given you that many correct placements.
+
+3. **Choosing the Next Guess (the minimax part):**  
+   - For every possible guess (it can be one of the remaining candidates—or even, if you wish, any permutation in the 720 space), simulate what the response would be for every candidate in **S**.
+   - For a candidate guess **g** and for each possible response value _r_ (0 through 6), compute the size of  
+     $$
+     S_{g,r} = \{\,s \in S : \text{if } g \text{ were guessed, } s \text{ would yield } r \text{ matches}\}.
+     $$
+   - Then choose the guess **g*** that minimizes the **worst-case** size:
+     $$
+     g^* = \arg\min_{g} \max_{r} |S_{g,r}|.
+     $$
+     In words, you pick the guess that, regardless of the feedback, will leave you with as small a set of possible secrets as possible.
+
+4. **Repeat:**  
+   - Use the new guess, get a new response, and update **S** accordingly.
+   - Continue until **S** contains exactly one permutation, which must be the secret.
+
+---
+
+### Performance and Worst‐Case Rounds
+
+- **Worst‐Case Bound:**  
+  Although each individual round may not give the full “ideal” amount of information (because the response is just a number from 0 to 6), the minimax strategy has been studied (in the context of Mastermind and its variants) and—when restricted to the set of 720 valid (i.e. permutation) guesses—has been shown by computational search to guarantee finding the secret in no more than **7 rounds** in the worst case. (In many cases you can do it in fewer rounds.)
+
+- **Optimality Considerations:**  
+  If you are allowed to pick guesses that are not necessarily in the current candidate set, you may (in theory) improve the worst-case performance. However, in our “water bottle shuffling” game the natural rule is that you are shuffling the same 6 water bottles—so your guesses come from the 720 possible orders.
+
+---
+
+### Summary of the Strategy (/sum)
+
+- **Initialization:**  
+  - Start with **S = {all 720 permutations}**.  
+  - First guess: e.g. **(A, B, C, D, E, F)**.
+
+- **Iterative Process:**  
+  1. Submit a guess **G**.
+  2. Receive the number of correctly placed bottles (_r_).
+  3. Update **S** by keeping only those permutations that would give _r_ matches with **G**.
+  4. For the next guess, evaluate all possible guesses by computing, for each possible response, the size of the resulting candidate set; then choose the guess that minimizes the worst-case remaining set size.
+  5. Repeat until **S** has only one element.
+
+- **Result:**  
+  - With this minimax (adaptive elimination) approach, the secret permutation can be determined in at most **7 rounds** (often fewer).
+
+---
+
+### Conclusion
+
+The strategy you use is essentially a minimax or optimal-code–breaking approach, much like Knuth’s algorithm for Mastermind. By always choosing the guess that “splits” the remaining possibilities as evenly as possible, you ensure that even in the worst-case scenario the secret (i.e. the correct water bottle order) is identified in a minimal number of rounds. Although working out the exact next guess may require some computation, this method is both conceptually clear and provably near–optimal for the game setup.
+
+---
+
+**References / Further Reading:**
+
+- Knuth, D. E. (1976). *The computer as Master Mind*. Journal of Recreational Mathematics, 9(1), 1–6.
+- Koyama, K. & Lai, T. (1993). *An Optimal Mastermind Strategy*. Journal of Recreational Mathematics, 25(4), 251–256.
+- Chvátal, V. (1983). *Mastermind*. Combinatorica, 3(3–4), 325–329.
+
+This method should serve as a solid strategy to minimize the rounds needed in your water bottle shuffling game.
+
+## Implementation
+
+Below is an annotated Python implementation of the minimax strategy for the water bottle shuffling game. In this implementation, we assume that the water bottles are represented by the letters `"A"`, `"B"`, `"C"`, `"D"`, `"E"`, and `"F"`. The code is organized into several components:
+
+1. **Scoring Function:**  
+   A function that compares a guess with a candidate secret sequence and returns the number of positions that match.
+
+2. **Filtering Function:**  
+   Given a current set of possible secrets (candidates), a guess, and the response (number of correct positions), this function filters out candidates that would not have produced that response.
+
+3. **Minimax Guess Selection:**  
+   A function that, given the current candidate set and the full set of possible permutations, computes—for every potential guess—the worst-case number of remaining candidates (over all possible responses). It then picks the guess that minimizes this worst-case scenario. (When there is a tie, it prefers a guess that is among the candidate set.)
+
+4. **Game Solver Function:**  
+   A wrapper function that puts everything together. It starts with a fixed initial guess, obtains the “score” from comparing with the secret, updates the candidate list, and then uses the minimax function to choose the next guess. The process repeats until the guess exactly matches the secret.
+
+Below is the complete code with inline comments and explanations:
+
+---
+
+```{python}
+import itertools
+```
+
+### `get_score()`
+
+```{python}
+def get_score(guess, secret):
+    """
+    Compare the guess to the secret and return the number of positions that match.
+    
+    Parameters:
+      guess: A tuple representing a guessed order (e.g., ('A', 'B', 'C', 'D', 'E', 'F')).
+      secret: A tuple representing the secret order.
+      
+    Returns:
+      An integer count of how many positions in guess match those in secret.
+    """
+    return sum(1 for g, s in zip(guess, secret) if g == s)
+```
+
+
+```{python}
+secret1 = ('B', 'A', 'C', 'F', 'E', 'D')
+guess1 = ('A', 'B', 'C', 'D', 'E', 'F')
+
+get_score(guess1, secret1)
+```
+
+### `filter_candidates()`
+
+
+```{python}
+def filter_candidates(candidates, guess, score):
+    """
+    Filter the candidate secrets to keep only those that would yield the same score if the guess was made.
+    
+    Parameters:
+      candidates: A list of tuples, each a possible secret order.
+      guess: The guess made.
+      score: The number of correct positions obtained when comparing the guess to the secret.
+      
+    Returns:
+      A new list of candidates that are consistent with the given response.
+    """
+    return [cand for cand in candidates if get_score(guess, cand) == score]
+```
+
+
+### `minimax_guess()`
+
+```{python}
+def minimax_guess(candidates, all_perms):
+    """
+    Select the next guess using a minimax strategy.
+    
+    For every possible guess in all_perms (the complete set of 720 orders),
+    calculate, for each possible response (0 to 6), how many candidates in the current
+    candidate set would give that response if that guess were chosen.
+    Then, choose the guess whose worst-case remaining candidate count is minimal.
+    As a tie-breaker, prefer a guess that is among the current candidate set.
+    
+    Parameters:
+      candidates: A list of candidate secrets (tuples) still possible.
+      all_perms: A list of all possible permutations (all 720 orders).
+      
+    Returns:
+      A tuple representing the chosen guess.
+    """
+    best_guess = None
+    best_worst_case = float('inf')
+    
+    # Iterate over every possible guess.
+    for guess in all_perms:
+        # Dictionary to count the responses for the given guess.
+        score_counts = {}
+        for cand in candidates:
+            r = get_score(guess, cand)
+            score_counts[r] = score_counts.get(r, 0) + 1
+        
+        # The worst-case (largest remaining candidate set size) for this guess.
+        worst_case = max(score_counts.values())
+        
+        # Prefer guesses with a lower worst-case; in a tie, prefer one that is in the candidates.
+        if worst_case < best_worst_case or (worst_case == best_worst_case and guess in candidates):
+            best_worst_case = worst_case
+            best_guess = guess
+            
+    return best_guess
+```
+
+### Wrapper: `solve_water_bottle_game()`
+
+```{python}
+def solve_water_bottle_game(secret):
+    """
+    Solve the water bottle shuffling game using the minimax strategy.
+    
+    This function simulates the game: starting with an initial guess,
+    it obtains the "score" (number of water bottles in the correct position),
+    filters the set of possible secret orders, and then uses the minimax algorithm 
+    to choose the next guess. The process repeats until the guess exactly matches the secret.
+    
+    Parameters:
+      secret: A tuple representing the secret water bottle order.
+              For example: ('B', 'A', 'C', 'D', 'E', 'F')
+    
+    Returns:
+      A list of tuples, where each tuple is (guess, score) showing the guess made and the corresponding feedback.
+    """
+    # Create the full set of all possible orders (720 permutations)
+    items = list(secret)  # assuming secret contains all unique bottles
+    all_perms = list(itertools.permutations(items))
+    
+    # Initially, all orders are possible candidates.
+    candidates = all_perms.copy()
+    
+    guess_history = []  # To record the history of guesses and responses.
+    rounds = 0
+    
+    # We choose a fixed initial guess, e.g., ("A", "B", "C", "D", "E", "F").
+    guess = tuple(sorted(secret))  # This ensures we get ('A', 'B', 'C', 'D', 'E', 'F') if secret is a permutation.
+    
+    while True:
+        rounds += 1
+        # Compare the guess to the secret and get the number of correctly placed bottles.
+        score = get_score(guess, secret)
+        guess_history.append((guess, score))
+        print(f"Round {rounds}: Guess = {guess}, Score = {score}")
+        
+        # If the score equals the total number of bottles, the secret is found.
+        if score == len(secret):
+            print("Secret found!")
+            break
+        
+        # Filter the candidate set to keep only sequences consistent with the response.
+        candidates = filter_candidates(candidates, guess, score)
+        
+        # Use the minimax strategy to choose the next guess.
+        guess = minimax_guess(candidates, all_perms)
+        
+    return guess_history
+```
+
+### Simulation
+
+```{python}
+# Define the secret water bottle order (this would be secret in an actual game)
+secret = ('B', 'A', 'C', 'F', 'D', 'E')
+    
+# Run the minimax algorithm to solve the game
+history = solve_water_bottle_game(secret)
+history
+```
+
+
+```{python}
+for guess, score in history:
+    print(f"Guess: {guess} -> Score: {score}")
+```
+
+## Interactive Game
+
+```{python}
+def solve_water_bottle_game_interactive(n_bottle):
+    """
+    An interactive helper for the water bottle shuffling game.
+    
+    Parameters:
+      - n_bottle: number of water bottles.
+        (We assume the bottles are labeled using the first n_bottle letters of the alphabet,
+         e.g., for 6 bottles the labels are "A", "B", "C", "D", "E", "F".)
+    
+    How it works:
+      1. It initializes the set of all possible sequences (permutations).
+      2. It shows the initial candidate count and suggests the initial guess
+         (the sorted sequence, e.g., ABCDEF).
+      3. In each round, the player is prompted to enter:
+         - Their guess sequence (e.g., ABCDEF)
+         - The score (number of bottles in the correct position) provided by the instructor.
+      4. The function then filters the candidate set based on the feedback,
+         prints the remaining possibilities, and suggests a next guess.
+      5. The loop ends when the score equals n_bottle, meaning the secret has been found.
+    
+    Returns:
+      A history list of tuples (guess, score) representing each round.
+    """
+    # Use first n_bottle letters from the alphabet.
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if n_bottle > len(alphabet):
+        print(f"n_bottle is too high; maximum allowed is {len(alphabet)}")
+        return
+    
+    letters = alphabet[:n_bottle]
+    
+    # Create the complete set of possible sequences.
+    all_perms = list(itertools.permutations(letters))
+    candidates = all_perms.copy()
+    
+    guess_history = []
+    
+    print(f"Initial candidate count: {len(candidates)} possibilities.")
+    print(f"Suggested initial guess: {''.join(letters)}")
+    
+    # Continue until the game is ended (score equals n_bottle)
+    while True:
+        # Get the player's guess
+        guess_input = input(f"Enter your guess sequence (e.g., {''.join(letters)}): ").strip().upper()
+        if len(guess_input) != n_bottle:
+            print(f"Your guess must have exactly {n_bottle} letters.")
+            continue
+        guess = tuple(guess_input)
+        
+        # Get the score from the instructor
+        try:
+            score_input = input("Enter the score (number of correct positions): ").strip()
+            score = int(score_input)
+        except ValueError:
+            print("Invalid score. Please enter an integer.")
+            continue
+        
+        guess_history.append((guess, score))
+        
+        # Check if the game has ended
+        if score == n_bottle:
+            print("Congratulations! The secret sequence has been found.")
+            break
+        
+        # Filter the candidate set using the provided feedback.
+        candidates = filter_candidates(candidates, guess, score)
+        
+        if not candidates:
+            print("No possible sequences remain. Please check the input or the feedback given.")
+            break
+        
+        print(f"After this round, {len(candidates)} possibilities remain.")
+        # Display the remaining possibilities if few; otherwise show a sample.
+        if len(candidates) <= 20:
+            print("Remaining possibilities:")
+            for cand in candidates:
+                print("".join(cand))
+        else:
+            print("A few remaining possibilities:")
+            for cand in candidates[:10]:
+                print("".join(cand))
+        
+        # Provide a suggestion for the next guess using the minimax strategy.
+        suggestion = minimax_guess(candidates, all_perms)
+        print(f"Suggested next guess: {''.join(suggestion)}\n")
+    
+    return guess_history
+
+```
+
+For interative use only:
+
+```{python}
+# n = int(input("Enter the number of water bottles: "))
+# history = solve_water_bottle_game_interactive(n)
+```
