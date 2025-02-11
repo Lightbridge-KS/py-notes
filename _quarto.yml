@@ -54,6 +54,7 @@ book:
       - "playground/shape.ipynb"
       - "playground/book-catalog.ipynb"
       - "playground/fruits.ipynb"
+      - "playground/chess-game.ipynb"
     - part: "Data Validation"
       chapters: 
       - "howto/typecheck.ipynb"
