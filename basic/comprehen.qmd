@@ -81,6 +81,17 @@ def double_short_words(words):
     ]
 ```
 
+### Nested Compreshension
+
+```{python}
+colors = ["orange", "purple", "pink"]
+toys = ["bike", "basketball", "skateboard", "doll"]
+
+[ color + " " + toy
+  for color in colors
+  for toy in toys ]
+```
+
 ### Using `_` varible
 
 ```{python}
