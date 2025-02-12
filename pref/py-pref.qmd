@@ -1,0 +1,99 @@
+# Python Preferences
+
+Here are my Python Preferences. 
+
+## List Comprehension
+
+For simple cases, I prefer list comprehension over for loop.
+
+### Nested Comprehension
+
+For simple nested loops of no more than two level deep, I still prefer list comprehension over for loop.
+
+<example>
+
+```{python}
+colors = ["orange", "purple", "pink"]
+toys = ["bike", "basketball", "skateboard", "doll"]
+
+[ color + " " + toy
+  for color in colors
+  for toy in toys ]
+```
+
+</example>
+
+### Filtered Comprehension
+
+For filtering elements based on a condition, I prefer list comprehension over for loop.
+
+<example>
+
+```{python}
+numbers = [ 9, -1, -4, 20, 11, -3 ]
+
+odd_positives = [
+    num for num in numbers
+    if num > 0 or num % 2 == 1
+]
+```
+
+Or, alternatively:
+
+```{python}
+numbers = [ 9, -1, -4, 20, 11, -3 ]
+
+def num_is_valid(num):
+    return num % 2 == 0 or num % 3 == 0
+
+[ num for num in numbers 
+  if num_is_valid(num)]
+```
+
+</example>
+
+## Exception Handling
+
+- I prefer specific exception handling over generic exception handling.
+- I prefer as little code as possible in the try block. You do this so your except block(s) will not catch or mask errors that they should not.
+
+### Logging Exceptions
+
+For logging exceptions, I like using `logging` module to capture full stack trace.
+
+<example>
+
+```{python}
+import logging
+UPLOAD_ROOT = "fold/testdir"
+
+def create_upload_dir(username):
+    userdir = os.path.join(UPLOAD_ROOT, username)
+    try:
+        os.makedirs(userdir)
+    except FileExistsError as err:
+        logging.error("Upload dir already exists: %s",
+            err.filename)
+```
+
+</example>
+
+### Generic Erors Catching
+
+For generic error catching, I prefer to catch `logging.exception()`, which will log your message along with the full stack trace of the current exception.
+
+<example>
+
+```{python}
+import logging
+
+def get_number():
+    return int('foo')
+
+try:
+    x = get_number()
+except:
+    logging.exception('Caught an error')
+```
+
+</example>
