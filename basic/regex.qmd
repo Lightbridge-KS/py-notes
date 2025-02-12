@@ -148,3 +148,43 @@ match = re.search(pattern, text, re.IGNORECASE)
 if match:
     print("Case-insensitive match found!") 
 ```
+
+
+## Use Cases
+
+### No Match - Exception
+
+`if match is None`
+
+```{python}
+class Money:
+    def __init__(self, dollars, cents):
+        self.dollars = dollars
+        self.cents = cents
+    def __repr__(self):
+        return f"Money({self.dollars}, {self.cents})"
+```
+
+```{python}
+import re
+def money_from_string(amount):
+    match = re.search(
+        r'^\$(?P<dollars>\d+)\.(?P<cents>\d\d)$', amount)
+    # Adding the next two lines here
+    if match is None:
+        raise ValueError(f"Invalid amount: {amount}")
+    dollars = int(match.group('dollars'))
+    cents = int(match.group('cents'))
+    return Money(dollars, cents)
+```
+
+```{python}
+money_from_string("$12.34")
+```
+
+```{python}
+try:
+    money_from_string("Big")
+except ValueError as e:
+    print(e)
+```

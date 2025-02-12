@@ -20,6 +20,17 @@ source(here("_common.R"))
 
 1. put as little code as possible in the try block. You do this so your except block(s) will not catch or mask errors that they should not.
 
+## Anti-pattern 
+
+Don't ever do this:
+
+```python
+try:
+    do_something()
+except:
+    pass
+```
+
 ## Raising Exception
 
 
