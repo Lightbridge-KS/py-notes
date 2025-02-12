@@ -68,6 +68,18 @@ ls = ["a", "b", "c"]
 [str.upper(x) for x in ls]
 ```
 
+### Multiline Comprehension
+
+For readibility:
+
+```{python}
+def double_short_words(words):
+    return [
+        word + word
+        for word in words
+        if len(word) < 5
+    ]
+```
 
 ### Using `_` varible
 

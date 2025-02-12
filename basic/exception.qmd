@@ -293,3 +293,21 @@ try:
 except MyCustomException:
     print('My custom exception was raised')
 ```
+
+## Full stack trace by logging
+
+Python provides an easy way to capture that error event, and all the information you need to fix it. The logging module has a function called `exception()`, which will log your message along with the full stack trace of the current exception. So you can write code like this:
+
+
+```{python}
+import logging
+
+def get_number():
+    return int('foo')
+
+
+try:
+    x = get_number()
+except:
+    logging.exception('Caught an error')
+```
