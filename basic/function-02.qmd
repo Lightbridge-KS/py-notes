@@ -12,16 +12,23 @@ def f(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2):
 
 `/` and `*` are optional. If used, these symbols indicate the kind of parameter by how the arguments may be passed to the function: positional-only, positional-or-keyword, and keyword-only. Keyword parameters are also referred to as named parameters.
 
+Arguments in this order: 
+
+- Positional arguments (nonkeyword) arguments 
+- `*args` nonkeyword variable arguments
+- `**kwargs` keyword variable arguments
+
+
 
 ```{python}
-def cheeseshop(kind, *arguments, **keywords):
+def cheeseshop(kind, *args, **kwargs):
     print("-- Do you have any", kind, "?")
     print("-- I'm sorry, we're all out of", kind)
-    for arg in arguments:
+    for arg in args:
         print(arg)
     print("-" * 40)
-    for kw in keywords:
-        print(kw, ":", keywords[kw])
+    for kw in kwargs:
+        print(kw, ":", kwargs[kw])
 ```
 
 
