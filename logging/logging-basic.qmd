@@ -94,3 +94,12 @@ logging.info(
     num_fruits, fruit_name
     )
 ```
+
+Use named fields:
+
+```{python}
+fruit_info = {"count": 14, "name": "oranges"}
+logging.info(
+    "We ate %(count)d of your %(name)s. Thanks!",
+    fruit_info)
+```

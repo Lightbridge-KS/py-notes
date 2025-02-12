@@ -1,0 +1,29 @@
+# Logging (Advanced)
+
+## Logging to Multiple Destination
+
+To verbosely log everything into a log file, while duplicating only the more interesting messages onto the console:
+
+
+```{python}
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+fmt = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+
+# Warnings and higher only on the console.
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.WARNING)
+logger.addHandler(console_handler)
+console_handler.setFormatter(fmt)
+
+
+# But allow everything to go into the log file.
+logfile_handler = logging.FileHandler("mylog.log")
+logger.addHandler(logfile_handler)
+logfile_handler.setFormatter(fmt)
+
+logger.warning("This goes to both the console, AND into log.txt.")
+logger.debug("While this only goes to the file.")
+```

@@ -1,0 +1,12 @@
+{
+  "hash": "12f9e48d125ebc92edde12ba780f74bd",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "# Logging (Advanced)\n\n## Logging to Multiple Destination\n\nTo verbosely log everything into a log file, while duplicating only the more interesting messages onto the console:\n\n::: {#eb55e230 .cell execution_count=1}\n``` {.python .cell-code}\nimport logging\n\nlogger = logging.getLogger()\nlogger.setLevel(logging.DEBUG)\nfmt = logging.Formatter(\"%(asctime)s - %(levelname)s - %(message)s\")\n\n# Warnings and higher only on the console.\nconsole_handler = logging.StreamHandler()\nconsole_handler.setLevel(logging.WARNING)\nlogger.addHandler(console_handler)\nconsole_handler.setFormatter(fmt)\n\n\n# But allow everything to go into the log file.\nlogfile_handler = logging.FileHandler(\"mylog.log\")\nlogger.addHandler(logfile_handler)\nlogfile_handler.setFormatter(fmt)\n\nlogger.warning(\"This goes to both the console, AND into log.txt.\")\nlogger.debug(\"While this only goes to the file.\")\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n2025-02-12 21:04:42,969 - WARNING - This goes to both the console, AND into log.txt.\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "logging-advanced_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
