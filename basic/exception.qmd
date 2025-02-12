@@ -200,6 +200,25 @@ except KeyError as err:
     print(f"Missing data for element: {missing_element}")
 ```
 
+### Simple Logging
+
+```{python}
+import logging
+UPLOAD_ROOT = "fold/testdir"
+
+def create_upload_dir(username):
+    userdir = os.path.join(UPLOAD_ROOT, username)
+    try:
+        os.makedirs(userdir)
+    except FileExistsError as err:
+        logging.error("Upload dir already exists: %s",
+            err.filename)
+```
+
+```{python}
+create_upload_dir("testuser")
+```
+
 ## `else` clause
 
 ```{python}
