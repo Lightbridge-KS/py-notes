@@ -1,8 +1,35 @@
 # Function (Validation)
 
 
+## My Arguments Validation
 
-## Arguments Validation
+I would use these balanced approach:
+
+```{python}
+from typing import Literal
+
+def fn1(a: Literal["apple", "banana", "orange"]):
+
+    valid_fruits = frozenset({"apple", "banana", "orange"})
+
+    if a not in valid_fruits:
+        raise ValueError(f"Invalid value: {a}. Must be one of: {', '.join(valid_fruits)}")
+    # Rest of the function
+    return a
+```
+
+```{python}
+fn1("apple")
+```
+
+```{python}
+try:
+    fn1("watermelon")
+except ValueError as e:
+    print(e)
+```
+
+## Arguments Validation (Approach)
 
 ::: {.callout-note appearance="minimal" collapse="false"}
 Q: If I have a function, say, `fn1(a)`,  which have an argument `a` with only 3 possible text values: "apple", "banana", "orange". 
