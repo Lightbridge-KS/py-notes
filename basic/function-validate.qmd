@@ -1,0 +1,110 @@
+# Function (Validation)
+
+
+
+## Arguments Validation
+
+::: {.callout-note appearance="minimal" collapse="false"}
+Q: If I have a function, say, `fn1(a)`,  which have an argument `a` with only 3 possible text values: "apple", "banana", "orange". 
+
+Give me different approach to perform arguments validation.
+:::
+
+I'll help you explore different approaches to validate function arguments when there are only specific allowed values. Let's examine various methods, starting from simple to more sophisticated approaches.
+
+### If-else statements (Basic Approach):
+   
+```{python}
+def fn1(a):
+    if a not in ["apple", "banana", "orange"]:
+        raise ValueError(f"Invalid value: {a}. Must be one of: apple, banana, orange")
+    # Rest of the function
+    return a
+```
+
+### Using an Enum class (Type Safety)
+
+```{python}
+from enum import Enum, auto
+
+class Fruit(Enum):
+    APPLE = "apple"
+    BANANA = "banana"
+    ORANGE = "orange"
+
+def fn1(a: Fruit) -> str:
+    # The type hint ensures only Fruit enum values are accepted
+    return a.value
+```
+
+### Using a Set for faster lookup:
+
+```{python}
+VALID_FRUITS = frozenset({"apple", "banana", "orange"})
+
+def fn1(a: str) -> str:
+    if a not in VALID_FRUITS:
+        raise ValueError(f"Invalid value: {a}. Must be one of: {', '.join(VALID_FRUITS)}")
+    return a
+```
+
+### Using decorators (Advanced):
+
+```{python}
+from functools import wraps
+from typing import Callable, Any
+
+def validate_fruit(func: Callable) -> Callable:
+    valid_fruits = frozenset({"apple", "banana", "orange"})
+    
+    @wraps(func)
+    def wrapper(a: str, *args: Any, **kwargs: Any) -> Any:
+        if a not in valid_fruits:
+            raise ValueError(f"Invalid value: {a}. Must be one of: {', '.join(valid_fruits)}")
+        return func(a, *args, **kwargs)
+    
+    return wrapper
+
+@validate_fruit
+def fn1(a: str) -> str:
+    return a
+```
+
+```{python}
+try:
+    fn1("watermelon")
+except ValueError as e:
+    print(e)
+```
+
+### Using Literal type hints (Python 3.8+):
+
+```{python}
+from typing import Literal
+
+def fn1(a: Literal["apple", "banana", "orange"]) -> str:
+    return a
+```
+
+```{python}
+fn1("watermelon")
+```
+
+Let me explain the pros and cons of each approach:
+
+The if-else approach is straightforward and easy to understand, but it's verbose if you need to reuse the validation in multiple functions.
+
+The Enum approach provides type safety and IDE support, making it harder to make mistakes. It's especially useful in larger applications where you want to ensure type consistency. However, it requires more setup code.
+
+The Set approach offers faster lookup times compared to lists and is memory efficient. It's a good balance between simplicity and performance, especially when you have many valid values.
+
+The decorator approach allows you to separate the validation logic from the function implementation, making it reusable across multiple functions. However, it's more complex and might be overkill for simple cases.
+
+The Literal type hints provide static type checking if you use a type checker like mypy, but they don't enforce runtime validation by themselves. They're great for documentation and catching errors during development.
+
+For your specific case, since you mentioned you're at an intermediate Python level, I would recommend either the Set approach or the Enum approach:
+
+- Use the Set approach if you want something simple and performant
+- Use the Enum approach if you want better type safety and IDE support
+
+Would you like me to elaborate on any of these approaches or show you how to combine them for more robust validation?

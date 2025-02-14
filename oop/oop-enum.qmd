@@ -1,0 +1,44 @@
+# Enum
+
+```{python}
+from enum import Enum
+```
+
+```{python}
+class Color(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+```
+
+
+```{python}
+class Color2(Enum):
+    RED = 1
+    GREEN = 2
+    BLUE = 3
+
+    @classmethod
+    def from_str(cls, color_str):
+        if color_str == 'RED':
+            return cls.RED
+        elif color_str == 'GREEN':
+            return cls.GREEN
+        elif color_str == 'BLUE':
+            return cls.BLUE
+        else:
+            raise ValueError(f'Invalid color: {color_str}')
+```
+
+
+```{python}
+Color2.from_str('RED')
+```
+
+
+```{python}
+class Color3(Enum):
+    RED = long_processing()
+    GREEN = 2
+    BLUE = 3
+```
