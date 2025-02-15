@@ -89,6 +89,9 @@ book:
     - part: "PKG Dev"
       chapters: 
       - "pkg-dev/pkg-export.qmd"
+    - part: "Pipeline"
+      chapters: 
+      - "pkg-dev/make-py-basic.qmd"
     - part: "Exercises"
       chapters:
       - basic/ctr-flow-ex.qmd
