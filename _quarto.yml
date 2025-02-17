@@ -82,6 +82,9 @@ book:
     - part: "Typing"
       chapters: 
       - "basic/typing.qmd"
+    - part: "Benchmark"
+      chapters: 
+        - "benchmark/timing-basic.qmd"
     - part: "Module & PKG"
       chapters: 
       - basic/file.qmd

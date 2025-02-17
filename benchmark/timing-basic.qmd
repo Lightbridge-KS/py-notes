@@ -1,0 +1,126 @@
+# Timing 
+
+::: {.callout-note appearance="simple" collapse="false"}
+Q: How to time the execution of a given block of code and save the result to a variable
+:::
+
+## Basic Timing
+
+I'll show you how to time code execution in Python using different methods, focusing on your preference for clean and efficient code.
+
+Here's a comprehensive solution using different approaches:
+
+### Context manager
+
+```{python}
+import time
+from contextlib import contextmanager
+import timeit
+
+@contextmanager
+def timer():
+    """Time the execution of a code block.
+    
+    Returns
+    -------
+    float
+        Time elapsed in seconds.
+    
+    Examples
+    --------
+    >>> with timer() as t:
+    ...     # Your code here
+    ...     time.sleep(1)
+    >>> print(f"Elapsed time: {t:.4f} seconds")
+    """
+    start = time.perf_counter()
+    elapsed = -1  # Default value if error occurs
+    
+    try:
+        yield lambda: elapsed
+    finally:
+        elapsed = time.perf_counter() - start
+```
+
+
+```{python}
+with timer() as t:
+    # Your code block here
+    time.sleep(0.5)  # Simulate work
+elapsed_time = t()
+print(f"Elapsed time: {elapsed_time:.4f} seconds")
+```
+
+
+### timeit
+
+Example usage 2: Using timeit for more accurate benchmarking
+
+```{python}
+def code_to_time():
+    # Your code block here
+    time.sleep(0.5)  # Simulate work
+
+execution_time = timeit.timeit(code_to_time, number=1)
+print(f"Execution time: {execution_time:.4f} seconds")
+```
+
+Key features of this implementation:
+
+1. Uses `contextmanager` for clean syntax and proper resource management
+2. Uses `time.perf_counter()` which is more precise than `time.time()`
+3. Implements error handling as per your preference
+4. Returns the elapsed time as a variable for further use
+5. Provides an alternative using `timeit` for more accurate benchmarking
+
+## Benchmarking
+
+For timing multiple iterations or getting statistics, you can use this extended version:
+
+```{python}
+def benchmark(func, iterations=100):
+    """Benchmark a function's execution time over multiple iterations.
+    
+    Parameters
+    ----------
+    func : callable
+        Function to benchmark
+    iterations : int, optional
+        Number of iterations, by default 100
+    
+    Returns
+    -------
+    dict
+        Dictionary containing timing statistics
+    """
+    times = []
+    
+    for _ in range(iterations):
+        with timer() as t:
+            func()
+        times.append(t())
+    
+    return {
+        'mean': sum(times) / len(times),
+        'min': min(times),
+        'max': max(times),
+        'iterations': iterations
+    }
+
+# Example usage
+def sample_function():
+    time.sleep(0.1)  # Simulate work
+
+results = benchmark(sample_function, iterations=5)
+print(f"Mean time: {results['mean']:.4f} seconds")
+print(f"Min time: {results['min']:.4f} seconds")
+print(f"Max time: {results['max']:.4f} seconds")
+```
+
+
+
+Choose the method that best fits your needs:
+
+1. Use the `timer()` context manager for simple, one-off timing
+2. Use `timeit` for more accurate benchmarking
+3. Use the `benchmark()` function for statistical analysis of execution times
