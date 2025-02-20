@@ -188,3 +188,79 @@ try:
 except ValueError as e:
     print(e)
 ```
+
+## `re` vs `regex`
+
+```{python}
+import re
+import regex
+import timeit
+
+text = "hello world" * 1000000
+pattern = r'world'
+
+# re module
+def re_search():
+    return len(re.findall(pattern, text))
+
+# regex module
+def regex_search():
+    return len(regex.findall(pattern, text))
+```
+
+
+```{python}
+# Benchmark
+print("re module:", timeit.timeit(re_search, number=100))
+print("regex module:", timeit.timeit(regex_search, number=100))
+```
+
+
+## Fuzzy Matching
+
+Let me explain fuzzy matching through a practical example that you might encounter in medical records.
+
+Imagine you're working with patient names in a database. With regular exact matching, searching for "Johnson" would only find "Johnson" - it wouldn't find common variations or typos like "Johnsen", "Jonson", or "Johnson". This is where fuzzy matching comes in.
+
+Fuzzy matching is a technique that finds strings that approximately match a pattern, even when they're not exactly the same. It measures how similar two strings are and can match them if they're "close enough." This is especially useful when dealing with:
+
+1. Misspellings: Like matching "penicillin" with "penicilin"
+2. Name variations: Like matching "Catherine" with "Katherine"
+3. OCR errors: When scanned text isn't perfectly recognized
+4. Data entry errors: When humans make typing mistakes
+
+Here's a practical example using Python's `regex` module with fuzzy matching:
+
+```{python}
+import regex
+
+# Regular exact matching
+text = "The patient Smith was prescribed penicillin"
+exact_pattern = r'penicillin'
+print("Exact match:", regex.findall(exact_pattern, text))  # Finds 'penicillin'
+
+# Fuzzy matching with maximum 2 differences allowed
+fuzzy_pattern = r'(?:penicillin){e<=2}'  # e<=2 means allow up to 2 errors
+texts = [
+    "The patient Smith was prescribed penicilin",   # Missing 'l'
+    "The patient Smith was prescribed peniciilin",  # Extra 'i'
+    "The patient Smith was prescribed penicilln"    # Missing 'i'
+]
+
+for t in texts:
+    matches = regex.findall(fuzzy_pattern, t)
+    print(f"Fuzzy matches in '{t}': {matches}")
+```
+
+The magic happens in how fuzzy matching calculates the "distance" between strings. The most common method is Levenshtein distance, which counts the minimum number of single-character edits needed to change one string into another. For example:
+
+- "penicillin" → "penicilin" (distance = 1, one deletion)
+- "Smith" → "Smyth" (distance = 1, one substitution)
+- "Katherine" → "Catherine" (distance = 1, one substitution)
+
+Think of it like measuring how many steps it takes to transform one word into another, where each step can be:
+- Inserting a character
+- Deleting a character
+- Substituting one character for another
+
+This is particularly valuable in medical contexts where accuracy is crucial but variations are common. For instance, when searching through medical records, fuzzy matching could help you find relevant cases even when drug names or conditions are slightly misspelled.
