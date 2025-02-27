@@ -4,6 +4,18 @@ title: Re2 vs Re
 
 Both Python's built-in `re` module and Google's `re2` module are used for regular expression operations, but they have some important differences in their implementation and API. Let's examine each of the functions you mentioned.
 
+## Compile
+
+```{python}
+import re
+import re2
+text = "Hello, my email is example@example.com"
+pattern = r'(\w+)@(\w+)\.com'
+
+re.compile(pattern, 0)
+re2.compile(pattern, 0)
+```
+
 ## `search()`
 
 ### Basic API Structure
@@ -53,7 +65,49 @@ if re2_result:
     print(f"Username: {re2_result.group(1)}, Domain: {re2_result.group(2)}")
 ```
 
+
 Both will output similar results for this simple case, but re2 won't work with patterns containing backreferences like `r'(\w+)@\1\.com'`.
+
+### Option in `re2` is different than `flag` in `re`
+
+```{python}
+import re2
+
+text = "Hello, my email is EXAMPLE@example.com"
+
+# RE2 
+# Create options object with CASE_INSENSITIVE flag
+options = re2.Options()
+options.case_sensitive = False
+
+# Pass options as the flags parameter
+match = re2.search(r'(\w+)@(\w+)\.com', text, options)
+print(match.group(0))
+```
+
+```{python}
+options.NAMES
+```
+
+```{python}
+flags = re.IGNORECASE
+
+if flags is re.IGNORECASE:
+   print("IGNORECASE")
+```
+
+```{python}
+combined_flags = re.IGNORECASE | re.MULTILINE  # Value: 10 (binary: 00001010)
+
+# This returns False because combined_flags isn't exactly IGNORECASE
+combined_flags == re.IGNORECASE  
+```
+
+
+```{python}
+if combined_flags & re.IGNORECASE:
+   print("IGNORECASE is set")
+```
 
 ## `findall()`
 
