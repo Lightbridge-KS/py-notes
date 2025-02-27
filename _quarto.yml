@@ -46,6 +46,7 @@ book:
     - part: "Regex"
       chapters: 
       - "basic/regex.qmd"
+      - "basic/regex-re2.qmd"
     - part: "Iterate"
       chapters:
       - "concept/iterable-iterator-generator.qmd"

@@ -1,0 +1,189 @@
+---
+title: Re2 vs Re
+---
+
+Both Python's built-in `re` module and Google's `re2` module are used for regular expression operations, but they have some important differences in their implementation and API. Let's examine each of the functions you mentioned.
+
+## `search()`
+
+### Basic API Structure
+
+**`re.search()`**:
+
+```python
+re.search(pattern, string, flags=0)
+```
+
+**`re2.search()`**:
+
+```python
+re2.search(pattern, string, flags=0)
+```
+
+### Key Differences
+
+1. **Return Value**: Both return a match object if found, or `None` if no match is found.
+
+2. **Flags Support**:
+   - `re` supports all Python's regular expression flags like `re.IGNORECASE`, `re.MULTILINE`, etc.
+   - `re2` supports only a subset of flags: `re2.IGNORECASE`, `re2.MULTILINE`, `re2.DOTALL`, and `re2.UNICODE`.
+
+3. **Backreference Support**:
+   - `re` fully supports backreferences in search patterns.
+   - `re2` doesn't support backreferences in the pattern itself.
+
+### Example
+
+```{python}
+import re
+import re2
+
+text = "Hello, my email is example@example.com"
+
+# Using re
+re_result = re.search(r'(\w+)@(\w+)\.com', text)
+if re_result:
+    print(f"re found: {re_result.group(0)}")
+    print(f"Username: {re_result.group(1)}, Domain: {re_result.group(2)}")
+
+# Using re2
+re2_result = re2.search(r'(\w+)@(\w+)\.com', text)
+if re2_result:
+    print(f"re2 found: {re2_result.group(0)}")
+    print(f"Username: {re2_result.group(1)}, Domain: {re2_result.group(2)}")
+```
+
+Both will output similar results for this simple case, but re2 won't work with patterns containing backreferences like `r'(\w+)@\1\.com'`.
+
+## `findall()`
+
+### Basic API Structure
+
+**`re.findall()`**:
+
+```python
+re.findall(pattern, string, flags=0)
+```
+
+**`re2.findall()`**:
+
+```python
+re2.findall(pattern, string, flags=0)
+```
+
+### Key Differences
+
+1. **Return Value Handling**:
+   - Both return a list of matching strings or tuples (when there are capturing groups).
+   - However, there's a subtle difference in how they handle groups:
+     - With `re`, if there's only one capturing group, you get a list of the contents of that group.
+     - With `re2`, if there's only one capturing group, you still get the full match unless you explicitly use non-capturing groups for the rest.
+
+2. **Performance**: 
+   - `re2.findall()` is typically faster for complex patterns on large strings due to re2's linear-time matching guarantees.
+
+### Example
+
+```{python}
+import re
+import re2
+
+text = "Email me at user1@example.com or user2@test.com"
+reg_cap = r'(\w+)@(\w+)\.com'
+reg_nc = r'(?:\w+)@(?:\w+)\.com'
+# Using re
+re_result = re.findall(reg_cap, text)
+print(f"re findall: {re_result}") 
+
+# Using re2
+re2_result = re2.findall(reg_cap, text)
+print(f"re2 findall: {re2_result}")  # Same result
+```
+
+For patterns with one capturing group, the difference becomes apparent:
+
+```{python}
+reg_cap = r'(\w+@\w+\.com)'
+reg_nc = r'(?:\w+@\w+\.com)'
+
+# With re
+re_result = re.findall(reg_cap, text)
+print(f"re findall: {re_result}")  # Will return ['user1@example.com', 'user2@test.com']
+
+# With re2
+re2_result = re2.findall(reg_cap, text)
+print(f"re2 findall: {re2_result}")  # Same result, but for different reasons
+```
+
+## `.finditer()`
+
+### Basic API Structure
+
+**`re.finditer()`**:
+
+```python
+re.finditer(pattern, string, flags=0)
+```
+
+**`re2.finditer()`**:
+
+```python
+re2.finditer(pattern, string, flags=0)
+```
+
+### Key Differences
+
+1. **Return Value**: Both return an iterator yielding match objects.
+
+2. **Match Object Methods**: 
+   - `re` match objects have methods like `.start()`, `.end()`, `.span()`, `.group()`, `.groups()`, and `.groupdict()`.
+   - `re2` match objects have the same methods, but some complex operations involving lookahead/lookbehind may behave differently.
+
+3. **Named Group Support**:
+   - Both support named groups with `(?P<name>...)` syntax.
+   - `re2` has limitations with some named group features that `re` supports.
+
+### Example
+
+```{python}
+import re
+import re2
+
+text = "Contact us: user1@example.com or user2@test.com"
+
+# Using re
+for match in re.finditer(r'(\w+)@(\w+)\.com', text):
+    print(f"re match: {match.group(0)}, groups: {match.groups()}")
+    print(f"  Position: {match.start()}-{match.end()}")
+
+# Using re2
+for match in re2.finditer(r'(\w+)@(\w+)\.com', text):
+    print(f"re2 match: {match.group(0)}, groups: {match.groups()}")
+    print(f"  Position: {match.start()}-{match.end()}")
+```
+
+# Key Differences Summary
+
+| Feature | `re` module | `re2` module |
+|---------|------------|-------------|
+| **Fundamental Implementation** | Uses backtracking, which can be exponential | Uses finite automata with linear-time guarantees |
+| **Backreferences** | Fully supported | Not supported |
+| **Lookahead/Lookbehind** | Fully supported | Limited support (only fixed-width lookbehind) |
+| **Flag Support** | All standard flags | Limited subset (IGNORECASE, MULTILINE, DOTALL, UNICODE) |
+| **Memory Usage** | Can be high for complex patterns | Generally lower and more predictable |
+| **Performance** | May have catastrophic backtracking on complex patterns | Guaranteed linear time complexity |
+| **Group Handling** | Special handling for single capture group in `findall()` | Consistent behavior |
+
+## Practical Implications
+
+1. **When to use `re2`**:
+   - Processing large text files
+   - When you need performance guarantees (to avoid regex denial-of-service)
+   - When your patterns are relatively simple
+
+2. **When to use `re`**:
+   - When you need backreferences
+   - When you need complex lookahead/lookbehind
+   - For compatibility with existing Python code
+
+Remember that `re2` is designed with safety and performance in mind, specifically to avoid the catastrophic backtracking that can happen with traditional regex engines like the one in Python's `re` module. This comes at the cost of some advanced regex features that cannot be implemented efficiently while maintaining linear-time guarantees.
