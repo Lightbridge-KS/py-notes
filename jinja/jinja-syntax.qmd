@@ -1,0 +1,265 @@
+# Jinja2: Syntax
+
+## Basic Syntax
+
+### Variables
+
+```jinja
+{{ variable }}
+{{ user.name }}
+{{ user['name'] }}
+{{ user.get('name', 'default') }}
+```
+
+### Comments
+
+```jinja
+{# This is a comment and won't be rendered in the output #}
+```
+
+### Statements
+
+```jinja
+{% statement %}
+```
+
+## Control Structures
+
+### If Statements
+
+```jinja
+{% if condition %}
+    Content if condition is true
+{% elif another_condition %}
+    Content if another_condition is true
+{% else %}
+    Content if all conditions are false
+{% endif %}
+```
+
+### For Loops
+
+```jinja
+{% for item in items %}
+    {{ item }}
+{% endfor %}
+
+{% for key, value in dictionary.items() %}
+    {{ key }}: {{ value }}
+{% endfor %}
+
+{% for item in items %}
+    {{ loop.index }}      {# 1-based index #}
+    {{ loop.index0 }}     {# 0-based index #}
+    {{ loop.first }}      {# True if first iteration #}
+    {{ loop.last }}       {# True if last iteration #}
+    {{ loop.length }}     {# Total number of items #}
+{% else %}
+    No items found
+{% endfor %}
+```
+
+## Template Inheritance
+
+### Base Template
+
+```jinja
+{# base.html #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Default Title{% endblock %}</title>
+</head>
+<body>
+    <header>{% block header %}Default Header{% endblock %}</header>
+    <main>{% block content %}{% endblock %}</main>
+    <footer>{% block footer %}Default Footer{% endblock %}</footer>
+</body>
+</html>
+```
+
+### Child Template
+
+```jinja
+{# child.html #}
+{% extends "base.html" %}
+
+{% block title %}Page Title{% endblock %}
+
+{% block content %}
+    <h1>Page Content</h1>
+    <p>This replaces the content block from the parent template</p>
+    
+    {# Include parent block content #}
+    {{ super() }}
+{% endblock %}
+```
+
+## Includes and Imports
+
+### Include
+```jinja
+{% include 'header.html' %}
+{% include 'sidebar.html' ignore missing %}
+```
+
+### Import
+```jinja
+{% import 'macros.html' as macros %}
+{{ macros.input('username') }}
+
+{% from 'macros.html' import input %}
+{{ input('username') }}
+```
+
+## Macros (Reusable Template Functions)
+
+### Define Macro
+
+
+```jinja
+{% macro input(name, value='', type='text') %}
+    <input type="{{ type }}" name="{{ name }}" value="{{ value }}">
+{% endmacro %}
+```
+
+### Use Macro
+
+```jinja
+{{ input('username') }}
+{{ input('password', type='password') }}
+```
+
+## Filters
+
+### String Filters
+
+```jinja
+{{ name|capitalize }}         {# First letter capitalized #}
+{{ name|upper }}              {# All uppercase #}
+{{ name|lower }}              {# All lowercase #}
+{{ name|title }}              {# Title Case #}
+{{ name|trim }}               {# Remove whitespace from both ends #}
+{{ name|replace('old', 'new') }} {# Replace text #}
+{{ name|truncate(50) }}       {# Truncate to 50 chars #}
+```
+
+### List Filters
+
+```jinja
+{{ list|join(', ') }}         {# Join list items #}
+{{ list|first }}              {# First item #}
+{{ list|last }}               {# Last item #}
+{{ list|length }}             {# Number of items #}
+{{ list|sort }}               {# Sort items #}
+{{ list|reverse }}            {# Reverse order #}
+```
+
+### Custom Filters (Python Side)
+
+```python
+def date_filter(value, format='%Y-%m-%d'):
+    return value.strftime(format)
+
+env.filters['date'] = date_filter
+```
+
+```jinja
+{{ post.date|date }}
+{{ post.date|date('%B %d, %Y') }}
+```
+
+## Tests
+
+```jinja
+{% if variable is defined %}
+{% if number is divisibleby(3) %}
+{% if value is none %}
+{% if string is upper %}
+```
+
+Common tests:
+
+- `defined`, `undefined`
+- `none`, `sameas(other)`
+- `odd`, `even`, `divisibleby(number)`
+- `string`, `number`, `iterable`, `mapping`
+
+## Whitespace Control
+
+```jinja
+{%- if condition -%}    {# Remove whitespace on both sides #}
+    Content
+{%- endif -%}
+
+{{- variable -}}         {# Remove whitespace on both sides #}
+```
+
+## Set & Block Variables
+
+```jinja
+{% set name = 'John' %}
+{% set users = [1, 2, 3] %}
+{% set users = users + [4, 5] %}
+
+{% set navigation %}
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+{% endset %}
+```
+
+## Raw Content (No Processing)
+
+```jinja
+{% raw %}
+    This {{ will not }} be processed by Jinja2
+{% endraw %}
+```
+
+## Extensions & Advanced Features
+
+### Expression Statement
+
+```jinja
+{% do users.append('john') %}  {# Do something without output #}
+```
+
+### With Statement
+
+```jinja
+{% with foo = 42 %}
+    {{ foo }}             {# foo is 42 here #}
+{% endwith %}
+```
+
+### Assignments
+
+```jinja
+{% set users = ['John', 'Jane'] %}
+```
+
+### Line Statements
+
+```jinja
+# for item in items
+    {{ item }}
+# endfor
+```
+
+### Template Context (Python Side)
+
+```python
+template.render(
+    title="My Page",
+    users=["John", "Jane"],
+    is_admin=True
+)
+```
+
+## Error Handling
+
+```jinja
+{{ missing_variable|default('default value') }}
+```
+
+This cheat sheet covers the most commonly used Jinja2 syntax elements and features. Keep it handy as you build your templates!

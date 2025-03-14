@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ heading }}</h1>
+    
+    {# This is a comment that won't appear in the output #}
+    
+    {% if is_admin %}
+    <div class="admin-panel">
+        <p>You have admin privileges</p>
+    </div>
+    {% endif %}
+    
+    <h2>User List</h2>
+    <ul>
+        {% for user in users %}
+        <li>{{ user.name }} - {{ user.role }}</li>
+        {% endfor %}
+    </ul>
+    
+    <p>Generated on: {{ date|date("Y-m-d") }}</p>
+</body>
+</html>

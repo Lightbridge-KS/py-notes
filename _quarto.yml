@@ -71,6 +71,10 @@ book:
       - basic/os/os.qmd
       - basic/path.qmd
       - basic/json.qmd
+    - part: "Jinja"
+      chapters: 
+        - "jinja/jinja-basic.ipynb"
+        - "jinja/jinja-syntax.qmd"
     - part: "FS"
       chapters: 
       - "fs/fs.ipynb"

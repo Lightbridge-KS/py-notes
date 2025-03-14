@@ -1,0 +1,12 @@
+# Results
+
+{% for student in students %}
+### {{ student.name }}
+
+- **Score:** {{ student.score }}/{{ max_score }}
+{% if student.score >= 80 %}
+- **Result:** 🙂
+{% else %}
+- **Result:** 🙁
+{% endif %}
+{% endfor %}
