@@ -1,0 +1,9 @@
+{
+    "name": "Mario",
+    "age": 33,
+    "friends": [
+        "Luigi",
+        "Toad"
+    ],
+    "other_info": null
+}

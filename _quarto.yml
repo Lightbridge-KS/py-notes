@@ -68,6 +68,7 @@ book:
       - "pkg/pydantic.ipynb"
     - part: "I/O"
       chapters: 
+      - "basic/file-ops.ipynb"
       - basic/os/os.qmd
       - basic/path.qmd
       - basic/json.qmd
