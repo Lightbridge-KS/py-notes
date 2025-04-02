@@ -85,11 +85,14 @@ book:
     - part: "Context"
       chapters: 
       - basic/context/context.qmd
+      - "basic/context/context-custom.ipynb"
+
     - part: "Typing"
       chapters: 
       - "basic/typing.qmd"
     - part: "Benchmark"
       chapters: 
+        - "benchmark/time.qmd"
         - "benchmark/timing-basic.qmd"
     - part: "Module & PKG"
       chapters: 

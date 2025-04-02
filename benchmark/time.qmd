@@ -1,0 +1,166 @@
+# Time Module
+
+## Basic
+
+### What is the `time` module?
+
+The `time` module gives you ways to work with time in your Python programs. This includes:
+- Getting the current time
+- Measuring elapsed time
+- Pausing your program's execution
+- Converting between different time formats
+
+
+1. `time.time()` gives you the current time as seconds since the epoch
+2. `time.sleep(seconds)` pauses your program for the specified duration
+3. `localtime()` and `gmtime()` convert epoch time to structured time objects
+4. `strftime()` formats time objects into human-readable strings
+5. `perf_counter()` is best for precise performance measurements
+6. `process_time()` measures only CPU time used by your program
+
+
+Let's explore each of these functions with examples.
+
+```{python}
+import time
+```
+
+### Getting the current time
+
+The most basic function is `time()`, which returns the current time as a floating-point number representing seconds since the "epoch" (January 1, 1970, 00:00:00 UTC):
+
+```{python}
+current_time = time.time()
+print(current_time)  # Example output: 1712020642.7743263
+```
+
+This number by itself isn't very readable, but it's useful for calculations and can be converted to more human-readable formats.
+
+### Measuring elapsed time
+
+A common use of the `time` module is measuring how long something takes:
+
+```{python}
+start_time = time.time()
+
+# Code you want to measure
+for i in range(1_000_000):
+    pass
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"Operation took {elapsed_time:.6f} seconds")
+```
+
+## Pausing execution with sleep()
+
+To pause your program for a specified number of seconds:
+
+```{python}
+print("Starting...")
+time.sleep(2)  # Pause for 2 seconds
+print("Continuing after 2 seconds")
+```
+
+This is useful for creating delays, implementing simple animations, or rate-limiting API calls.
+
+## Time conversions
+
+### Converting epoch time to a structured time
+
+The `localtime()` and `gmtime()` functions convert a time expressed in seconds since the epoch to a structured time:
+
+```{python}
+current_time = time.time()
+local_time = time.localtime(current_time)  # Local time
+utc_time = time.gmtime(current_time)       # UTC time
+
+print(local_time)  
+print(utc_time)
+```
+
+These functions return a `struct_time` object, which has named attributes like `tm_year`, `tm_mon`, etc.
+
+### Converting to human-readable format
+
+The `strftime()` function formats time according to specified format codes:
+
+```{python}
+local_time = time.localtime()
+formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", local_time)
+print(formatted_time)  # Example output: 2025-04-02 10:30:42
+```
+
+Common format codes:
+
+- `%Y`: 4-digit year (e.g., 2025)
+- `%m`: Month (01-12)
+- `%d`: Day (01-31)
+- `%H`: Hour in 24-hour format (00-23)
+- `%M`: Minute (00-59)
+- `%S`: Second (00-59)
+- `%A`: Weekday name (e.g., Wednesday)
+- `%B`: Month name (e.g., April)
+
+### Converting string to time
+
+The `strptime()` function parses a string representation of time:
+
+```python
+time_string = "2025-04-02 10:30:42"
+parsed_time = time.strptime(time_string, "%Y-%m-%d %H:%M:%S")
+print(parsed_time)  # Returns a struct_time object
+```
+
+### Performance measurement with `perf_counter()`
+
+For more precise timing, especially for benchmarking code, use `perf_counter()`:
+
+```{python}
+start = time.perf_counter()
+# Code to measure
+time.sleep(0.1)  # Just as an example
+end = time.perf_counter()
+print(f"Operation took {end - start:.6f} seconds")
+```
+
+`perf_counter()` is more accurate than `time()` for measuring short durations and isn't affected by system clock changes.
+
+### Processor time with `process_time()`
+
+To measure only CPU time used by your program (excluding sleep time):
+
+```{python}
+start = time.process_time()
+# Code to measure
+time.sleep(1)  # This won't be counted in process_time
+end = time.process_time()
+print(f"CPU time used: {end - start:.6f} seconds")
+```
+
+## Example
+
+### Countdown
+
+
+```{python}
+def countdown(seconds):
+    """
+    Count down from the specified number of seconds.
+    
+    Parameters
+    ----------
+    seconds : int
+        Number of seconds to count down from
+    """
+    print(f"Countdown starting from {seconds} seconds...")
+    
+    for remaining in range(seconds, 0, -1):
+        print(f"{remaining} seconds remaining")
+        time.sleep(1)
+        
+    print("Time's up!")
+
+# Usage
+countdown(5)
+```
