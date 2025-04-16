@@ -30,6 +30,7 @@ book:
       - basic/function.qmd
       - basic/function-02.qmd
       - basic/function-dec.qmd
+      - "concept/closure-decorator.qmd"
       - "basic/function-validate.qmd"
     - part: "Func Prog"
       chapters: 

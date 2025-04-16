@@ -1,0 +1,176 @@
+# Closures and Decorators in Python
+
+## Code Example
+
+**Source:**
+
+- Youtube: [Closures - How to Use Them and Why They Are Useful](https://www.youtube.com/watch?v=swU3c34d2NQ)
+- [GitHub](https://github.com/CoreyMSchafer/code_snippets/blob/master/Closures/closure.py)
+
+
+```{python}
+# Closures
+
+import logging
+logging.basicConfig(filename='example.log', level=logging.INFO)
+
+
+def logger(func):
+    def log_func(*args):
+        logging.info(
+            'Running "{}" with arguments {}'.format(func.__name__, args))
+        print(func(*args))
+    return log_func
+
+
+def add(x, y):
+    return x+y
+
+
+def sub(x, y):
+    return x-y
+
+add_logger = logger(add)
+sub_logger = logger(sub)
+
+print(add_logger(3, 3))
+print(add_logger(4, 5))
+
+print(sub_logger(10, 5))
+print(sub_logger(20, 10))
+```
+
+The code you've shared demonstrates closures in Python, but not yet decorators. Let me explain how closures work in your example, and then show how to transform this into using decorators.
+
+## What's Happening
+
+Your example uses a closure - where `logger` is a function that returns another function (`log_func`). This inner function "closes over" and remembers the `func` variable from its parent scope.
+
+When you call:
+
+```{python}
+add_logger = logger(add)
+```
+
+You're creating a new function (`log_func`) that:
+
+1. Has access to the `add` function (stored in the `func` parameter)
+2. Logs information before executing the original function
+3. Prints the result of the function call
+
+## Converting to a Decorator
+
+Decorators are a syntactic way to apply this closure pattern. Here's how to convert your example to use decorators:
+
+```{python}
+import logging
+logging.basicConfig(filename='example.log', level=logging.INFO)
+
+def logger(func):
+    def log_func(*args):
+        logging.info(
+            'Running "{}" with arguments {}'.format(func.__name__, args))
+        print(func(*args))
+    return log_func
+
+# Apply decorator to functions
+@logger
+def add(x, y):
+    return x+y
+
+@logger
+def sub(x, y):
+    return x-y
+
+# Now you can call the functions directly
+add(3, 3)
+add(4, 5)
+
+sub(10, 5)
+sub(20, 10)
+```
+
+The `@logger` syntax is shorthand for `add = logger(add)`. It automatically wraps your function with the logger functionality.
+
+## How Decorators Work
+
+When you use the `@decorator` syntax:
+
+1. Python defines the function (e.g., `add`)
+2. It then passes this function to the decorator (`logger`)
+3. The decorator returns a new function (the inner `log_func`)
+4. This new function replaces the original function
+
+## Adding Parameters to Decorators
+
+You can also create decorators that accept parameters. This involves adding another layer of functions:
+
+```{python}
+import logging
+logging.basicConfig(filename='example.log', level=logging.INFO)
+
+def logger_with_level(level=logging.INFO):
+    def decorator(func):
+        def log_func(*args):
+            logging.log(level, 
+                'Running "{}" with arguments {}'.format(func.__name__, args))
+            result = func(*args)
+            print(result)
+            return result
+        return log_func
+    return decorator
+
+@logger_with_level(level=logging.DEBUG)
+def add(x, y):
+    return x+y
+
+@logger_with_level()  # Using default level
+def sub(x, y):
+    return x-y
+
+add(3, 3)
+sub(10, 5)
+```
+
+## Preserving Function Metadata
+
+One issue with decorators is that they replace the original function, including its name and docstring. To fix this, use `functools.wraps`:
+
+```{python}
+import logging
+import functools
+logging.basicConfig(filename='example.log', level=logging.INFO)
+
+def logger(func):
+    @functools.wraps(func)  # Preserves function metadata
+    def log_func(*args):
+        logging.info(
+            'Running "{}" with arguments {}'.format(func.__name__, args))
+        result = func(*args)
+        print(result)
+        return result
+    return log_func
+
+@logger
+def add(x, y):
+    """Add two numbers and return the result."""
+    return x+y
+
+# Now add.__name__ will be 'add' instead of 'log_func'
+# and add.__doc__ will still be available
+print(add.__name__)  # Output: add
+print(add.__doc__)   # Output: Add two numbers and return the result.
+```
+
+## Closure vs. Decorator: Comparison
+
+| Aspect | Closure Approach | Decorator Approach |
+|--------|------------------|-------------------|
+| Syntax | `add_logger = logger(add)` | `@logger` above function |
+| Function usage | Call wrapped function: `add_logger(3, 3)` | Call original function name: `add(3, 3)` |
+| Code clarity | Separate wrapping from function definition | Wrapping happens at function definition |
+| Metadata preservation | Original function name/docs lost | Can preserve with `functools.wraps` |
+| Reusability | Requires explicit wrapping of each function | Can apply to multiple functions with same syntax |
+| Nested application | More verbose with multiple wrappers | Clean syntax for multiple decorators: `@dec1 @dec2` |
+
+Would you like me to explain any specific aspect of decorators in more detail?
