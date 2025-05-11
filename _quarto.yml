@@ -83,6 +83,8 @@ book:
     - part: "Web"
       chapters: 
       - "contents/basic/request.qmd"
+      - "contents/webscrape/bs4soup-basic.ipynb"
+      - "contents/webscrape/bs4soup-fetch.ipynb"
     - part: "Context"
       chapters: 
       - "contents/basic/context/context.qmd"
