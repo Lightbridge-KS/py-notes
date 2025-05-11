@@ -10,7 +10,7 @@ source(here("_common.R"))
 
 :::{.callout-note}
 ## About
-This is my Python notes
+This is my Python notes (Last updated: `r Sys.Date()`)
 :::
 
 
@@ -37,4 +37,3 @@ print(f'I have to pay {bill:.2f}')
 
 ---
 
-Last updated: `r Sys.Date()`

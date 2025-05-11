@@ -127,5 +127,5 @@ format:
   #pdf:
     #documentclass: scrreprt
 
-freeze: true
+freeze: auto
 

@@ -1,9 +1,11 @@
 {
-  "hash": "71bb27d89a5fe539f1d0fddc39545b59",
+  "hash": "a8115f98492bbf1c5512cad08fc281e7",
   "result": {
     "engine": "knitr",
-    "markdown": "# Preface {.unnumbered}\n\n\n\n\n\n\n\n\n\n\n\n:::{.callout-note}\n## About\nThis is my Python notes\n:::\n\n\nI am an R user who is learning Python. I'm building my reference for **Python**. Also, It has some R code as well.\n\n:::{.callout-warning}\n\nNote that this is a work in progress book, so the content is imperfect and subject to change.\n\n:::\n\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\nprices = {'apple': 0.75, 'egg': 0.50}\ncart = {\n  'apple': 1,\n  'egg': 6\n}\n\nbill = sum(prices[item] * cart[item]\n           for item in cart)\n\nprint(f'I have to pay {bill:.2f}')\n#> I have to pay 3.75\n```\n:::\n\n\n\n\n---\n\nLast updated: 2025-02-12",
-    "supporting": [],
+    "markdown": "# Preface {.unnumbered}\n\n\n\n\n\n\n\n\n\n\n\n:::{.callout-note}\n## About\nThis is my Python notes (Last updated: 2025-05-11)\n:::\n\n\nI am an R user who is learning Python. I'm building my reference for **Python**. Also, It has some R code as well.\n\n:::{.callout-warning}\n\nNote that this is a work in progress book, so the content is imperfect and subject to change.\n\n:::\n\n\n\n\n::: {.cell}\n\n```{.python .cell-code}\nprices = {'apple': 0.75, 'egg': 0.50}\ncart = {\n  'apple': 1,\n  'egg': 6\n}\n\nbill = sum(prices[item] * cart[item]\n           for item in cart)\n\nprint(f'I have to pay {bill:.2f}')\n#> I have to pay 3.75\n```\n:::\n\n\n\n\n---\n\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],
