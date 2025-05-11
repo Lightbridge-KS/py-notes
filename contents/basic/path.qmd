@@ -1,0 +1,126 @@
+---
+title: "Path"
+---
+
+```{r}
+#| include: false
+library(here)
+here::i_am("contents/basic/path.qmd")
+source(here("_common.R"))
+```
+
+```{python}
+from pathlib import Path
+import os
+```
+
+- [Pathlib library](https://docs.python.org/3/library/pathlib.html)
+
+## WD and Home
+
+### Current WD
+
+```{python}
+# Same
+os.getcwd()
+Path.cwd()
+```
+
+On Windows, `.cwd()` returns a WindowsPath. On Linux and macOS, you get a PosixPath.
+
+### Current module
+
+```{python}
+Path(__file__)
+```
+
+The `__file__` attribute contains the path to the file that Python is currently importing or executing
+
+Parent module:
+
+```{python}
+Path(__file__).parent.parent
+```
+
+### Home Dir
+
+```{python}
+Path.home()
+```
+
+## Path Operations
+
+### Passing as string
+
+```{python}
+Path(r"C:\Users\philipp\realpython\file.txt")
+```
+
+use **raw string literals** (`r'string'`) to represent Windows paths
+
+### Absolute path
+
+```{python}
+Path(".").absolute()
+Path(".").resolve() # Better
+```
+
+### Check Existance
+
+```{python}
+Path("somefile").exists()
+```
+
+### Glob
+
+```{python}
+sorted(Path('.').glob('*.qmd'))
+# Or
+# [x for x in Path('.').glob('*.qmd')]
+```
+
+### Join Path
+
+Use slash `/`
+
+```{python}
+Path.cwd() / Path("somefile.txt")
+```
+
+Use `joinpath()`
+
+```{python}
+Path.home().joinpath("python", "scripts", "test.py")
+```
+
+### Path Component
+
+conveniently available as properties. Basic examples include:
+
+-   **`.name`**: The filename without any directory
+
+-   **`.stem`**: The filename without the file extension
+
+-   **`.suffix`**: The file extension
+
+-   **`.anchor`**: The part of the path before the directories
+
+-   **`.parent`**: The directory containing the file, or the parent directory if the path is a directory
+
+```{python}
+from pathlib import Path
+path = Path(".").cwd()
+path
+
+path.name
+
+path.stem
+
+path.suffix
+
+path.anchor
+
+path.parent
+
+path.parent.parent
+```

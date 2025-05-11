@@ -1,0 +1,244 @@
+---
+title: "DataClass"
+---
+
+```{r}
+#| include: false
+library(here)
+here::i_am("contents/basic/dataclass.qmd")
+source(here("_common.R"))
+```
+
+## Intro
+
+```{python}
+from dataclasses import dataclass, field, asdict, astuple
+
+@dataclass(frozen=True, order=True)
+class Comment:
+    id: int
+    text: str = ""
+    replies: list[int] = field(default_factory=list, repr=False, compare=False)
+
+```
+
+```{python}
+import attr
+
+@attr.s(frozen=True, order=True, slots=True)
+class AttrComment:
+    id: int = 0
+    text: str = ""
+```
+
+```{python}
+comment_1 = Comment(1, "I just subscribed!")
+comment_2 = Comment(2, "Hi there")
+# comment.id = 3  # can't immutable
+print(comment_1)
+```
+
+**To Dict or Tuple**
+
+```{python}
+asdict(comment_1)
+astuple(comment_1)
+```
+
+```{python}
+copy = dataclasses.replace(comment, id=3)
+print(copy)
+
+pprint(inspect.getmembers(Comment, inspect.isfunction))
+```
+
+### Interitance
+
+```{python}
+from dataclasses import dataclass
+
+# Define the base dataclass
+@dataclass
+class Person:
+    name: str
+    age: int
+
+# Define a derived dataclass that inherits from Person
+@dataclass
+class Employee(Person):
+    employee_id: int
+    department: str
+
+# Create an instance of the derived class
+employee = Employee(name="John Doe", age=30, employee_id=1234, department="Engineering")
+
+# Display the inherited and new fields
+print(employee)
+```
+
+### Extract each compoent to List
+
+```{python}
+# List of Comment instances
+comments = [comment_1, comment_2]
+```
+
+#### List Comprehension
+
+```{python}
+# Extract the 'id' and 'text' properties into separate lists
+ids = [comment.id for comment in comments]
+ids
+texts = [comment.text for comment in comments]
+texts
+```
+
+
+#### Zip with Unpacking
+
+```{python}
+[(comment.id, comment.text) for comment in comments]
+```
+
+```{python}
+# Using zip with unpacking
+ids, texts = zip(*[(comment.id, comment.text) for comment in comments])
+```
+
+```{python}
+# Convert to list if needed (since zip returns tuples)
+ids = list(ids)
+texts = list(texts)
+```
+
+#### 👋 To Data Frame
+
+```{python}
+import pandas as pd
+from dataclasses import asdict
+```
+
+```{python}
+comments
+```
+
+```{python}
+# Convert to a DataFrame
+df = pd.DataFrame([asdict(comment) for comment in comments])
+df
+```
+
+## Default Argument
+
+### Default Factory
+
+The `default_factory` argument in the `field()` function within Python’s `dataclasses` module is used to provide a default value for a field that is a mutable type, such as a list, dictionary, or set. This is particularly useful because using mutable default arguments (like a list or dictionary) directly in a function or class definition can lead to unintended behavior.
+
+#### Why Use `default_factory`?
+
+If you define a mutable default argument directly, it can lead to all instances of the class sharing the same object. This is often not what you want. For example:
+
+```{python}
+from dataclasses import dataclass
+
+@dataclass
+class MyClass:
+    my_list: list = []
+
+# All instances share the same list
+obj1 = MyClass()
+obj2 = MyClass()
+obj1.my_list.append(1)
+print(obj2.my_list)  # Output: [1], obj1 and obj2 share the same list!
+```
+
+In contrast, `default_factory` ensures that each instance of the class gets its own independent copy of the mutable object:
+
+#### Example Using `default_factory`:
+
+```{python}
+from dataclasses import dataclass, field
+
+@dataclass
+class MyClass:
+    my_list: list = field(default_factory=list)
+
+# Now, each instance gets its own list
+obj1 = MyClass()
+obj2 = MyClass()
+obj1.my_list.append(1)
+print(obj2.my_list)  # Output: [], obj1 and obj2 have independent lists
+```
+
+**How It Works:**
+
+- **`default_factory=list`**: This tells Python to call `list()` to create a new empty list each time a new instance of `MyClass` is created.
+- **`default_factory=dict`**: Similarly, this would create a new dictionary for each instance.
+- **`default_factory=lambda: {"key": "value"}`**: You can also use a lambda function to generate a default value if you need something more complex.
+
+**When to Use It:**
+
+You should use `default_factory` whenever you need a default value for a field in a data class that is a mutable type. This ensures that each instance of the class gets its own independent copy of the mutable object, avoiding the unintended sharing of state between instances.
+
+**Summary:**
+
+- **`default_factory`** provides a way to specify a factory function that returns a default value for a field.
+- It is especially useful for fields that need a mutable default value (like lists or dictionaries) to ensure each instance of the class gets its own unique object.
+- This helps prevent bugs that occur due to shared mutable defaults across instances of a class.
+
+## Example
+
+### Ex2: Create Simple (Recist) 
+
+
+You can convert the `Recist` class to a `dataclass` in Python by using the `dataclasses` module, which simplifies the creation of classes by automatically generating special methods like `__init__`, `__repr__`, and `__eq__`. Here’s how you can do it:
+
+
+```{python}
+from dataclasses import dataclass, field
+
+@dataclass
+class Recist:
+    category: str
+    category_full: str = field(init=False)
+    
+    _category_dict = {
+        "PR": "Partial Response (PR)",
+        "CR": "Complete Response (CR)",
+        "PD": "Progressive Disease (PD)",
+        "SD": "Stable Disease (SD)"
+    }
+
+    def __post_init__(self):
+        # Set the full category name based on the provided short category
+        if self.category in self._category_dict:
+            self.category_full = self._category_dict[self.category]
+        else:
+            raise ValueError(f"Unknown category: {self.category}")
+
+```
+
+**Explanation:**
+
+- **`@dataclass` Decorator:** This decorator is used to create a data class, which automatically generates the `__init__` method and other utility methods based on the fields you define.
+- **Fields:**
+  - `category`: This is the input field where you pass the short form of the RECIST category.
+  - `category_full`: This field is automatically computed based on the `category` and does not need to be initialized by the user. It is marked with `field(init=False)` to exclude it from the generated `__init__` method.
+- **`__post_init__` Method:** This special method is automatically called after the `__init__` method. It's used here to set `category_full` based on the provided `category` value. If the `category` is not in the `_category_dict`, an exception is raised.
+
+
+
+```{python}
+# Creating an instance of the Recist class
+recist_instance = Recist(category="PR")
+print(recist_instance.category)       # Output: "PR"
+print(recist_instance.category_full)  # Output: "Partial Response (PR)"
+
+# Handling an invalid category
+try:
+    invalid_instance = Recist(category="XX")
+except ValueError as e:
+    print(e)  # Output: "Unknown category: XX"
+```
+
+

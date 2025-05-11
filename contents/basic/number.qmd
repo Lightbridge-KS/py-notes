@@ -1,0 +1,73 @@
+---
+title: "Number"
+---
+
+
+```{r setup, include=FALSE}
+library(here)
+here::i_am("contents/basic/number.qmd")
+source(here("_common.R"))
+```
+
+### Number Types
+
+`Python` has 3 types of numbers 
+
+```{python}
+type(1)
+type(1.2)
+type(1 + 2j)
+```
+
+### Arithmatic Operators
+
+
+```{python}
+10 + 3
+10 - 3
+10 * 3
+10 ** 3
+10 / 3 
+10 // 3 # floor division
+10 % 3 # modulus
+```
+
+### Augmented Assignment Operator
+
+
+```{python}
+x = 10
+x = x + 3
+x
+```
+
+Shorter version
+
+```{python}
+x = 10
+x += 3
+x
+```
+
+### Function with Numbers
+
+```{python}
+round(2.3)
+abs(-2.3)
+```
+
+using [`math` module](https://docs.python.org/3/library/math.html)
+
+```{python}
+import math
+
+math.ceil(2.3)
+math.factorial(3)
+```
+
+
+
+
+
+
+

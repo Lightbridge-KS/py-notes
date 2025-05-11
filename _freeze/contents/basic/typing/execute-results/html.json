@@ -1,0 +1,12 @@
+{
+  "hash": "ac2307e9be61cdf852231f051d967f11",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Typing\n---\n\n\n\n\n## TypedDict\n\n[TypedDict](https://typing.readthedocs.io/en/latest/spec/typeddict.html#typeddict)\n\n::: {#fa241e7d .cell execution_count=1}\n``` {.python .cell-code}\nfrom typing import TypedDict\n\nclass Movie(TypedDict):\n    name: str\n    year: int\n```\n:::\n\n\n::: {#8dd7bb15 .cell execution_count=2}\n``` {.python .cell-code}\nmovie: Movie = {'name': 'Blade Runner',\n                'year': 1982}\n```\n:::\n\n\n::: {#e4b83700 .cell execution_count=3}\n``` {.python .cell-code}\ndef record_movie(movie: Movie) -> None: ...\n\nrecord_movie({'name': 'Blade Runner', 'year': 1982})\n```\n:::\n\n\n### Example\n\n- [Ollama-Python Example](https://github.com/ollama/ollama-python/blob/main/ollama/_types.py)\n\n::: {#75f33b81 .cell execution_count=4}\n``` {.python .cell-code}\nclass BaseGenerateResponse(TypedDict):\n  model: str\n  'Model used to generate response.'\n\n  created_at: str\n  'Time when the request was created.'\n\n  done: bool\n  'True if response is complete, otherwise False. Useful for streaming to detect the final response.'\n```\n:::\n\n\n",
+    "supporting": [
+      "typing_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

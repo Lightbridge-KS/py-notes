@@ -1,0 +1,313 @@
+# Exception 
+
+```{r}
+#| include: false
+library(here)
+here::i_am("contents/basic/exception.qmd")
+source(here("_common.R"))
+```
+
+[Python Exception (realpython)](https://realpython.com/python-exceptions/)
+
+- `raise`: allows you to throw an exception at any time.
+- `assert`: enables you to verify if a certain condition is met and throw an exception if it isn’t.
+- In the `try` clause, all statements are executed until an exception is encountered.
+- `except` is used to catch and handle the exception(s) that are encountered in the try clause.
+- `else` lets you code sections that should run only when no exceptions are encountered in the try clause.
+- `finally` enables you to execute sections of code that should always run, with or without any previously encountered exceptions.
+
+## Concept
+
+1. put as little code as possible in the try block. You do this so your except block(s) will not catch or mask errors that they should not.
+
+## Anti-pattern 
+
+Don't ever do this:
+
+```python
+try:
+    do_something()
+except:
+    pass
+```
+
+## Raising Exception
+
+
+```{python}
+x = 10
+if x > 5:
+    raise Exception('x should not exceed 5. The value of x was: {}'.format(x))
+```
+
+## `AssertionError` Exception
+
+```{python}
+import sys
+assert ('linux' in sys.platform), "This code runs on Linux only."
+```
+
+## `try` and `except` Block
+
+Python executes code following the `try` statement as a “normal” part of the program. The code that follows the `except` statement is the program’s response to any exceptions in the preceding `try` clause.
+
+### Ex: Linux function
+
+```{python}
+def linux_interaction():
+    assert ('linux' in sys.platform), "Function can only run on Linux systems."
+    print('Doing something.')
+```
+
+```{python}
+def mac_interaction():
+    assert ('darwin' in sys.platform), "Function can only run on MacOS systems."
+    print('Doing something.')
+```
+
+```{python}
+try:
+    linux_interaction()
+except:
+    print('Linux function was not executed')
+```
+
+```{python}
+try:
+    linux_interaction()
+except AssertionError as error:
+    print(error)
+    print('The linux_interaction() function was not executed')
+```
+
+### Ex: Int & Float
+
+```{python}
+def get_int(x):
+    try:
+        return int(x)
+    except ValueError:
+        print(f"'{x}' is not a number")
+
+```
+
+```{python}
+get_int(5)
+get_int(-1)
+get_int(5.6)
+get_int("cat")
+```
+
+```{python}
+def attempt_float(x):
+    try:
+        return float(x)
+    except ValueError:
+        return x
+```
+
+```{python}
+attempt_float("2")
+attempt_float("X")
+```
+
+
+
+using `pass` to return `NoneType` and not print anything
+
+```{python}
+def get_int2(x):
+    try:
+        return int(x)
+    except ValueError:
+        pass
+
+```
+
+
+```{python}
+get_int2(2)
+get_int2("Cat") # Nothing
+
+type(get_int2("Cat"))
+```
+
+
+
+`isnumeric()` to check whether string is all numeric. But, it's not very effective:
+
+
+```{python}
+"123".isnumeric() # Only case that works
+"12.3".isnumeric()
+"-1".isnumeric()
+"cat".isnumeric()
+```
+
+### Ex: Try open file
+
+```{python}
+try:
+    with open('file.log') as file:
+        read_data = file.read()
+except:
+    print('Could not open file.log')
+```
+
+```{python}
+try:
+    with open('file.log') as file:
+        read_data = file.read()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+```
+
+
+```{python}
+try:
+    linux_interaction() # <-- AssertionError trigger in this line
+    with open('file.log') as file:
+        read_data = file.read()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+except AssertionError as error: 
+    print(error) 
+    print('Linux linux_interaction() function was not executed')
+```
+
+
+```{python}
+try:
+    mac_interaction()
+    with open('file.log') as file: # <-- FileNotFoundError trigger in this line
+        read_data = file.read()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+except AssertionError as error:
+    print(error)
+    print('Linux mac_interaction() function was not executed')
+```
+
+## `try` and `except` catch error
+
+### Ex: Atomic numbers of noble gases.
+
+```{python}
+nobles = {'He': 2, 'Ne': 10, 'Ar': 18, 'Kr': 36, 'Xe': 54}
+
+def show_element_info(elements):
+   for element in elements:
+       print('Atomic number of {} is {}'.format(
+             element, nobles[element]))
+```
+
+
+```{python}
+try:
+    show_element_info(['Ne', 'Ar', 'Br'])
+except KeyError as err:
+    missing_element = err.args[0]
+    print(f"Error args: {err.args}")
+    print(f"Missing data for element: {missing_element}")
+```
+
+### Simple Logging
+
+```{python}
+import logging
+UPLOAD_ROOT = "fold/testdir"
+
+def create_upload_dir(username):
+    userdir = os.path.join(UPLOAD_ROOT, username)
+    try:
+        os.makedirs(userdir)
+    except FileExistsError as err:
+        logging.error("Upload dir already exists: %s",
+            err.filename)
+```
+
+
+```{python}
+create_upload_dir("testuser")
+```
+
+## `else` clause
+
+```{python}
+try:
+    mac_interaction() # Pass
+except AssertionError as error:
+    print(error)
+else:
+    print('Executing the else clause.')
+```
+
+### `try-except-else-finally`
+
+```{python}
+try:
+    mac_interaction()
+except AssertionError as error:
+    print(error)
+else:
+    try:
+        with open('file.log') as file:
+            read_data = file.read()
+    except FileNotFoundError as fnf_error:
+        print(fnf_error)
+finally:
+    print('Cleaning up, irrespective of any exceptions.')
+```
+
+
+### Always close File 
+
+```python
+f = open(path, mode="w")
+
+try:
+    write_to_file(f)
+except:
+    print("Failed")
+else:
+    print("Succeeded")
+finally:
+    f.close()
+```
+
+## Custom Exception
+
+Custom exceptions initialize by creating a class that inherits from the base `Exception` class of Python
+
+```{python}
+class MyCustomException(Exception):
+    pass
+```
+
+```{python}
+raise MyCustomException('A custom message for my custom exception')
+```
+
+```{python}
+try:
+    raise MyCustomException('A custom message for my custom exception')
+except MyCustomException:
+    print('My custom exception was raised')
+```
+
+## Full stack trace by logging
+
+Python provides an easy way to capture that error event, and all the information you need to fix it. The logging module has a function called `exception()`, which will log your message along with the full stack trace of the current exception. So you can write code like this:
+
+
+```{python}
+import logging
+
+def get_number():
+    return int('foo')
+
+try:
+    x = get_number()
+except:
+    logging.exception('Caught an error')
+```

@@ -1,0 +1,15 @@
+{
+  "hash": "146333922ff9a2264926930e0049b181",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Package \n\n\n\n\n\n\n\n\n\n-   [Python PKG User Guide](https://packaging.python.org/en/latest/)\n-   [PKG layout](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html) (from setuptools)\n\n\n## Change WD of a script\n\n```text\n.\n├── dev\n│  ├── child.qmd\n│  ├── design.qmd\n│  └── test.qmd\n└── src\n   ├── peddesign\n   │  ├── __init__.py\n   │  ├── __pycache__\n   │  ├── _child.py\n   │  ├── ct.py\n   │  └── main.py\n```\n\nIn `test.qmd` change working dir to inside `src/`\n\n```python\nimport sys\nsys.path.insert(1, '../src') \nprint(sys.path)\nimport peddesign as pd\n```\n\n## Package Structure\n\nIn `__init__.py`\n\n```python\n# Export User-facing function:\nfrom .main import design_ct\nfrom .ct import design_chest, design_whole_abd, design_chest_whole_abd, design_cta_liver\n```\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

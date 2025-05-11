@@ -1,0 +1,332 @@
+---
+title: "OOP in Python"
+---
+
+```{r}
+#| include: false
+library(here)
+here::i_am("contents/oop/oop.qmd")
+source(here("_common.R"))
+```
+
+- [OOP in Python (real python)](https://realpython.com/python3-object-oriented-programming/#what-is-object-oriented-programming-in-python)
+
+
+## Class
+
+### Define Class
+
+```{python}
+class Car:
+    "Car Class"
+    # Class Attribute
+    fuel = "Electric"
+    # initialize dunder
+    def __init__(self, color: str, mileage: int):
+        self.color = color
+        self.mileage = mileage
+    # Print dunder
+    def __str__(self) -> str:
+        return f"color: {self.color}, mileage: {self.mileage}"
+    # Instance method
+    def drive(self):
+        return f"Ventured {self.mileage} miles"            
+```
+
+### Create instance
+
+Create instance of a class `Car`
+
+```{python}
+car_blue = Car("blue", 20000)
+print(car_blue)
+```
+
+
+```{python}
+# Doc string
+car_blue.__doc__
+```
+
+```{python}
+car_blue.__dict__
+```
+
+Access Attribute
+
+```{python}
+car_turbo.fuel
+```
+
+Access method
+
+```{python}
+car_turbo.drive()
+```
+
+### Class attribute vs Instance attribute
+
+
+1. **Class Attributes**:
+    - Defined directly in the class body.
+    - Shared across all instances of the class.
+    - Accessed using the class name or through an instance.
+    - Changes to a class attribute affect all instances that haven’t overridden the attribute.
+
+Example:
+```{python}
+class Manual:
+    A = "hi"
+    B = "there"
+
+# Accessing class attributes
+print(Manual.A)  # Output: hi
+print(Manual.B)  # Output: there
+
+# Creating instances
+m1 = Manual()
+m2 = Manual()
+
+# Accessing class attributes through instances
+print(m1.A)  
+print(m2.A) 
+
+# Modifying class attribute
+Manual.A = "hello"
+print(m1.A)  
+print(m2.A)   
+```
+
+2. **Instance Attributes**:
+    - Defined within the `__init__` method.
+    - Unique to each instance of the class.
+    - Accessed using the instance name.
+    - Changes to an instance attribute affect only that instance.
+
+Example:
+
+```{python}
+class Manual:
+    def __init__(self):
+        self.A = "hi"
+        self.B = "there"
+
+# Creating instances
+m1 = Manual()
+m2 = Manual()
+
+# Accessing instance attributes
+print(m1.A)  
+print(m2.A)  
+
+# Modifying instance attribute
+m1.A = "hello"
+print(m1.A)  
+print(m2.A)  
+```
+
+#### Key Differences
+
+1. **Scope and Sharing**:
+    - **Class Attributes**: Shared by all instances of the class. If you change a class attribute, the change is reflected in all instances unless overridden.
+    - **Instance Attributes**: Unique to each instance. Changing an instance attribute affects only that particular instance.
+
+2. **Definition and Initialization**:
+    - **Class Attributes**: Defined directly in the class body, outside any methods.
+    - **Instance Attributes**: Defined within the `__init__` method, which is called when a new instance of the class is created.
+
+3. **Usage Context**:
+    - **Class Attributes**: Useful for constants or attributes that should be shared across all instances.
+    - **Instance Attributes**: Used for attributes that need to be unique to each instance, such as data specific to that instance.
+
+#### Summary
+
+- Use **class attributes** when you want to share data across all instances of the class.
+- Use **instance attributes** when you need each instance of the class to have its own unique data.
+
+### Interitance
+
+```{python}
+class Parent:
+    hair_color = "brown"
+
+class Child(Parent):
+    pass
+```
+
+```{python}
+ch1 = Child()
+ch1.hair_color
+```
+
+**Overwrite Parent**
+
+```{python}
+class Parent:
+    hair_color = "brown"
+
+class Child(Parent):
+    hair_color = "purple" # Overwrite
+```
+
+```{python}
+ch2 = Child()
+ch2.hair_color
+```
+
+**Extend Parent Attribute**
+
+```{python}
+class Parent:
+    speaks = ["English"]
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.speaks.append("German")
+```
+
+```{python}
+ch3 = Child()
+ch3.hair_color
+```
+
+```{python}
+# Check parent class
+type(ch3) 
+isinstance(ch3, Parent)
+```
+
+### Multiple Child from Parent Class
+
+**Parent Class**
+
+```{python}
+class Dog:
+    species = "Canis familiaris"
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name} is {self.age} years old"
+
+    def speak(self, sound="..."):
+        return f"{self.name} says {sound}"
+```
+
+**Child Class**
+
+Each dog breed bark differently
+
+```{python}
+class JackRussellTerrier(Dog):
+    def speak(self, sound="Arf"):
+        return super().speak(sound)
+
+class Bulldog(Dog):
+    def speak(self, sound="Woof"):
+        return super().speak(sound)
+
+class Dachshund(Dog):
+    pass
+```
+
+```{python}
+miles = JackRussellTerrier("Miles", 4)
+buddy = Dachshund("Buddy", 9)
+jack = Bulldog("Jack", 3)
+jim = Bulldog("Jim", 5)
+```
+
+```{python}
+miles.speak()
+buddy.speak()
+```
+
+## Class Method (Dunder)
+
+### String Representation `__repr__`, `__str__`
+
+```{python}
+class Pair:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def __repr__(self):
+        return 'Pair({0.x!r}, {0.y!r})'.format(self) 
+    def __str__(self):
+        return '({0.x!s}, {0.y!s})'.format(self)
+```
+
+```{python}
+p = Pair(3, 4)
+p
+```
+
+the special !r formatting code indicates that the output of `__repr__()` should be used
+
+```{python}
+print('p is {0!r}'.format(p)) 
+print('p is {0}'.format(p))
+```
+
+### String Formatting `__format__()`
+
+```{python}
+_formats = {
+        'ymd' : '{d.year}-{d.month}-{d.day}',
+        'mdy' : '{d.month}/{d.day}/{d.year}',
+        'dmy' : '{d.day}/{d.month}/{d.year}'
+        }
+
+class Date:
+    def __init__(self, year, month, day):
+                self.year = year
+                self.month = month
+                self.day = day
+    def __format__(self, code): 
+        if code == '':
+            code = 'ymd'    
+        fmt = _formats[code] 
+        return fmt.format(d=self)
+```
+
+```{python}
+d = Date(2012, 12, 21)
+format(d)
+format(d, 'mdy')
+'The date is {:ymd}'.format(d)
+```
+
+### Setter / Getter
+
+```{python}
+class Person:
+    def __init__(self, first_name):
+        self.first_name = first_name
+    # Getter function
+    @property
+    def first_name(self): 
+        return self._first_name
+    # Setter function
+    @first_name.setter
+    def first_name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string') 
+        self._first_name = value
+    # Deleter function (optional)
+    @first_name.deleter
+    def first_name(self):
+        raise AttributeError("Can't delete attribute")
+```
+
+```{python}
+a = Person('Guido')
+a.first_name
+```
+
+```{python}
+a.first_name = 42
+```

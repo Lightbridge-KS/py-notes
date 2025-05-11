@@ -11,108 +11,108 @@ book:
     - index.qmd
     - part: "LLM Prompt"
       chapters: 
-      - "pref/py-pref.qmd"
+      - "contents/pref/py-pref.qmd"
     - part: "Primitive"
       chapters:
-      - basic/primitive.qmd
-      - basic/number.qmd
-      - basic/string.qmd
-      - basic/data-str.qmd
+      - contents/basic/primitive.qmd
+      - contents/basic/number.qmd
+      - contents/basic/string.qmd
+      - contents/basic/data-str.qmd
     - part: "Control Flow"
       chapters:
-      - basic/cond.qmd
-      - "basic/match-case.qmd"
-      - basic/loop.qmd
-      - "basic/comprehen.qmd"
-      - basic/fun-prog.qmd
+      - "contents/basic/cond.qmd"
+      - "contents/basic/match-case.qmd"
+      - "contents/basic/loop.qmd"
+      - "contents/basic/comprehen.qmd"
+      - "contents/basic/fun-prog.qmd"
     - part: "Functions"
       chapters:
-      - basic/function.qmd
-      - basic/function-02.qmd
-      - basic/function-dec.qmd
-      - "concept/closure-decorator.qmd"
-      - "basic/function-validate.qmd"
+      - "contents/basic/function.qmd"
+      - "contents/basic/function-02.qmd"
+      - "contents/basic/function-dec.qmd"
+      - "contents/concept/closure-decorator.qmd"
+      - "contents/basic/function-validate.qmd"
     - part: "Func Prog"
       chapters: 
-      - "concept/map-reduce.qmd"
+      - "contents/concept/map-reduce.qmd"
     - part: "Error & Exception"
       chapters:
-      - basic/exception.qmd
-      - "try/try-else-na.qmd"
+      - "contents/basic/exception.qmd"
+      - "contents/try/try-else-na.qmd"
     - part: "Logging"
       chapters: 
-      - "logging/logging-basic.qmd"
-      - "logging/logging-file.qmd"
-      - "logging/logging-advanced.qmd"
+      - "contents/logging/logging-basic.qmd"
+      - "contents/logging/logging-file.qmd"
+      - "contents/logging/logging-advanced.qmd"
     - part: "Regex"
       chapters: 
-      - "basic/regex.qmd"
-      - "basic/regex-re2.qmd"
+      - "contents/basic/regex.qmd"
+      - "contents/basic/regex-re2.qmd"
     - part: "Iterate"
       chapters:
-      - "concept/iterable-iterator-generator.qmd"
+      - "contents/concept/iterable-iterator-generator.qmd"
     - part: "OOP"
       chapters:
-      - "oop/oop.qmd"
-      - "oop/oop-trick.qmd"
-      - "oop/oop-property.qmd"
-      - "oop/oop-abc.qmd"
-      - "oop/oop-class-instance-method.ipynb"
-      - "basic/dataclass.qmd"
-      - "playground/shape.ipynb"
-      - "playground/book-catalog.ipynb"
-      - "playground/fruits.ipynb"
-      - "playground/chess-game.ipynb"
+      - "contents/oop/oop.qmd"
+      - "contents/oop/oop-trick.qmd"
+      - "contents/oop/oop-property.qmd"
+      - "contents/oop/oop-abc.qmd"
+      - "contents/oop/oop-class-instance-method.ipynb"
+      - "contents/basic/dataclass.qmd"
+      - "contents/playground/shape.ipynb"
+      - "contents/playground/book-catalog.ipynb"
+      - "contents/playground/fruits.ipynb"
+      - "contents/playground/chess-game.ipynb"
     - part: "Data Validation"
       chapters: 
-      - "howto/typecheck.ipynb"
-      - "pkg/pydantic.ipynb"
+      - "contents/howto/typecheck.ipynb"
+      - "contents/pkg/pydantic.ipynb"
     - part: "I/O"
       chapters: 
-      - "basic/file-ops.ipynb"
-      - basic/os/os.qmd
-      - basic/path.qmd
-      - basic/json.qmd
+      - "contents/basic/file-ops.ipynb"
+      - "contents/basic/os/os.qmd"
+      - "contents/basic/path.qmd"
+      - "contents/basic/json.qmd"
     - part: "Jinja"
       chapters: 
-        - "jinja/jinja-basic.ipynb"
-        - "jinja/jinja-syntax.qmd"
+        - "contents/jinja/jinja-basic.ipynb"
+        - "contents/jinja/jinja-syntax.qmd"
     - part: "FS"
       chapters: 
-      - "fs/fs.ipynb"
+      - "contents/fs/fs.ipynb"
     - part: "Web"
       chapters: 
-      - "basic/request.qmd"
+      - "contents/basic/request.qmd"
     - part: "Context"
       chapters: 
-      - basic/context/context.qmd
-      - "basic/context/context-custom.ipynb"
+      - "contents/basic/context/context.qmd"
+      - "contents/basic/context/context-custom.ipynb"
 
     - part: "Typing"
       chapters: 
-      - "basic/typing.qmd"
+      - "contents/basic/typing.qmd"
     - part: "Benchmark"
       chapters: 
-        - "benchmark/time.qmd"
-        - "benchmark/timing-basic.qmd"
+        - "contents/benchmark/time.qmd"
+        - "contents/benchmark/timing-basic.qmd"
     - part: "Module & PKG"
       chapters: 
-      - basic/file.qmd
-      - basic/pkg.qmd
+      - "contents/basic/file.qmd"
+      - "contents/basic/pkg.qmd"
     - part: "PKG Dev"
       chapters: 
-      - "pkg-dev/pkg-export.qmd"
+      - "contents/pkg-dev/pkg-export.qmd"
     - part: "Pipeline"
       chapters: 
-      - "pkg-dev/make-py-basic.qmd"
+      - "contents/pkg-dev/make-py-basic.qmd"
     - part: "Exercises"
       chapters:
-      - basic/ctr-flow-ex.qmd
-      - "playground/pg-sort.ipynb"
-      - "playground/minimax-game.qmd"
+      - "contents/basic/ctr-flow-ex.qmd"
+      - "contents/playground/pg-sort.ipynb"
+      - "contents/playground/minimax-game.qmd"
     - part: "Pandas"
       chapters: 
-        - ds/pd-intro.qmd
+        - "contents/ds/pd-intro.qmd"
     - references.qmd
 
 
@@ -127,5 +127,5 @@ format:
   #pdf:
     #documentclass: scrreprt
 
-freeze: auto
+freeze: true
 
