@@ -85,6 +85,7 @@ book:
       - "contents/basic/request.qmd"
       - "contents/webscrape/bs4soup-basic.ipynb"
       - "contents/webscrape/bs4soup-fetch.ipynb"
+      - "contents/webscrape/bs4soup-extract-table.ipynb"
     - part: "Context"
       chapters: 
       - "contents/basic/context/context.qmd"
