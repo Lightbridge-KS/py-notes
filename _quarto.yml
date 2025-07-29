@@ -18,6 +18,10 @@ book:
       - contents/basic/number.qmd
       - contents/basic/string.qmd
       - contents/basic/data-str.qmd
+    - part: "Typing"
+      chapters: 
+      - "contents/types/typehint-basic.ipynb"
+      - "contents/types/typehint-cheatsheet.ipynb"
     - part: "Control Flow"
       chapters:
       - "contents/basic/cond.qmd"
