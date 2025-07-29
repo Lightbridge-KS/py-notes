@@ -18,8 +18,9 @@ book:
       - contents/basic/number.qmd
       - contents/basic/string.qmd
       - contents/basic/data-str.qmd
-    - part: "Typing"
+    - part: "Type Hints"
       chapters: 
+      - "contents/basic/typing.qmd"
       - "contents/types/typehint-basic.ipynb"
       - "contents/types/typehint-cheatsheet.ipynb"
     - part: "Control Flow"
@@ -77,6 +78,9 @@ book:
       - "contents/basic/os/os.qmd"
       - "contents/basic/path.qmd"
       - "contents/basic/json.qmd"
+    - part: "Asynchronous"
+      chapters: 
+      - "contents/async/async-intro.ipynb"
     - part: "Jinja"
       chapters: 
         - "contents/jinja/jinja-basic.ipynb"
@@ -93,11 +97,7 @@ book:
     - part: "Context"
       chapters: 
       - "contents/basic/context/context.qmd"
-      - "contents/basic/context/context-custom.ipynb"
-
-    - part: "Typing"
-      chapters: 
-      - "contents/basic/typing.qmd"
+      - "contents/basic/context/context-custom.ipynb"      
     - part: "Benchmark"
       chapters: 
         - "contents/benchmark/time.qmd"
