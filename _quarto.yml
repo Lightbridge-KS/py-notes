@@ -23,6 +23,7 @@ book:
       - "contents/basic/typing.qmd"
       - "contents/types/typehint-basic.ipynb"
       - "contents/types/typehint-cheatsheet.ipynb"
+      - "contents/types/typehint-evo.ipynb"
     - part: "Control Flow"
       chapters:
       - "contents/basic/cond.qmd"
